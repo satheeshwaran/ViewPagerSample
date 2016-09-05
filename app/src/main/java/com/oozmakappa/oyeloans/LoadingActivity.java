@@ -15,6 +15,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +67,8 @@ public class LoadingActivity extends AppCompatActivity {
                                                 String jsonresult = String.valueOf(json);
                                                 System.out.println("JSON Result"+jsonresult);
 
-                                                String str_email = json.getString("email");
+                                                String str_fb_acc_name = json.getString("name");
+                                                FacebookHelperUtils.getInstance().fbUserName = str_fb_acc_name;
                                                 String str_id = json.getString("id");
                                                 String str_firstname = json.getString("first_name");
                                                 String str_lastname = json.getString("last_name");

@@ -9,7 +9,9 @@ public class FacebookHelperUtils {
 
     public static FacebookHelperUtils getInstance() {return sharedObject;}
 
-    boolean isFBLoggedIN = false;
+    public boolean isFBLoggedIN = false;
+
+    public String fbUserName = "";
 
     void checkFacebookLoginStatus(){
 
