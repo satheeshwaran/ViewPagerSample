@@ -80,24 +80,9 @@
                                                     System.out.println("JSON Result"+jsonresult);
 
                                                     String str_fb_acc_name = json.getString("name");
-                                                    FacebookHelperUtils.getInstance().fbUserName = str_fb_acc_name;
+                                                    FacebookHelperUtils.getInstance().userObject.fbUserName = str_fb_acc_name;
                                                     String str_id = json.getString("id");
-
-                                                    GraphRequest request = GraphRequest.newMeRequest(
-                                                            AccessToken.getCurrentAccessToken(),
-                                                            new GraphRequest.GraphJSONObjectCallback() {
-                                                                @Override
-                                                                public void onCompleted(
-                                                                        JSONObject object,
-                                                                        GraphResponse response) {
-                                                                    // Application code
-                                                                    Log.d(TAG_RESPONSE,object.toString());
-                                                                }
-                                                            });
-                                                    Bundle parameters = new Bundle();
-                                                    parameters.putString("fields", OyeConstants.fbMeRequestFields);
-                                                    request.setParameters(parameters);
-                                                    request.executeAsync();
+                                                    FacebookHelperUtils.getInstance().userObject.fbUserID = str_id;
 
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -106,7 +91,6 @@
                                         }
 
                                     }).executeAsync();
-
                         }
 
                         @Override
