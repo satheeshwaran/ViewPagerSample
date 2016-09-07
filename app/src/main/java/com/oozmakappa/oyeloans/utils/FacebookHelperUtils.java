@@ -1,5 +1,7 @@
 package com.oozmakappa.oyeloans.utils;
 
+import com.facebook.AccessToken;
+
 /**
  * Created by satheeshwaran on 9/5/16.
  */
@@ -9,12 +11,12 @@ public class FacebookHelperUtils {
 
     public static FacebookHelperUtils getInstance() {return sharedObject;}
 
-    public boolean isFBLoggedIN = false;
-
     public String fbUserName = "";
 
-    void checkFacebookLoginStatus(){
-
+    public boolean isFBLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
+
 
 }
