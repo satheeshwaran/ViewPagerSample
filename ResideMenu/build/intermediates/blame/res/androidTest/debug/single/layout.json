@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/res/merged/androidTest/debug/layout/residemenu_custom_right_scrollview.xml",
+        "source": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/bundles/debug/res/layout/residemenu_custom_right_scrollview.xml"
+    },
+    {
+        "merged": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/res/merged/androidTest/debug/layout/residemenu_custom_left_scrollview.xml",
+        "source": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/bundles/debug/res/layout/residemenu_custom_left_scrollview.xml"
+    },
+    {
+        "merged": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/res/merged/androidTest/debug/layout/residemenu_custom.xml",
+        "source": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/bundles/debug/res/layout/residemenu_custom.xml"
+    },
+    {
+        "merged": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/res/merged/androidTest/debug/layout/residemenu_item.xml",
+        "source": "/Users/sankarnarayanan/Desktop/Hackothon/OozmaKappa/ResideMenu/build/intermediates/bundles/debug/res/layout/residemenu_item.xml"
+    }
+]

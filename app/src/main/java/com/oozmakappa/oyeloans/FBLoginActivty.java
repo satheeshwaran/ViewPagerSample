@@ -74,6 +74,7 @@ public class FBLoginActivty extends AppCompatActivity {
                                             System.out.println("ERROR");
                                         } else {
                                             System.out.println("Success");
+                                            goToAccountSummaryPage();
                                             try {
 
                                                 String jsonresult = String.valueOf(json);
@@ -110,5 +111,12 @@ public class FBLoginActivty extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    void goToAccountSummaryPage(){
+        Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
+        startActivity(accSummaryIntent);
+
     }
 }
