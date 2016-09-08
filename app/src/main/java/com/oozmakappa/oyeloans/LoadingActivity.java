@@ -74,7 +74,7 @@
                                                 System.out.println("Success");
                                                 try {
 
-                                                    goToAccountSummaryPage();
+                                                    goToProfilePage();
 
                                                     String jsonresult = String.valueOf(json);
                                                     System.out.println("JSON Result"+jsonresult);
@@ -115,6 +115,11 @@
             Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
             startActivity(accSummaryIntent);
 
+        }
+
+        void goToProfilePage(){
+            Intent profilePage = new Intent(this,MyProfilePage.class);
+            startActivity(profilePage);
         }
 
         void goToLoginPage(){
