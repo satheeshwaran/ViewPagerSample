@@ -30,8 +30,8 @@ public class MyProfilePage extends AppCompatActivity implements AppBarLayout.OnO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         //ImageButton button = (ImageButton)this.findViewById(R.id.user_profile_photo);
         //button.bringToFront();

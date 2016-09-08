@@ -1,9 +1,7 @@
 package com.oozmakappa.oyeloans;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -11,54 +9,80 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
-import com.oozmakappa.oyeloans.Adapters.LoanSummaryAdapter;
+
+import com.github.clans.fab.FloatingActionMenu;
+import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
-
 import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
-
-import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class AccountSummaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ResideMenu resideMenu;
     private AccountSummaryActivity mContext;
-    ListView list;
-    LoanSummaryAdapter adapter;
-    public  AccountSummaryActivity CustomListView = null;
-    public ArrayList<LoanSummaryModel> CustomListViewValuesArr = new ArrayList<LoanSummaryModel>();
+    public ArrayList<LoanSummaryModel> loanArray = new ArrayList<LoanSummaryModel>();
+    public ArrayList<LoanSummaryModel> applicationArray = new ArrayList<LoanSummaryModel>();
+    ArrayList<String> listDataHeader = new ArrayList<String>();
+    HashMap<String, List<LoanSummaryModel>> listDataChild = new HashMap<String, List<LoanSummaryModel>>();
+    public String loanHistoryData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
+    public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
+    private FloatingActionMenu menuRed;
 
-    public String responseData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
+    /*
+ * Preparing the list data
+ */
+    private void prepareListData() {
 
-
-    /****** Function to set data in ArrayList *************/
-    public void setListData(String arrayData)
-    {
         try {
-            JSONObject json = new JSONObject(responseData);
-            JSONArray array = json.getJSONArray("loan_status_history");
+            listDataHeader.add("Loans");
+            listDataHeader.add("Applications");
 
-            for (int i=0; i< array.length(); i++){
-                JSONObject currentObj = array.getJSONObject(i);
+            JSONObject jsonLoan = new JSONObject(loanHistoryData);
+            JSONObject jsonApplication = new JSONObject(appHistoryData);
+            JSONArray loanArrayList = jsonLoan.getJSONArray("loan_status_history");
+            JSONArray ApplicationArrayList = jsonApplication.getJSONArray("application_status_history");
+
+            for (int i = 0; i < loanArrayList.length(); i++) {
+                JSONObject currentObj = loanArrayList.getJSONObject(i);
                 final LoanSummaryModel loanModel = new LoanSummaryModel();
                 loanModel.setLoanStatus(currentObj.getString("loan_status"));
-                loanModel.setLoanId(currentObj.getString("loan_id"));
-                CustomListViewValuesArr.add( loanModel );
+                loanModel.setLoanId("Loan Id : "+currentObj.getString("loan_id"));
+                loanArray.add(loanModel);
             }
-        }catch (Exception e){
 
+            for (int i = 0; i < ApplicationArrayList.length(); i++) {
+                JSONObject currentObj = ApplicationArrayList.getJSONObject(i);
+                final LoanSummaryModel loanModel = new LoanSummaryModel();
+                if (currentObj.has("app_status")) {
+                    loanModel.setLoanStatus(currentObj.getString("app_status"));
+                }
+                if(currentObj.has("loan_amount")) {
+                    loanModel.setLoanAmount("Rs."+currentObj.getString("loan_amount"));
+                    loanModel.setLoanId("App. Id : " +currentObj.getString("app_id"));
+                }else{
+                    loanModel.setLoanAmount("");
+                }
+                applicationArray.add(loanModel);
+            }
+
+            listDataChild.put("Loans", loanArray);
+            listDataChild.put("Applications", applicationArray);
+
+        } catch (Exception e) {
+            Log.v("exception", e.getMessage());
         }
 
     }
+
+
 
 
     @Override
@@ -78,13 +102,34 @@ public class AccountSummaryActivity extends AppCompatActivity
 
         mContext = this;
         setUpMenu();
-        setListData(responseData);
+        //setListData(responseData);
         Resources res =getResources();
-        ListView listView= ( ListView )findViewById( R.id.listView );
-        adapter = new LoanSummaryAdapter(this,  CustomListViewValuesArr, res);
-        listView.setAdapter(adapter);
-        //list.setAdapter(adapter);
+        // get the listview
+        final ExpandableListView expListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        // preparing list data
+        prepareListData();
+        LoanSummaryExpandableAdapter listAdapter = new LoanSummaryExpandableAdapter(this, listDataHeader, listDataChild, res);
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
+        // Listview on child click listener
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
 
+                return false;
+            }
+        });
+        // Listview Group expanded listener
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousGroup)
+                    expListView.collapseGroup(previousGroup);
+                previousGroup = groupPosition;
+            }
+        });
         ImageView image = (ImageView) findViewById(R.id.menuIcon);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,19 +138,8 @@ public class AccountSummaryActivity extends AppCompatActivity
             }
         });
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbar.setTitle("Loan Summary");
-//        toolbar.setBackgroundColor(Color.parseColor("#197EE6"));
-//        setSupportActionBar(toolbar);
+        menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override

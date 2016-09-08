@@ -74,7 +74,7 @@
                                                 System.out.println("Success");
                                                 try {
 
-                                                    goToProfilePage();
+                                                    goToAccountSummaryPage();
 
                                                     String jsonresult = String.valueOf(json);
                                                     System.out.println("JSON Result"+jsonresult);
