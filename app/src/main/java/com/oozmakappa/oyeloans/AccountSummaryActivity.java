@@ -17,6 +17,8 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.special.ResideMenu.ResideMenu;
+import com.special.ResideMenu.ResideMenuItem;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AccountSummaryActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ResideMenu resideMenu;
     private AccountSummaryActivity mContext;
@@ -36,6 +38,9 @@ public class AccountSummaryActivity extends AppCompatActivity
     public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
     private FloatingActionMenu menuRed;
 
+    private ResideMenuItem itemHome;
+    private ResideMenuItem itemProfile;
+    private ResideMenuItem itemSettings;
     /*
  * Preparing the list data
  */
@@ -204,6 +209,18 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
         resideMenu.setScaleValue(0.6f);
+
+        itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
+        itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
+        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+
+        itemHome.setOnClickListener(this);
+        itemProfile.setOnClickListener(this);
+        itemSettings.setOnClickListener(this);
+
+        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
     }
 
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
@@ -219,4 +236,8 @@ public class AccountSummaryActivity extends AppCompatActivity
     };
 
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }
