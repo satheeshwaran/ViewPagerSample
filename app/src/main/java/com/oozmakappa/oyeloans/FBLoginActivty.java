@@ -26,7 +26,7 @@ public class FBLoginActivty extends AppCompatActivity {
     private static final String TAG_ERROR = "ERROR";
 
     CallbackManager callbackManager;
-    List<String> permissionNeeds= Arrays.asList("user_photos", "email", "user_birthday", "user_friends");
+    List<String> permissionNeeds= Arrays.asList("public_profile", "email", "user_birthday", "user_hometown");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class FBLoginActivty extends AppCompatActivity {
             }
         });
 
-        onFacebookLogin();
+        //onFacebookLogin();
     }
 
     void onFacebookLogin(){
@@ -79,11 +79,8 @@ public class FBLoginActivty extends AppCompatActivity {
 
                                                 String jsonresult = String.valueOf(json);
                                                 System.out.println("JSON Result"+jsonresult);
-
-                                                String str_email = json.getString("email");
                                                 String str_id = json.getString("id");
-                                                String str_firstname = json.getString("first_name");
-                                                String str_lastname = json.getString("last_name");
+
 
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
