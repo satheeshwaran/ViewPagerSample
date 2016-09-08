@@ -42,7 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FBLoginActivty" />
+        <activity android:name=".FBLoginActivty"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AccountSummaryActivity"
             android:label="@string/title_activity_account_summary"
