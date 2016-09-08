@@ -101,7 +101,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         //setListData(responseData);
         Resources res =getResources();
         // get the listview
-        ExpandableListView expListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        final ExpandableListView expListView = (ExpandableListView) findViewById(R.id.expandableListView);
         // preparing list data
         prepareListData();
         LoanSummaryExpandableAdapter listAdapter = new LoanSummaryExpandableAdapter(this, listDataHeader, listDataChild, res);
@@ -118,9 +118,12 @@ public class AccountSummaryActivity extends AppCompatActivity
         });
         // Listview Group expanded listener
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
             @Override
             public void onGroupExpand(int groupPosition) {
-
+                if(groupPosition != previousGroup)
+                    expListView.collapseGroup(previousGroup);
+                previousGroup = groupPosition;
             }
         });
         ImageView image = (ImageView) findViewById(R.id.menuIcon);
