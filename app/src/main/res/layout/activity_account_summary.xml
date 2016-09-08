@@ -30,18 +30,6 @@
             android:contentDescription="@string/menuimage"
             android:id="@+id/menuIcon"/>
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/menuIcon"
-            android:dividerHeight="2.0sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/shadow_drawable"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,8 +38,19 @@
             android:id="@+id/textView2"
             android:layout_toEndOf="@+id/menuIcon"
             android:layout_alignTop="@+id/menuIcon"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="0dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="17dp"/>
+
+        <ExpandableListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expandableListView"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/parentView"
+            android:layout_margin="10dp"
+            android:background="@drawable/shadow_drawable"
+            android:dividerHeight="0.5dp"/>
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
