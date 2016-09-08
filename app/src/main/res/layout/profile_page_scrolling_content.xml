@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white">
 
-            <TableRow>
+            <TableRow android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -35,16 +36,18 @@
                     android:lineSpacingExtra="8dp"
                     android:text="@string/firstName"
                     android:textSize="18sp"
-                    />
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:layout_weight="50"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content" />
 
             </TableRow>
 
-            <TableRow>
+            <TableRow android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -200,6 +203,23 @@
 
             </TableRow>
 
+            <TableRow>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/save"
+                    android:background="@drawable/rounded_button_shape"
+                    android:textColor="@android:color/white"
+                    android:layout_span="2"
+                    android:layout_weight="100"
+                    android:padding="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:id="@+id/save_profile_button"
+                    />
+            </TableRow>
 
         </TableLayout>
 

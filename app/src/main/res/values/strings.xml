@@ -109,4 +109,5 @@
     <string name="city_address">City</string>
     <string name="PIN_address">PIN Code</string>
     <string name="state_address">State</string>
+    <string name="save">Save</string>
 </resources>

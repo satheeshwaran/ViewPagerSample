@@ -1,11 +1,13 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,6 +52,15 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
             mToolbar.inflateMenu(R.menu.menu_main);
             startAlphaAnimation(mTitle, 0, View.INVISIBLE);
             startAlphaAnimation(mTitle, 0, View.INVISIBLE);
+
+            Button saveButton = (Button) findViewById(R.id.save_profile_button);
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent accountSummaruIntent = new Intent(EditMyProfilePage.this,AccountSummaryActivity.class);
+                    startActivity(accountSummaruIntent);
+                }
+            });
 
         }
 

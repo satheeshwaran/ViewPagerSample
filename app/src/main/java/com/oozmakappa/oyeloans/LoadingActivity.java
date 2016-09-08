@@ -135,5 +135,4 @@
             Intent loginIntent = new Intent(this,FBLoginActivty.class);
             startActivity(loginIntent);
         }
-
     }
