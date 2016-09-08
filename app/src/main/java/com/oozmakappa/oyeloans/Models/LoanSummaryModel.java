@@ -7,6 +7,16 @@ public class LoanSummaryModel {
 
     private String loanId = "";
     private  String loanStatus = "";
+    private  String loanAmount = "";
+
+    public String getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(String loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
 
     public void setLoanId(String loanId){
         this.loanId = loanId;

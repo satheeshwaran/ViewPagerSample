@@ -63,27 +63,32 @@ public class LoanSummaryExpandableAdapter extends BaseExpandableListAdapter {
         TextView txtListChild2 = (TextView) convertView
                 .findViewById(R.id.text1);
 
+        if (model.getLoanAmount().length() > 0){
+            TextView amountView = (TextView) convertView.findViewById(R.id.amount);
+            amountView.setText(model.getLoanAmount());
+        }
+
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
         if(model.getLoanStatus().equals("Closed")){
             image.setImageResource(
                     this._res.getIdentifier(
-                            "com.oozmakappa.oyeloans:drawable/closed"
+                            "com.oozmakappa.oyeloans:drawable/application_icon"
                             ,null,null));
         }else if(model.getLoanStatus().equals("Pre- Closed")){
             image.setImageResource(
                     this._res.getIdentifier(
-                            "com.oozmakappa.oyeloans:drawable/preclosed"
+                            "com.oozmakappa.oyeloans:drawable/application_icon"
                             ,null,null));
         }else if(model.getLoanStatus().equals("Active")){
             image.setImageResource(
                     this._res.getIdentifier(
-                            "com.oozmakappa.oyeloans:drawable/active"
+                            "com.oozmakappa.oyeloans:drawable/application_icon"
                             ,null,null));
         }else{
             image.setImageResource(
                     this._res.getIdentifier(
-                            "com.oozmakappa.oyeloans:drawable/application_icon"
+                            "com.oozmakappa.oyeloans:drawable/application"
                             ,null,null));
         }
 

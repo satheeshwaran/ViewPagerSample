@@ -13,8 +13,8 @@
             android:layout_width="60dp"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_height="50dp"
-                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_width="40dp"
                 android:layout_gravity="left|top"
                 android:id="@+id/image"
 
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_weight="1" android:layout_gravity="left|center_vertical"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="3dip"
                     android:layout_marginTop="0dip"
                     android:textColor="#868687"
@@ -46,12 +46,24 @@
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="left|center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="10sp"
                     android:textColor="#868687"
                     android:layout_marginLeft="3dip"
                     android:layout_marginTop="3dip"
                     android:gravity="left"/>
             </TableRow>
+            <TextView
+                android:text=""
+                android:id="@+id/amount"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="right|center"
+                android:textSize="10sp"
+                android:textColor="#ff0000"
+                android:layout_marginLeft="3dip"
+                android:layout_marginTop="3dip"
+                android:gravity="left"/>
         </TableLayout>
     </TableRow>
 </TableLayout>

@@ -62,9 +62,10 @@ public class AccountSummaryActivity extends AppCompatActivity
                     loanModel.setLoanStatus(currentObj.getString("app_status"));
                 }
                 if(currentObj.has("loan_amount")) {
-                    loanModel.setLoanId("Loan Amount : " +currentObj.getString("loan_amount"));
+                    loanModel.setLoanAmount("Rs."+currentObj.getString("loan_amount"));
+                    loanModel.setLoanId("App. Id : " +currentObj.getString("app_id"));
                 }else{
-                    loanModel.setLoanId("Application Id : "+currentObj.getString("app_id"));
+                    loanModel.setLoanAmount("");
                 }
                 applicationArray.add(loanModel);
             }
