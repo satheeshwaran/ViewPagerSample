@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
@@ -139,6 +140,25 @@ public class AccountSummaryActivity extends AppCompatActivity
         });
 
         menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+
+        FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
+        FloatingActionButton applyLoanBtn = (FloatingActionButton) findViewById(R.id.fab1);
+        makePaymentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Make payment button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        applyLoanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 
     }
 
