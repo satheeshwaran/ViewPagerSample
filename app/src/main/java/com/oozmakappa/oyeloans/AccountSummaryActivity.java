@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.special.ResideMenu.ResideMenu;
@@ -32,6 +34,7 @@ public class AccountSummaryActivity extends AppCompatActivity
     HashMap<String, List<LoanSummaryModel>> listDataChild = new HashMap<String, List<LoanSummaryModel>>();
     public String loanHistoryData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
     public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
+    private FloatingActionMenu menuRed;
 
     /*
  * Preparing the list data
@@ -134,6 +137,9 @@ public class AccountSummaryActivity extends AppCompatActivity
                 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
             }
         });
+
+        menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+
     }
 
     @Override
