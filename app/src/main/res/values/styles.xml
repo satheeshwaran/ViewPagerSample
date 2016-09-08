@@ -1,6 +1,11 @@
 <resources>
 
     <color name="NavBarColor">#197EE6</color>
+    <color name="SummaryBackgroundColor">#F4F7F9</color>
+    <color name="BlackColor">#000000</color>
+    <color name="WhiteColor">#FFFFFF</color>
+
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
