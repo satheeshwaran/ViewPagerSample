@@ -107,7 +107,7 @@ public class LoanSummaryAdapter extends BaseAdapter {
 
             /************  Set Model values in Holder elements ***********/
 
-            holder.loanId.setText( "Loan Id" +tempValues.getLoanId() );
+            holder.loanId.setText( "Loan Id : " +tempValues.getLoanId() );
             holder.loanStatus.setText("Status :" +tempValues.getLoanStatus() );
 
             Log.v("status", tempValues.getLoanStatus());
