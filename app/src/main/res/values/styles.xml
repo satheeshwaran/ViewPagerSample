@@ -4,6 +4,8 @@
     <color name="SummaryBackgroundColor">#F4F7F9</color>
     <color name="BlackColor">#000000</color>
     <color name="WhiteColor">#FFFFFF</color>
+    <color name="NavigationMenuColor">#0F539B</color>
+
 
 
     <!-- Base application theme. -->
