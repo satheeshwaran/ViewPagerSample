@@ -74,7 +74,7 @@ public class FBLoginActivty extends AppCompatActivity {
                                             System.out.println("ERROR");
                                         } else {
                                             System.out.println("Success");
-                                            goToAccountSummaryPage();
+                                            goToProfileEditPage();
                                             try {
 
                                                 String jsonresult = String.valueOf(json);
@@ -111,8 +111,8 @@ public class FBLoginActivty extends AppCompatActivity {
     }
 
 
-    void goToAccountSummaryPage(){
-        Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
+    void goToProfileEditPage(){
+        Intent accSummaryIntent = new Intent(this,EditMyProfilePage.class);
         startActivity(accSummaryIntent);
 
     }

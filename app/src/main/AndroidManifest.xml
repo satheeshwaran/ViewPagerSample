@@ -33,7 +33,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoadingActivity"
+        <activity
+            android:name=".LoadingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +46,10 @@
         <activity
             android:name=".AccountSummaryActivity"
             android:label="@string/title_activity_account_summary"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditMyProfilePage"
+            android:label="@string/title_activity_my_profile_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
