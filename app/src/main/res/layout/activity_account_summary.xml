@@ -9,48 +9,60 @@
     tools:openDrawer="start"
     android:background="@color/SummaryBackgroundColor">
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/SummaryBackgroundColor">
-
-        <View
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/NavBarColor"
-            android:id="@+id/parentView"></View>
+            android:layout_height="match_parent"
+            android:background="@color/SummaryBackgroundColor">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_menu_white_24dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/menuimage"
-            android:id="@+id/menuIcon"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/NavBarColor"
+                android:id="@+id/parentView"></View>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Loan Summary"
-            android:id="@+id/textView2"
-            android:layout_toEndOf="@+id/menuIcon"
-            android:layout_alignTop="@+id/menuIcon"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="0dp"
-            android:textColor="#ffffff"
-            android:textSize="17dp"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_menu_white_24dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/menuimage"
+                android:id="@+id/menuIcon"/>
 
-        <ExpandableListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/expandableListView"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/parentView"
-            android:layout_margin="10dp"
-            android:background="@drawable/shadow_drawable"
-            android:dividerHeight="0.5dp"/>
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Loan Summary"
+                android:id="@+id/textView2"
+                android:layout_toEndOf="@+id/menuIcon"
+                android:layout_alignTop="@+id/menuIcon"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#ffffff"
+                android:textSize="17dp"/>
+
+            <ExpandableListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/expandableListView"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/parentView"
+                android:layout_margin="10dp"
+                android:background="@drawable/shadow_drawable"
+                android:dividerHeight="0.5dp"/>
+
+            <include
+                layout="@layout/app_bar_account_summary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
 </android.support.v4.widget.DrawerLayout>
