@@ -213,14 +213,17 @@ public class AccountSummaryActivity extends AppCompatActivity
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
-
+        ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.icon_home, "Logout");
         itemHome.setOnClickListener(this);
         itemProfile.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
+        itemLogout.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
+
     }
 
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
