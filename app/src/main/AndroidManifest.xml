@@ -48,7 +48,7 @@
             android:label="@string/title_activity_account_summary"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MyProfilePage"
+            android:name=".EditMyProfilePage"
             android:label="@string/title_activity_my_profile_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

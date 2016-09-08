@@ -1,24 +1,23 @@
     package com.oozmakappa.oyeloans;
 
     import android.content.Intent;
+    import android.os.Build;
     import android.support.v7.app.AppCompatActivity;
     import android.os.Bundle;
     import android.util.Log;
+    import android.view.Window;
+    import android.view.WindowManager;
 
-    import com.facebook.AccessToken;
     import com.facebook.CallbackManager;
     import com.facebook.FacebookCallback;
     import com.facebook.FacebookException;
     import com.facebook.FacebookSdk;
     import com.facebook.GraphRequest;
     import com.facebook.GraphResponse;
-    import com.facebook.HttpMethod;
     import com.facebook.appevents.AppEventsLogger;
     import com.facebook.login.LoginManager;
     import com.facebook.login.LoginResult;
-    import com.facebook.login.widget.LoginButton;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
-    import com.oozmakappa.oyeloans.utils.OyeConstants;
 
     import org.json.JSONException;
     import org.json.JSONObject;
@@ -37,6 +36,14 @@
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = this.getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
+            }
+
             FacebookSdk.sdkInitialize(getApplicationContext());
             AppEventsLogger.activateApp(this);
             callbackManager = CallbackManager.Factory.create();
@@ -50,6 +57,8 @@
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_loading);
+
+
 
         }
 
@@ -118,7 +127,7 @@
         }
 
         void goToProfilePage(){
-            Intent profilePage = new Intent(this,MyProfilePage.class);
+            Intent profilePage = new Intent(this,EditMyProfilePage.class);
             startActivity(profilePage);
         }
 
