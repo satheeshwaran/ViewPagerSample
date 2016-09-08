@@ -11,3 +11,5 @@ ResideMenu/build/
 ResideMenu/build/generated/source/buildConfig/androidTest/debug/com/special/ResideMenu/test/BuildConfig.java
 
 ResideMenu/build/generated/source/buildConfig/androidTest/debug/com/special/ResideMenu/test/BuildConfig.java
+
+*.jar
