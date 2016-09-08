@@ -13,3 +13,19 @@ ResideMenu/build/generated/source/buildConfig/androidTest/debug/com/special/Resi
 ResideMenu/build/generated/source/buildConfig/androidTest/debug/com/special/ResideMenu/test/BuildConfig.java
 
 *.jar
+
+*.aar
+
+ResideMenu/build/intermediates/bundles/debug/libs/nineoldandroids-library-2.4.0.jar
+
+ResideMenu/build/intermediates/bundles/release/classes.jar
+
+ResideMenu/build/intermediates/bundles/release/libs/nineoldandroids-library-2.4.0.jar
+
+ResideMenu/build/outputs/aar/ResideMenu-debug.aar
+
+ResideMenu/build/outputs/aar/ResideMenu-release.aar
+
+ResideMenu/build/intermediates/bundles/debug/libs/nineoldandroids-library-2.4.0.jar
+
+ResideMenu/build/intermediates/bundles/debug/classes.jar
