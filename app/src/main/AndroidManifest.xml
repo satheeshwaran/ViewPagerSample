@@ -42,8 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FBLoginActivty"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".FBLoginActivty"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AccountSummaryActivity"
             android:label="@string/title_activity_account_summary"
@@ -51,7 +52,7 @@
         <activity
             android:name=".EditMyProfilePage"
             android:label="@string/title_activity_my_profile_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

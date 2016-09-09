@@ -57,9 +57,6 @@
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_loading);
-
-
-
         }
 
         void onFacebookLogin(){
@@ -83,8 +80,8 @@
                                                 System.out.println("Success");
                                                 try {
 
-                                                    goToAccountSummaryPage();
-
+                                                    //goToAccountSummaryPage();
+                                                    goToProfilePage();
                                                     String jsonresult = String.valueOf(json);
                                                     System.out.println("JSON Result"+jsonresult);
 

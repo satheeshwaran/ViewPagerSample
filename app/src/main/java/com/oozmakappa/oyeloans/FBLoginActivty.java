@@ -1,10 +1,12 @@
 package com.oozmakappa.oyeloans;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.Button;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -54,7 +56,8 @@ public class FBLoginActivty extends AppCompatActivity {
             }
         });
 
-        //onFacebookLogin();
+        Button button = (Button) findViewById(R.id.HowItWorks);
+        button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     void onFacebookLogin(){
@@ -118,6 +121,5 @@ public class FBLoginActivty extends AppCompatActivity {
     void goToProfileEditPage(){
         Intent accSummaryIntent = new Intent(this,EditMyProfilePage.class);
         startActivity(accSummaryIntent);
-
     }
 }

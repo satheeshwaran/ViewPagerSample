@@ -11,13 +11,64 @@
     android:background="@drawable/nav_bar_header"
     android:scaleType = "centerCrop"
     >
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/profile"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:id="@+id/oyeLoansWelcomeImage"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcomeToOyeLoans"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/oyeLoansWelcomeImage"
+        android:id="@+id/welcomeToOye"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/welcomeToOye"
+        />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/HowItWorks"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:id="@+id/HowItWorks"
+        />
 </RelativeLayout>

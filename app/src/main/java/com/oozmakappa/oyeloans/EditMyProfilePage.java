@@ -1,11 +1,14 @@
 package com.oozmakappa.oyeloans;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -31,6 +34,14 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_page);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = this.getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(this.getResources().getColor(R.color.NavBarColor));
+            }
+
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -53,14 +64,14 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
             startAlphaAnimation(mTitle, 0, View.INVISIBLE);
             startAlphaAnimation(mTitle, 0, View.INVISIBLE);
 
-            Button saveButton = (Button) findViewById(R.id.save_profile_button);
+            /*Button saveButton = (Button) findViewById(R.id.save_profile_button);
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent accountSummaruIntent = new Intent(EditMyProfilePage.this,AccountSummaryActivity.class);
                     startActivity(accountSummaruIntent);
                 }
-            });
+            });*/
 
         }
 

@@ -110,4 +110,11 @@
     <string name="PIN_address">PIN Code</string>
     <string name="state_address">State</string>
     <string name="save">Save</string>
+    <string name="welcomeToOyeLoans">Welcome to Oye Loans!</string>
+    <string name="loginMessage">We are glad you installed our app! If you need to apply for a loan please login using your facebook account.</string>
+    <string name="HowItWorks"><u><b><i>How it works?</i></b></u></string>
+    <string name="title_activity_profile_page">"My Profile"</string>
+    <string name="dummyAddress">Pacifica Tech Park, 101A, First Floor, 23, Old Mahabalipuram Road, Navallur, Chennai, Tamil Nadu 603103</string>
+    <string name="dummyEmployment">Global Analytics</string>
+    <string name="dummySocial">https://facebook.com/satheesh4590</string>
 </resources>
