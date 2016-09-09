@@ -1,4 +1,5 @@
 package com.oozmakappa.oyeloans;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,6 @@ public class AccountSummaryActivity extends AppCompatActivity
     public String loanHistoryData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
     public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
     private FloatingActionMenu menuRed;
-
     private ResideMenuItem itemHome;
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemSettings;
@@ -159,13 +159,15 @@ public class AccountSummaryActivity extends AppCompatActivity
         applyLoanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goToApplyLoanPage();
                 Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-
-
-
+    public void goToApplyLoanPage(){
+        Intent goToApplyLoanFirstScreenIntent = new Intent(this,ApplyLoanFirstActivity.class);
+        startActivity(goToApplyLoanFirstScreenIntent);
     }
 
     @Override
@@ -245,9 +247,6 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-
-        //View leftMenu = resideMenu.getLeftMenuView();
-        //leftMenu.setBackgroundColor(getResources().getColor(R.color.WhiteColor));
 
 
     }
