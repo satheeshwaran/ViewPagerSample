@@ -19,9 +19,9 @@ public class FacebookHelperUtils {
 
     public static FacebookHelperUtils sharedObject = new FacebookHelperUtils();
 
-    public static FacebookHelperUtils getInstance() { sharedObject.userObject = new LoanUser(); return sharedObject;}
+    public static FacebookHelperUtils getInstance() {  return sharedObject;}
 
-    public LoanUser userObject;
+    public LoanUser userObject = new LoanUser();
 
     private static final String TAG_RESPONSE = "RESPONSE";
 

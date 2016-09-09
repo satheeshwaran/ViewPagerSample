@@ -5,5 +5,5 @@ package com.oozmakappa.oyeloans.utils;
  */
 public class OyeConstants {
 
-    public static String fbMeRequestFields = "id,name,link,birthday,gender,first_name,last_name,verified,email,location,picture.type(large),age_range,devices,education,about,context,friends";
+    public static String fbMeRequestFields = "id,name,link,birthday,gender,first_name,last_name,verified,email,location,picture.type(large),age_range,devices,education,about,context,friends,work";
 }
