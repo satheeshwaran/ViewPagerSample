@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+
+import org.w3c.dom.Text;
+
 public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
 
@@ -73,7 +78,14 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
                 }
             });*/
 
+            setUpData();
         }
+
+    private void setUpData(){
+        LoanUser user = FacebookHelperUtils.getInstance().userObject;
+        ((TextView)findViewById(R.id.profileName)).setText(user.fbUserName);
+        ((TextView)findViewById(R.id.email)).setText(user.emailID);
+    }
 
     private void bindActivity() {
         mToolbar        = (Toolbar) findViewById(R.id.main_toolbar);

@@ -1,6 +1,7 @@
     package com.oozmakappa.oyeloans;
 
     import android.content.Intent;
+    import android.hardware.camera2.params.Face;
     import android.os.Build;
     import android.support.v7.app.AppCompatActivity;
     import android.os.Bundle;
@@ -17,7 +18,9 @@
     import com.facebook.appevents.AppEventsLogger;
     import com.facebook.login.LoginManager;
     import com.facebook.login.LoginResult;
+    import com.oozmakappa.oyeloans.Models.LoanUser;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+    import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 
     import org.json.JSONException;
     import org.json.JSONObject;
@@ -78,21 +81,18 @@
                                                 System.out.println("ERROR");
                                             } else {
                                                 System.out.println("Success");
-                                                try {
 
-                                                    //goToAccountSummaryPage();
-                                                    goToProfilePage();
-                                                    String jsonresult = String.valueOf(json);
-                                                    System.out.println("JSON Result"+jsonresult);
+                                                FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                                                    @Override
+                                                    public void callCompleted(JSONObject responseObject) {
+                                                            FacebookHelperUtils.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
 
-                                                    String str_fb_acc_name = json.getString("name");
-                                                    FacebookHelperUtils.getInstance().userObject.fbUserName = str_fb_acc_name;
-                                                    String str_id = json.getString("id");
-                                                    FacebookHelperUtils.getInstance().userObject.fbUserID = str_id;
-
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
+                                                            //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
+                                                            //FacebookHelperUtils.getInstance().userObject.fbUserID = responseObject.getString("id");
+                                                            //goToAccountSummaryPage();
+                                                            goToProfilePage();
+                                                    }
+                                                });
                                             }
                                         }
 
