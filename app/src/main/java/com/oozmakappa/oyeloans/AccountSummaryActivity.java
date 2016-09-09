@@ -229,7 +229,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
-        resideMenu.setScaleValue(0.6f);
+        resideMenu.setScaleValue(0.4f);
 
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
@@ -244,6 +244,11 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+
+        //View leftMenu = resideMenu.getLeftMenuView();
+        //leftMenu.setBackgroundColor(getResources().getColor(R.color.WhiteColor));
+
 
     }
 
