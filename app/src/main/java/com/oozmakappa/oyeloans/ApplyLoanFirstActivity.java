@@ -1,15 +1,19 @@
 package com.oozmakappa.oyeloans;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+
 import me.angrybyte.circularslider.CircularSlider;
 
 /**
  * Created by sankarnarayanan on 09/09/16.
  */
-public class ApplyLoanFirstActivity extends AppCompatActivity {
+public class ApplyLoanFirstActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,18 @@ public class ApplyLoanFirstActivity extends AppCompatActivity {
         // finally change the color
         window.setStatusBarColor(this.getResources().getColor(R.color.NavigationMenuColor));
 
+        ImageView backButton = (ImageView) findViewById(R.id.menuIcon);
+        backButton.setOnClickListener(clickListener);
+
+
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+
+        public void onClick(View v) {
+            onBackPressed();
+        }
+    };
 
 
 }
