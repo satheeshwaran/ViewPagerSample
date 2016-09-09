@@ -17,6 +17,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,33 +71,14 @@ public class FBLoginActivty extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
 
                         System.out.println("Success");
-                        GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject json, GraphResponse response) {
-                                        if (response.getError() != null) {
-                                            // handle error
-                                            System.out.println("ERROR");
-                                        } else {
-                                            System.out.println("Success");
-                                            goToProfileEditPage();
-                                            try {
-
-                                                String jsonresult = String.valueOf(json);
-                                                System.out.println("JSON Result"+jsonresult);
-                                                String str_fb_acc_name = json.getString("name");
-                                                FacebookHelperUtils.getInstance().userObject.fbUserName = str_fb_acc_name;
-                                                String str_id = json.getString("id");
-                                                FacebookHelperUtils.getInstance().userObject.fbUserID = str_id;
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                }).executeAsync();
-
+                        FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                            @Override
+                            public void callCompleted(JSONObject responseObject) {
+                                //start parsing and assin to shared object.
+                                Log.d(TAG_CANCEL,responseObject.toString());
+                                FBLoginActivty.this.goToProfileEditPage();
+                            }
+                        });
                     }
 
                     @Override

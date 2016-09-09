@@ -30,11 +30,11 @@ public class FacebookHelperUtils {
         return accessToken != null;
     }
 
-    public static void getFBProfilePicture(){
+    public static void getFBProfilePictureForUserID(String userID,final FacebookHelperUtilsCallback callback){
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/"+FacebookHelperUtils.getInstance().userObject.fbUserID+"/picture?width=1000&height=1000&redirect=false",
+                "/"+userID+"/picture?width=1000&height=1000&redirect=false",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
@@ -42,6 +42,7 @@ public class FacebookHelperUtils {
                         Log.d(TAG_RESPONSE,response.getRawResponse());
                         try {
                             FacebookHelperUtils.getInstance().userObject.fbProfilePicURL = response.getJSONObject().getJSONObject("data").getString("url");
+                            callback.callCompleted(response.getJSONObject());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -50,7 +51,7 @@ public class FacebookHelperUtils {
         ).executeAsync();
     }
 
-    public static void getOtherFBDetails(){
+    public static void getRequiredFBDetails(final FacebookHelperUtilsCallback callback){
 
         final GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -61,11 +62,40 @@ public class FacebookHelperUtils {
                             GraphResponse response) {
                         // Application code
                         Log.d(TAG_RESPONSE,object.toString());
+                        callback.callCompleted(response.getJSONObject());
                     }
                 });
         Bundle parameters = new Bundle();
         parameters.putString("fields", OyeConstants.fbMeRequestFields);
         request.setParameters(parameters);
         request.executeAsync();
+    }
+    public static void getMeRequestDetails(AccessToken accessToken,final FacebookHelperUtils callback){
+
+        GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject json, GraphResponse response) {
+                        if (response.getError() != null) {
+                            // handle error
+                            System.out.println("ERROR");
+                        } else {
+                            System.out.println("Success");
+                            try {
+
+                                String jsonresult = String.valueOf(json);
+                                System.out.println("JSON Result"+jsonresult);
+                                String str_fb_acc_name = json.getString("name");
+                                FacebookHelperUtils.getInstance().userObject.fbUserName = str_fb_acc_name;
+                                String str_id = json.getString("id");
+                                FacebookHelperUtils.getInstance().userObject.fbUserID = str_id;
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                }).executeAsync();
     }
 }

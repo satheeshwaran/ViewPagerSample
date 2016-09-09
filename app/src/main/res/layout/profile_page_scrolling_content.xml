@@ -1,79 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scroll"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/container"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/NavBarColor"
-        android:id="@+id/mainDetails">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="@dimen/image_width"
-            android:layout_height="@dimen/image_width"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/profile"
-            app:border_color="@android:color/white"
-            app:border_width="2dp"
-            app:finalHeight="@dimen/image_final_width"
-            app:finalYPosition="2dp"
-            app:layout_behavior="com.oozmakappa.oyeloans.AvatarImageBehavior"
-            app:startHeight="2dp"
-            app:startToolbarPosition="2dp"
-            app:startXPosition="2dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:id="@+id/profileImage"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Satheeshwaran J"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/profileImage"
-            android:textStyle="normal"
-            android:textSize="20dp"
-            android:id="@+id/profileName"/>
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".EditMyProfilePage"
+    app:behavior_overlapTop="30dp"
+    tools:showIn="@layout/profile_page"
+    android:background="@android:color/white"
+    android:scrollbars="none">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="9176034562"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/profileName"
-            android:textStyle="normal"
-            android:textSize="16dp"
-            android:id="@+id/phoneNumber"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="satheesh4590@gmail.com"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/phoneNumber"
-            android:textStyle="normal"
-            android:textSize="14dp"
-            android:id="@+id/email"/>
-    </RelativeLayout>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,27 +23,27 @@
             android:layout_margin="8dp"
             app:cardElevation="0dp"
             app:contentPadding="16dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Address"
-                    android:id="@+id/addressTitle"
-                    />
-                <include layout="@layout/item_divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/addressTitle"
-                    android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Address"
+                android:id="@+id/addressTitle"
+                />
+            <include layout="@layout/item_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/addressTitle"
+                android:layout_marginTop="25dp"/>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_weight="50"
-                    android:lineSpacingExtra="8dp"
-                    android:text="@string/dummyAddress"
-                    android:textSize="14dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="50"
+                android:lineSpacingExtra="8dp"
+                android:text="@string/dummyAddress"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"/>
 
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
@@ -193,6 +131,4 @@
                 android:layout_marginTop="35dp"/>
         </android.support.v7.widget.CardView>
     </TableLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
