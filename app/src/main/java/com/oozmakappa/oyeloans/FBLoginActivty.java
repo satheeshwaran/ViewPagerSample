@@ -18,6 +18,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
+import com.oozmakappa.oyeloans.utils.OyeConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +32,6 @@ public class FBLoginActivty extends AppCompatActivity {
     private static final String TAG_ERROR = "ERROR";
 
     CallbackManager callbackManager;
-    List<String> permissionNeeds= Arrays.asList("public_profile", "email", "user_birthday", "user_hometown");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class FBLoginActivty extends AppCompatActivity {
     }
 
     void onFacebookLogin(){
-        LoginManager.getInstance().logInWithReadPermissions(this,permissionNeeds);
+        LoginManager.getInstance().logInWithReadPermissions(this, OyeConstants.permissionNeeds);
 
         // Set permissions
         LoginManager.getInstance().registerCallback(callbackManager,

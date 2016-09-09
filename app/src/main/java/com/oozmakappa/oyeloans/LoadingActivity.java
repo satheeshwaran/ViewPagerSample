@@ -21,6 +21,7 @@
     import com.oozmakappa.oyeloans.Models.LoanUser;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
+    import com.oozmakappa.oyeloans.utils.OyeConstants;
 
     import org.json.JSONException;
     import org.json.JSONObject;
@@ -31,7 +32,6 @@
     public class LoadingActivity extends AppCompatActivity {
 
         CallbackManager callbackManager;
-        List<String> permissionNeeds= Arrays.asList("public_profile", "email", "user_birthday", "user_hometown");
 
         private static final String TAG_CANCEL = "CANCELLED";
         private static final String TAG_ERROR = "ERROR";
@@ -63,7 +63,7 @@
         }
 
         void onFacebookLogin(){
-            LoginManager.getInstance().logInWithReadPermissions(this,permissionNeeds);
+            LoginManager.getInstance().logInWithReadPermissions(this, OyeConstants.permissionNeeds);
 
             LoginManager.getInstance().registerCallback(callbackManager,
                     new FacebookCallback<LoginResult>() {
@@ -89,8 +89,8 @@
 
                                                             //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
                                                             //FacebookHelperUtils.getInstance().userObject.fbUserID = responseObject.getString("id");
-                                                            //goToAccountSummaryPage();
-                                                            goToProfilePage();
+                                                            goToAccountSummaryPage();
+                                                            //goToProfilePage();
                                                     }
                                                 });
                                             }

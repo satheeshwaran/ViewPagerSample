@@ -5,9 +5,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -28,10 +31,19 @@ public class LoanUser {
     public int ageRange;
     public double totalFriendcount;
     public String gender = "";
-    public String education;
+    public String highestEducation;
+    public String highestEducationPlace;
+    public String highestEducationYear;
+
     public String workPlace;
     public String workTitle;
     public int totalWorkExperience;
+    public String street;
+    public String locaility;
+    public String city;
+    public String landmark;
+    public String state;
+
 
 
     public static LoanUser loanUserFromJSONObject(JSONObject object){
@@ -52,10 +64,19 @@ public class LoanUser {
             if (object.getJSONArray("work") != null) {
                 JSONObject workArray = (JSONObject) object.getJSONArray("work").get(0);
                 user.workPlace = workArray.getJSONObject("employer").getString("name");
-                user.workTitle = workArray.getJSONObject("employer").getString("position");
+                user.workTitle = workArray.getJSONObject("position").getString("name");
                 user.totalWorkExperience = calcaulteTotalWorkExp(object.getJSONArray("work"));
             }
-            user.education = object.getString("");
+
+            user.city = object.getJSONObject("location").getString("name");
+            ArrayList<String> eductaionList = calculateHighestQualification(object.getJSONArray("education"));
+
+            if(!eductaionList.isEmpty()) {
+                user.highestEducation = eductaionList.get(0);
+                user.highestEducationPlace = eductaionList.get(1);
+                user.highestEducationYear = eductaionList.get(2);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -64,17 +85,19 @@ public class LoanUser {
 
     private static int calcaulteTotalWorkExp(JSONArray workExpArray){
         try {
-            String startDate = ((JSONObject)workExpArray.get(workExpArray.length())).getString("start_date");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            Date convertedDate = new Date();
-            return getDiffYears(new Date(),convertedDate);
+            String startDate = ((JSONObject)workExpArray.get(workExpArray.length()-1)).getString("start_date");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedDate = dateFormat.parse(startDate);
+            return getDiffYears(convertedDate,new Date());
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0;
     }
 
-    public static int getDiffYears(Date first, Date last) {
+    private static int getDiffYears(Date first, Date last) {
         Calendar a = getCalendar(first);
         Calendar b = getCalendar(last);
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
@@ -85,9 +108,42 @@ public class LoanUser {
         return diff;
     }
 
-    public static Calendar getCalendar(Date date) {
+    private static Calendar getCalendar(Date date) {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.setTime(date);
         return cal;
+    }
+
+    private static ArrayList<String> calculateHighestQualification(JSONArray jsonArray){
+
+        int recentYear = 0;
+        String highestQualification = "";
+        String highestQualifaicationPlace = "";
+        try {
+
+
+        for (int i=0;i<jsonArray.length();i++){
+                JSONObject workItem = (JSONObject) jsonArray.get(i);
+                if (workItem.getString("type").equalsIgnoreCase("college") && workItem.has("concentration") ){
+                    int year = Integer.parseInt(workItem.getJSONObject("year").getString("name"));
+                    if(year>recentYear) {
+                        recentYear = year;
+                        highestQualification = ((JSONObject)workItem.getJSONArray("concentration").get(0)).getString("name");
+                        highestQualifaicationPlace = workItem.getJSONObject("school").getString("name");
+                    }
+                }
+
+        }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList returnList = new ArrayList();
+        returnList.add(highestQualification);
+        returnList.add(String.valueOf(recentYear));
+        returnList.add(highestQualifaicationPlace);
+
+        return returnList;
     }
 }
