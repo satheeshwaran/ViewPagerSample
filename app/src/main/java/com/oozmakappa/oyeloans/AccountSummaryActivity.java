@@ -118,6 +118,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         // setting list adapter
         expListView.setAdapter(listAdapter);
         // Listview on child click listener
+        expListView.expandGroup(0);
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -128,7 +129,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         });
         // Listview Group expanded listener
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            int previousGroup = -1;
+            int previousGroup = 0;
             @Override
             public void onGroupExpand(int groupPosition) {
                 if(groupPosition != previousGroup)

@@ -22,7 +22,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="150dp"
                 android:background="@color/NavBarColor"
                 android:id="@+id/parentView"></View>
 
@@ -42,11 +42,49 @@
                 android:text="Loan Summary"
                 android:id="@+id/textView2"
                 android:layout_toEndOf="@+id/menuIcon"
-                android:layout_alignTop="@+id/menuIcon"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="15dp"
                 android:textColor="#ffffff"
                 android:textSize="17dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Loan, Application History"
+                android:id="@+id/textView4"
+                android:layout_toEndOf="@+id/menuIcon"
+                android:layout_below="@+id/textView2"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="3dp"
+                android:textColor="#ffffff"
+                android:textSize="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Welcome User!"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="70dp"
+                android:id="@+id/textView3"
+                android:textColor="#083A73"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please click on + icon for apply loan, make payment."
+                android:layout_below="@+id/textView3"
+                android:textColor="#083A73"
+                android:textSize="10dp"
+                android:textStyle="normal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="70dp"/>
+
+
 
         </RelativeLayout>
 
