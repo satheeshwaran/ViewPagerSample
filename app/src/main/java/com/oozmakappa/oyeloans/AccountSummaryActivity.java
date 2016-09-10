@@ -13,19 +13,18 @@ import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import com.oozmakappa.oyeloans.EditMyProfilePage;
 
 public class AccountSummaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -163,6 +162,15 @@ public class AccountSummaryActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
+        itemProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profilePage = new Intent(AccountSummaryActivity.this,EditMyProfilePage.class);
+                startActivity(profilePage);
+            }
+        });
+
     }
 
     public void goToApplyLoanPage(){
@@ -250,6 +258,7 @@ public class AccountSummaryActivity extends AppCompatActivity
 
 
     }
+
 
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
         @Override
