@@ -36,6 +36,7 @@
                     android:layout_marginTop="0dip"
                     android:textColor="#868687"
                     android:layout_span="1"
+                    android:fontFamily="sans-serif"
                     />
             </TableRow>
             <TableRow>
@@ -50,7 +51,8 @@
                     android:textColor="#868687"
                     android:layout_marginLeft="3dip"
                     android:layout_marginTop="3dip"
-                    android:gravity="left"/>
+                    android:gravity="left"
+                    android:fontFamily="sans-serif"/>
             </TableRow>
             <TextView
                 android:text=""
@@ -63,7 +65,8 @@
                 android:textColor="#ff0000"
                 android:layout_marginLeft="3dip"
                 android:layout_marginTop="3dip"
-                android:gravity="left"/>
+                android:gravity="left"
+                android:fontFamily="sans-serif"/>
         </TableLayout>
     </TableRow>
 </TableLayout>

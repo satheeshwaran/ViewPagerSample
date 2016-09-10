@@ -45,7 +45,8 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:textColor="#ffffff"
-                android:textSize="17dp"/>
+                android:textSize="17dp"
+                android:fontFamily="sans-serif"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +59,8 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="3dp"
                 android:textColor="#ffffff"
-                android:textSize="10dp"/>
+                android:textSize="10dp"
+                android:fontFamily="sans-serif"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +73,8 @@
                 android:id="@+id/textView3"
                 android:textColor="#083A73"
                 android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +85,8 @@
                 android:textSize="10dp"
                 android:textStyle="normal"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="70dp"/>
+                android:layout_marginLeft="70dp"
+                android:fontFamily="sans-serif"/>
 
 
 
