@@ -124,4 +124,6 @@
     <string name="dummyDOBAndAge">1990-05-26 26 years old</string>
     <string name="dummyTotalExp">5 Years</string>
     <string name="profileProceedButton">Save</string>
+    <string name="proceedAppFlowButton">Proceed</string>
+    <string name="interestRateLoanAppFlow">Interest Rate of 25% to be paid in 12 months</string>
 </resources>
