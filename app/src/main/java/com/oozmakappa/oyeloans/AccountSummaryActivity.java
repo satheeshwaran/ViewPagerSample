@@ -1,6 +1,7 @@
 package com.oozmakappa.oyeloans;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +18,14 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
+import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
+import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import com.oozmakappa.oyeloans.EditMyProfilePage;
 
 public class AccountSummaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -96,14 +97,17 @@ public class AccountSummaryActivity extends AppCompatActivity
         setContentView(R.layout.activity_account_summary);
         Window window = this.getWindow();
 
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
         // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(R.color.NavigationMenuColor));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            window.setStatusBarColor(this.getResources().getColor(R.color.NavigationMenuColor));
+        }
 
         mContext = this;
         setUpMenu();
