@@ -193,5 +193,21 @@
                 android:layout_marginTop="35dp"
                 android:id="@+id/fbProfileLinkValue"/>
         </android.support.v7.widget.CardView>
+
+        <RelativeLayout
+            android:padding="20dp">
+            <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_shape"
+            android:text="@string/profileProceedButton"
+            android:textSize="16dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:id="@+id/profileProceedButton"
+            android:layout_centerInParent="true"
+            />
+        </RelativeLayout>
+
     </TableLayout>
 </android.support.v4.widget.NestedScrollView>
