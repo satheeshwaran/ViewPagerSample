@@ -14,7 +14,10 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
+import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +122,14 @@ public class ResideMenu extends FrameLayout {
         RelativeLayout menuHolder = (RelativeLayout) findViewById(R.id.sv_menu_holder);
         menuHolder.addView(scrollViewLeftMenu);
         menuHolder.addView(scrollViewRightMenu);
+
+        LoanUser user = FacebookHelperUtils.getInstance().userObject;
+
+        Picasso.with(this.getContext())
+                .load(user.fbProfilePicURL)
+                .placeholder(R.drawable.profile)
+                .resize(400,400)
+                .into((ImageView) findViewById(R.id.userProfilePictureSideMenu));
     }
 
     /**
