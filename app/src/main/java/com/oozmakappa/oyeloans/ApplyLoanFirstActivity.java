@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 
 /**
@@ -31,6 +33,31 @@ public class ApplyLoanFirstActivity extends AppCompatActivity{
 
         ImageView backButton = (ImageView) findViewById(R.id.menuIcon);
         backButton.setOnClickListener(clickListener);
+
+        SeekBar amountSeekbar = (SeekBar) findViewById(R.id.seekBar);
+        final EditText amountEdit = (EditText) findViewById(R.id.editText);
+        amountSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                // TODO Auto-generated method stub
+
+                int value = (progress * 1000) + 10000;
+                amountEdit.setText(Integer.toString(value));
+                amountEdit.clearFocus();
+
+            }
+        });
 
 
 
