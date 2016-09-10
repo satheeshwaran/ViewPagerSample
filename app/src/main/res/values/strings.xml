@@ -123,4 +123,5 @@
     <string name="DOBTitle"><![CDATA[DOB & Age]]></string>
     <string name="dummyDOBAndAge">1990-05-26 26 years old</string>
     <string name="dummyTotalExp">5 Years</string>
+    <string name="profileProceedButton">Save</string>
 </resources>
