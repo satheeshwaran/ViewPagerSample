@@ -21,7 +21,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="180dp"
                 android:background="@color/NavBarColor"
                 android:id="@+id/parentView"></View>
 
@@ -63,8 +63,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 rsv:filledColor="@color/green_300"
                 rsv:emptyColor="@color/fifty_percent_transparency_white"
                 rsv:rangeCount="4"
@@ -73,7 +73,91 @@
                 />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Enter Details"
+                android:id="@+id/textView5"
+                android:layout_below="@+id/rsv_custom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#ffffff"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Submit Docs."
+                android:id="@+id/textView6"
+                android:layout_below="@+id/rsv_custom"
+                android:layout_toEndOf="@+id/textView5"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#ffffff"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="OTP Verify"
+                android:id="@+id/textView7"
+                android:layout_below="@+id/rsv_custom"
+                android:layout_toEndOf="@+id/textView6"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#ffffff"
+                android:textSize="12dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Schedule Meeting"
+                android:id="@+id/textView8"
+                android:layout_below="@+id/rsv_custom"
+                android:layout_toEndOf="@+id/textView7"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:textColor="#ffffff"
+                android:textSize="12dp"/>
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:max="90"
+                android:progressDrawable="@drawable/seekbar_progress_bar"
+                android:thumb="@drawable/thumb"
+                />
+
+
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:background="@color/light_blue_50"
+            android:layout_gravity="center_horizontal"
+            android:layout_toRightOf="@+id/seekBar"/>
+
 
     </LinearLayout>
 
