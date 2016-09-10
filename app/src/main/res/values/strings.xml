@@ -118,4 +118,9 @@
     <string name="dummyAddress">Pacifica Tech Park, 101A, First Floor, 23, Old Mahabalipuram Road, Navallur, Chennai, Tamil Nadu 603103</string>
     <string name="dummyEmployment">Global Analytics</string>
     <string name="dummySocial">https://facebook.com/satheesh4590</string>
+    <string name="dummPhoneNumber">9176034562</string>
+    <string name="educationTitle">Education</string>
+    <string name="DOBTitle"><![CDATA[DOB & Age]]></string>
+    <string name="dummyDOBAndAge">1990-05-26 26 years old</string>
+    <string name="dummyTotalExp">5 Years</string>
 </resources>
