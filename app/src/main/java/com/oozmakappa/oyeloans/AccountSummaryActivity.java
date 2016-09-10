@@ -178,7 +178,7 @@ public class AccountSummaryActivity extends AppCompatActivity
     }
 
     public void goToApplyLoanPage(){
-        Intent goToApplyLoanFirstScreenIntent = new Intent(this,ApplyLoanFirstActivity.class);
+        Intent goToApplyLoanFirstScreenIntent = new Intent(this,LoanApplicationStepsActivity.class);
         startActivity(goToApplyLoanFirstScreenIntent);
     }
 
