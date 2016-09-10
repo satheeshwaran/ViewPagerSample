@@ -26,6 +26,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Phone Number"
+                android:id="@+id/phoneNumberTitle"
+                />
+            <include layout="@layout/item_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/phoneNumberTitle"
+                android:layout_marginTop="25dp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:lineSpacingExtra="8dp"
+                android:text="@string/dummPhoneNumber"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:id="@+id/phoneNumberValue"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="0dp"
+            app:contentPadding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/DOBTitle"
+                android:id="@+id/DOBTitle"
+                />
+            <include layout="@layout/item_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/DOBTitle"
+                android:layout_marginTop="25dp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:lineSpacingExtra="8dp"
+                android:text="@string/dummyDOBAndAge"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:id="@+id/DOBAgeValue"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="0dp"
+            app:contentPadding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Address"
                 android:id="@+id/addressTitle"
                 />
@@ -38,12 +96,12 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="50"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/dummyAddress"
                 android:textSize="14dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginTop="35dp"
+                android:id="@+id/addressValue"/>
 
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
@@ -55,24 +113,57 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Employment"
-                android:id="@+id/someId"
+                android:text="@string/educationTitle"
+                android:id="@+id/educationTitle"
                 />
             <include layout="@layout/item_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/addressTitle"
+                android:layout_below="@id/educationTitle"
                 android:layout_marginTop="25dp"/>
 
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="50"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/dummyEmployment"
                 android:textSize="14dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginTop="35dp"
+                android:id="@+id/educationValue"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="2dp"
+            app:contentPadding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employment"
+                android:id="@+id/employmentTitle"
+                />
+            <include layout="@layout/item_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/employmentTitle"
+                android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/dummyEmployment"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/employmentValue"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummyTotalExp"
+                android:textSize="14dp"
+                android:layout_marginTop="85dp"
+                android:id="@+id/totalExperience"/>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_width="fill_parent"
@@ -95,40 +186,12 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="50"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/dummySocial"
                 android:textSize="14dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"/>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardElevation="2dp"
-            app:contentPadding="16dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Financial"
-                android:id="@+id/financialTitle"
-                />
-            <include layout="@layout/item_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/financialTitle"
-                android:layout_marginTop="25dp"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_weight="50"
-                android:lineSpacingExtra="8dp"
-                android:text="@string/dummyEmployment"
-                android:textSize="14dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginTop="35dp"
+                android:id="@+id/fbProfileLinkValue"/>
         </android.support.v7.widget.CardView>
     </TableLayout>
 </android.support.v4.widget.NestedScrollView>

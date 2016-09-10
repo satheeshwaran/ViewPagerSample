@@ -45,7 +45,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/NavBarColor"
                     android:id="@+id/mainDetails"
                     android:layout_marginTop="25dp">
@@ -63,29 +63,18 @@
                         android:id="@+id/profileName"/>
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9176034562"
+                        android:text="satheesh4590@gmail.com"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
                         android:layout_below="@+id/profileName"
                         android:textStyle="normal"
                         android:textSize="16dp"
-                        android:id="@+id/phoneNumber"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="satheesh4590@gmail.com"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="5dp"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:layout_below="@+id/phoneNumber"
-                        android:textStyle="normal"
-                        android:textSize="14dp"
-                        android:id="@+id/email"/>
+                        android:id="@+id/email"
+                        android:paddingBottom="5dp"/>
                 </RelativeLayout>
             </FrameLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -141,5 +130,6 @@
         app:startHeight="2dp"
         app:startToolbarPosition="2dp"
         app:startXPosition="2dp"
+        android:id="@+id/userProfilePicture"
         />
 </android.support.design.widget.CoordinatorLayout>

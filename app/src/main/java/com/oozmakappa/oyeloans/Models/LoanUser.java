@@ -22,6 +22,8 @@ public class LoanUser {
     public String fbUserID;
     public String emailID;
     public String PANNumber;
+    public String mobileNumber;
+    public String landlineNumber;
 
     public String fbUserName = "";
     public String fbProfileLink = "";
@@ -38,11 +40,11 @@ public class LoanUser {
     public String workPlace;
     public String workTitle;
     public int totalWorkExperience;
-    public String street;
-    public String locaility;
-    public String city;
-    public String landmark;
-    public String state;
+    public String street = "";
+    public String locaility = "";
+    public String city = "";
+    public String landmark = "";
+    public String state = "";
 
 
 
@@ -73,8 +75,8 @@ public class LoanUser {
 
             if(!eductaionList.isEmpty()) {
                 user.highestEducation = eductaionList.get(0);
-                user.highestEducationPlace = eductaionList.get(1);
-                user.highestEducationYear = eductaionList.get(2);
+                user.highestEducationYear= eductaionList.get(1);
+                user.highestEducationPlace = eductaionList.get(2);
             }
 
         } catch (JSONException e) {

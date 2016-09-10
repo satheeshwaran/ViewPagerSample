@@ -11,11 +11,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -85,6 +87,24 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
         LoanUser user = FacebookHelperUtils.getInstance().userObject;
         ((TextView)findViewById(R.id.profileName)).setText(user.fbUserName);
         ((TextView)findViewById(R.id.email)).setText(user.emailID);
+        ((TextView)findViewById(R.id.main_textview_title)).setText(user.fbUserName);
+        ((TextView)findViewById(R.id.DOBAgeValue)).setText(user.DOB);
+        ((TextView)findViewById(R.id.phoneNumberValue)).setText((user.mobileNumber != null &&  user.mobileNumber.length() > 0)?user.mobileNumber:"NA" );
+        String educationValue = user.highestEducation + " @ " + user.highestEducationPlace + " batch of " + user.highestEducationYear;
+        ((TextView)findViewById(R.id.educationValue)).setText(educationValue);
+        String workValue = "Current: " + user.workTitle + " @ " + user.workPlace;
+        ((TextView)findViewById(R.id.employmentValue)).setText(workValue);
+        String totalExp = "Total Work Experience: " + user.totalWorkExperience + " years";
+        ((TextView)findViewById(R.id.totalExperience)).setText(totalExp);
+        String addressValue = user.street + user.locaility + user.city + user.state;
+        ((TextView)findViewById(R.id.addressValue)).setText(addressValue);
+        ((TextView)findViewById(R.id.fbProfileLinkValue)).setText(user.fbProfileLink);
+
+        Picasso.with(this)
+                .load(user.fbProfilePicURL)
+                .placeholder(R.drawable.profile)
+                .resize(400,400)
+                .into((ImageView) findViewById(R.id.userProfilePicture));
     }
 
     private void bindActivity() {
