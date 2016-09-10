@@ -88,8 +88,8 @@
                                                             FacebookHelperUtils.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
 
                                                             //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
-                                                            //goToAccountSummaryPage();
-                                                            goToProfilePage();
+                                                            goToAccountSummaryPage();
+                                                            //goToProfilePage();
                                                     }
                                                 });
                                             }
