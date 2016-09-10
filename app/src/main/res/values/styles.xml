@@ -5,6 +5,10 @@
     <color name="BlackColor">#000000</color>
     <color name="WhiteColor">#FFFFFF</color>
     <color name="NavigationMenuColor">#0F539B</color>
+    <color name="halfWhiteColor">#80FFFFFF</color>
+    <color name="bgColorLightOrange">#e6af4b</color>
+    <color name="bgColorLightViolet">#9068be</color>
+    <color name="bgColorLightGreen">#33C88B</color>
 
 
     <!-- Base application theme. -->

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="60dp"
+    android:gravity="center_horizontal"
+    android:background="@color/NavBarColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Documents Required"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/WhiteColor"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Self Signed"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/halfWhiteColor"/>
+    <View
+        android:layout_width="30dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/halfWhiteColor"/>
+
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/pan_card"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pan"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/WhiteColor"/>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/halfWhiteColor"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/address_proof"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address Proof"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/WhiteColor"/>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/halfWhiteColor"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/salary_slip"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latest Salary Slip"
+        android:layout_marginTop="5dp"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:textColor="@color/WhiteColor"/>
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/halfWhiteColor"/>
+
+</LinearLayout>
