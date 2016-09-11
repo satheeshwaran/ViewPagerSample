@@ -6,29 +6,37 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
-
+import com.google.gson.Gson;
 import com.oozmakappa.oyeloans.Adapters.LoanStepsPagerAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
+
+import java.util.HashMap;
 
 /**
  * Created by sankarnarayanan on 9/10/16.
  */
 
-public class LoanApplicationStepsActivity extends AppCompatActivity {
+public class LoanApplicationStepsActivity extends AppCompatActivity implements AppController.DataFetchListener {
 
     ViewPager viewPager;
     RadioGroup radioGroup;
     LinearLayout getStartedButton;
     LinearLayout skipButton;
 
+    // Local Members Reference
+    private AppController mController;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // Initializes the controller, for data extraction.
+        //To be uncommented - Gets all mobile data to submit to underwriting.
+        //getDeviceData();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_applocation_steps);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -118,6 +126,41 @@ public class LoanApplicationStepsActivity extends AppCompatActivity {
 
         }
     };
+
+
+    public void getDeviceData(){
+        try {
+            mController = AppController.getInstance();
+            mController.startDataFetch(this);
+        }catch (Exception e)
+        {
+            Log.v("EXception", e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void onFetchCompleted() {
+        postData();
+    }
+
+
+    @Override
+    public void onProgressUpdate(Integer progress) {
+        //Do nothing
+    }
+
+
+    /**
+     * Post the device data to the server.
+     */
+    private void postData() {
+        // Post the device data
+        final HashMap<Object, Object> requestParams = new HashMap<>();
+        final String content = new Gson().toJson(mController.getMobileData());
+        Log.v("Device data", content);
+        //Make web service call here.
+
+    }
 
 }
 

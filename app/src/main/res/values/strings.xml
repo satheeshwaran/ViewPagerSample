@@ -128,4 +128,6 @@
     <string name="MakeAPayment">Make A Payment</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="proceedToPay">Proceed To Pay</string>
+    <string name="proceedAppFlowButton">Proceed</string>
+    <string name="interestRateLoanAppFlow">Interest Rate of 25% to be paid in 12 months</string>
 </resources>
