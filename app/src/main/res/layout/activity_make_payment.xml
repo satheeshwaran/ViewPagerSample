@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context="com.oozmakappa.oyeloans.MakePayment">
+
+
+     <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+         android:id="@+id/loanDetailsLayout"
+         android:background="@color/colorPrimary">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loan ID"
+        android:id="@+id/loanID"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:textColor="@color/WhiteColor"
+        />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_below="@+id/loanID"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:text="Rs. 1000"
+            android:id="@+id/loanAmount"
+            android:textAlignment="center"
+            android:textColor="@color/WhiteColor"
+            />
+        </RelativeLayout>
+
+    <ListView
+        android:id="@+id/makePaymentAmountsList"
+        android:choiceMode="singleChoice"
+        android:descendantFocusability="beforeDescendants"
+        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/loanDetailsLayout"
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/makePaymentAmountsList"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rounded_button_shape"
+        android:text="@string/proceedToPay"
+        android:textColor="@color/WhiteColor"
+        />
+</RelativeLayout>

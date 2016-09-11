@@ -72,6 +72,13 @@
             android:name=".LoanApplicationStepsActivity"
             android:label="@string/apply_loan_first_page"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MakePayment"
+            android:label="@string/MakeAPayment">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
+            </activity>
     </application>
 
 </manifest>
