@@ -15,11 +15,11 @@ import org.json.JSONObject;
 /**
  * Created by satheeshwaran on 9/5/16.
  */
-public class FacebookHelperUtils {
+public class SharedDataManager {
 
-    public static FacebookHelperUtils sharedObject = new FacebookHelperUtils();
+    public static SharedDataManager sharedObject = new SharedDataManager();
 
-    public static FacebookHelperUtils getInstance() {  return sharedObject;}
+    public static SharedDataManager getInstance() {  return sharedObject;}
 
     public LoanUser userObject = new LoanUser();
 
@@ -41,7 +41,7 @@ public class FacebookHelperUtils {
                     public void onCompleted(GraphResponse response) {
                         Log.d(TAG_RESPONSE,response.getRawResponse());
                         try {
-                            FacebookHelperUtils.getInstance().userObject.fbProfilePicURL = response.getJSONObject().getJSONObject("data").getString("url");
+                            SharedDataManager.getInstance().userObject.fbProfilePicURL = response.getJSONObject().getJSONObject("data").getString("url");
                             callback.callCompleted(response.getJSONObject());
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -70,7 +70,7 @@ public class FacebookHelperUtils {
         request.setParameters(parameters);
         request.executeAsync();
     }
-    public static void getMeRequestDetails(AccessToken accessToken,final FacebookHelperUtils callback){
+    public static void getMeRequestDetails(AccessToken accessToken,final SharedDataManager callback){
 
         GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -86,9 +86,9 @@ public class FacebookHelperUtils {
                                 String jsonresult = String.valueOf(json);
                                 System.out.println("JSON Result"+jsonresult);
                                 String str_fb_acc_name = json.getString("name");
-                                FacebookHelperUtils.getInstance().userObject.fbUserName = str_fb_acc_name;
+                                SharedDataManager.getInstance().userObject.fbUserName = str_fb_acc_name;
                                 String str_id = json.getString("id");
-                                FacebookHelperUtils.getInstance().userObject.fbUserID = str_id;
+                                SharedDataManager.getInstance().userObject.fbUserID = str_id;
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

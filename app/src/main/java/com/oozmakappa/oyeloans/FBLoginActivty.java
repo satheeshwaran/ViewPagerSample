@@ -5,26 +5,19 @@ import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 import android.widget.Button;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class FBLoginActivty extends AppCompatActivity {
 
@@ -71,7 +64,7 @@ public class FBLoginActivty extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
 
                         System.out.println("Success");
-                        FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                        SharedDataManager.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
                             @Override
                             public void callCompleted(JSONObject responseObject) {
                                 //start parsing and assin to shared object.
