@@ -124,4 +124,8 @@
     <string name="dummyDOBAndAge">1990-05-26 26 years old</string>
     <string name="dummyTotalExp">5 Years</string>
     <string name="profileProceedButton">Save</string>
+    <string name="AmountDue">Amount Due</string>
+    <string name="MakeAPayment">Make A Payment</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="proceedToPay">Proceed To Pay</string>
 </resources>
