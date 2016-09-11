@@ -1,7 +1,12 @@
 package com.oozmakappa.oyeloans;
 
+import android.os.Build;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,11 +15,25 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.oozmakappa.oyeloans.fragments.ApplyLoanFirstFragment;
+import com.oozmakappa.oyeloans.fragments.ApplyLoanPersonalInfo;
+
+import java.util.HashMap;
+
 
 /**
  * Created by sankarnarayanan on 09/09/16.
  */
-public class ApplyLoanFirstActivity extends AppCompatActivity{
+public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLoanFirstFragment.OnProceedSelectedListener{
+
+
+    @Override
+    public void onLoanAmountSelected(HashMap<String,String> data){
+        Log.v("data", data.toString());
+        Fragment personalDetails = new ApplyLoanPersonalInfo();
+        setFragment(personalDetails);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,40 +48,24 @@ public class ApplyLoanFirstActivity extends AppCompatActivity{
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(R.color.NavigationMenuColor));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(this.getResources().getColor(R.color.NavigationMenuColor));
+        }
 
         ImageView backButton = (ImageView) findViewById(R.id.menuIcon);
         backButton.setOnClickListener(clickListener);
-
-        SeekBar amountSeekbar = (SeekBar) findViewById(R.id.seekBar);
-        final EditText amountEdit = (EditText) findViewById(R.id.editText);
-        amountSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                // TODO Auto-generated method stub
-
-                int value = (progress * 1000) + 10000;
-                amountEdit.setText(Integer.toString(value));
-                amountEdit.clearFocus();
-
-            }
-        });
+        Fragment nextFragment = new ApplyLoanFirstFragment();
+        setFragment(nextFragment);
 
 
+    }
 
-
-
+    protected void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_container, fragment);
+        fragmentTransaction.commit();
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -72,6 +75,18 @@ public class ApplyLoanFirstActivity extends AppCompatActivity{
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else if(getFragmentManager().getBackStackEntryCount() == 1) {
+            moveTaskToBack(false);
+        }
+        else {
+            getFragmentManager().popBackStack();
+        }
+    }
 
 
 }
