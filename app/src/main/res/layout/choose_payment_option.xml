@@ -21,10 +21,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/debitCardFragmentContainer"
         android:orientation="horizontal"
-        android:background="@color/WhiteColor"
-        android:paddingBottom="50dp">
+        android:background="@color/WhiteColor">
     </LinearLayout>
     </HorizontalScrollView>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rounded_button_yellow"
+        android:text="@string/addNewDebitCard"
+        android:id="@+id/addNewDebitCard"
+        android:textColor="@color/WhiteColor"
+        />
 
     <Button
         android:layout_width="300dp"
