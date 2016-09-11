@@ -67,6 +67,7 @@ public class MakePayment extends AppCompatActivity {
         fullBalanceMap.put("requiresEditText","false");
 
         HashMap<String,String> otherAmountMap = new HashMap<>();
+        otherAmountMap.put("subTitle","");
         otherAmountMap.put("title","Other Amount");
         otherAmountMap.put("requiresEditText","true");
 

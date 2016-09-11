@@ -16,6 +16,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
@@ -70,15 +71,31 @@ public class FBLoginActivty extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
-                        System.out.println("Success");
-                        FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
-                            @Override
-                            public void callCompleted(JSONObject responseObject) {
-                                //start parsing and assin to shared object.
-                                Log.d(TAG_CANCEL,responseObject.toString());
-                                FBLoginActivty.this.goToProfileEditPage();
-                            }
-                        });
+                        GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject json, GraphResponse response) {
+                                        if (response.getError() != null) {
+                                            // handle error
+                                            System.out.println("ERROR");
+                                        } else {
+                                            System.out.println("Success");
+
+                                            FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                                                @Override
+                                                public void callCompleted(JSONObject responseObject) {
+                                                    FacebookHelperUtils.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
+
+                                                    //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
+                                                    //goToAccountSummaryPage();
+                                                    goToProfileEditPage();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                }).executeAsync();
+
                     }
 
                     @Override

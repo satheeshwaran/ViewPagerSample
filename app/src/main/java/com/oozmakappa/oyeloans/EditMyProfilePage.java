@@ -86,11 +86,13 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
         ((TextView)findViewById(R.id.addressValue)).setText(addressValue);
         ((TextView)findViewById(R.id.fbProfileLinkValue)).setText(user.fbProfileLink);
 
-        Picasso.with(this)
-                .load(user.fbProfilePicURL)
-                .placeholder(R.drawable.profile)
-                .resize(400,400)
-                .into((ImageView) findViewById(R.id.userProfilePicture));
+        if (user.fbProfilePicURL != null && user.fbProfilePicURL.length()>0) {
+            Picasso.with(this)
+                    .load(user.fbProfilePicURL)
+                    .placeholder(R.drawable.profile)
+                    .resize(400, 400)
+                    .into((ImageView) findViewById(R.id.userProfilePicture));
+        }
     }
 
     private void bindActivity() {

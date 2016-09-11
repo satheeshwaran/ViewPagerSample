@@ -66,11 +66,6 @@ public class MakePaymentAmountsAdapter extends ArrayAdapter<String> {
 
         if (map.get("subTitle") == null || map.get("subTitle").length() == 0){
             title.setGravity(Gravity.CENTER_VERTICAL);
-            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) title
-                    .getLayoutParams();
-
-            mlp.setMargins(40, 20, 0, 0);
-            title.setLayoutParams(mlp);
         }
 
         Boolean requiresTextField = Boolean.parseBoolean(map.get("requiresEditText"));
