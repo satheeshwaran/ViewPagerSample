@@ -35,15 +35,8 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Initializes the controller, for data extraction.
-
-//        try {
-//            mController = AppController.getInstance();
-//            mController.startDataFetch(this);
-//        }catch (Exception e)
-//        {
-//            Log.v("EXception", e.getLocalizedMessage());
-//        }
-
+        //To be uncommented - Gets all mobile data to submit to underwriting.
+        //getDeviceData();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_applocation_steps);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -134,6 +127,17 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
         }
     };
 
+
+    public void getDeviceData(){
+        try {
+            mController = AppController.getInstance();
+            mController.startDataFetch(this);
+        }catch (Exception e)
+        {
+            Log.v("EXception", e.getLocalizedMessage());
+        }
+    }
+
     @Override
     public void onFetchCompleted() {
         postData();
@@ -153,6 +157,7 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
         // Post the device data
         final HashMap<Object, Object> requestParams = new HashMap<>();
         final String content = new Gson().toJson(mController.getMobileData());
+        Log.v("Device data", content);
         //Make web service call here.
 
     }
