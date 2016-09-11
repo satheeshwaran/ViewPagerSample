@@ -1,5 +1,6 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.oozmakappa.oyeloans.Adapters.MakePaymentAmountsAdapter;
@@ -37,6 +39,18 @@ public class MakePayment extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Button proceedButton = (Button) findViewById(R.id.proceedToPay);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adapter.selectedIndex != -1) {
+                    Intent choosePaymentIntent = new Intent(MakePayment.this, ChoosePaymentOptionActivity.class);
+                    startActivity(choosePaymentIntent);
+                }
+            }
+        });
+
     }
 
     @Override

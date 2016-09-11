@@ -78,7 +78,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
-            </activity>
+        </activity>
+        <activity android:name=".ChoosePaymentOptionActivity"></activity>
     </application>
 
 </manifest>

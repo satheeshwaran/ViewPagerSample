@@ -20,6 +20,7 @@ import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,9 +85,7 @@ public class FBLoginActivty extends AppCompatActivity {
                                             FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
                                                 @Override
                                                 public void callCompleted(JSONObject responseObject) {
-                                                    FacebookHelperUtils.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
-
-                                                    //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
+                                                    SharedDataManager.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
                                                     //goToAccountSummaryPage();
                                                     goToProfileEditPage();
                                                 }

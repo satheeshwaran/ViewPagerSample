@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal" >
+
+    <RadioButton
+        android:id="@+id/paymentOptionRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:checked="false"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:id="@+id/paymentTypeTitle"
+        android:layout_alignLeft="@id/paymentOptionRadioButton"
+        android:layout_alignStart="@+id/paymentOptionRadioButton"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/AmountDue"
+        android:textStyle="bold"
+        android:textColor="@color/grey_900"
+        android:textSize="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true" />
+
+
+</RelativeLayout>

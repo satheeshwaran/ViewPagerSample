@@ -18,6 +18,7 @@
     import com.facebook.login.LoginManager;
     import com.facebook.login.LoginResult;
     import com.oozmakappa.oyeloans.Models.LoanUser;
+    import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
     import com.oozmakappa.oyeloans.utils.SharedDataManager;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
     import com.oozmakappa.oyeloans.utils.OyeConstants;
@@ -77,7 +78,7 @@
                                             } else {
                                                 System.out.println("Success");
 
-                                                SharedDataManager.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                                                FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
                                                     @Override
                                                     public void callCompleted(JSONObject responseObject) {
                                                             SharedDataManager.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
