@@ -46,14 +46,13 @@ public class ChoosePaymentOptionAdapter extends ArrayAdapter<String> {
                     R.layout.choose_payment_option_row, null);
         }
 
-        if (position%2 == 0)
-            convertView.setBackgroundColor(context.getResources().getColor(R.color.grey_200));
+        convertView.setBackgroundColor(context.getResources().getColor(R.color.halfWhiteColor));
 
-        TextView title = (TextView)convertView.findViewById(R.id.mainTextTitle);
-        title.setText(getItem(position));
+        TextView title = (TextView)convertView.findViewById(R.id.paymentTypeTitle);
+        title.setText(strings.get(position));
 
         RadioButton rbSelect = (RadioButton) convertView
-                .findViewById(R.id.paymentAmountRadioButton);
+                .findViewById(R.id.paymentOptionRadioButton);
         if(selectedIndex == position){
             rbSelect.setChecked(true);
         }

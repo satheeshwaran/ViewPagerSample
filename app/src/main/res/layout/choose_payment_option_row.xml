@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+    android:id="@+id/paymentMethodLayout"
     android:layout_width="fill_parent"
-    android:layout_height="80dp"
-    android:orientation="horizontal" >
-
+    android:layout_height="300dp"
+    android:orientation="horizontal"
+    android:minHeight="80dp"
+    >
     <RadioButton
         android:id="@+id/paymentOptionRadioButton"
         android:layout_width="wrap_content"
@@ -29,8 +30,5 @@
         android:textStyle="bold"
         android:textColor="@color/grey_900"
         android:textSize="16dp"
-        android:layout_marginTop="10dp"
         android:layout_centerVertical="true" />
-
-
 </RelativeLayout>

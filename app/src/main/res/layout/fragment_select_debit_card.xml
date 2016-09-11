@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.cooltechworks.creditcarddesign.CreditCardView
+        android:id="@+id/card_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:card_number="4446789000000000"
+        app:card_holder_name="SATHEESHWARAN J"
+        app:cvv="522"
+        app:card_expiration="01/12"
+        />
+
+</FrameLayout>

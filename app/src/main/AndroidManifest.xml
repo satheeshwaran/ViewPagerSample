@@ -79,7 +79,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
         </activity>
-        <activity android:name=".ChoosePaymentOptionActivity"></activity>
+        <activity android:name=".ChoosePaymentOptionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.MakePayment" />
+        </activity>
     </application>
 
 </manifest>
