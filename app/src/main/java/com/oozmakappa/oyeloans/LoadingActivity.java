@@ -1,7 +1,6 @@
     package com.oozmakappa.oyeloans;
 
     import android.content.Intent;
-    import android.hardware.camera2.params.Face;
     import android.os.Build;
     import android.support.v7.app.AppCompatActivity;
     import android.os.Bundle;
@@ -19,15 +18,11 @@
     import com.facebook.login.LoginManager;
     import com.facebook.login.LoginResult;
     import com.oozmakappa.oyeloans.Models.LoanUser;
-    import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+    import com.oozmakappa.oyeloans.utils.SharedDataManager;
     import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
     import com.oozmakappa.oyeloans.utils.OyeConstants;
 
-    import org.json.JSONException;
     import org.json.JSONObject;
-
-    import java.util.Arrays;
-    import java.util.List;
 
     public class LoadingActivity extends AppCompatActivity {
 
@@ -51,7 +46,7 @@
             AppEventsLogger.activateApp(this);
             callbackManager = CallbackManager.Factory.create();
 
-            if (FacebookHelperUtils.getInstance().isFBLoggedIn()){
+            if (SharedDataManager.getInstance().isFBLoggedIn()){
                 onFacebookLogin();
             }else{
                 //go to account login page...
@@ -82,12 +77,12 @@
                                             } else {
                                                 System.out.println("Success");
 
-                                                FacebookHelperUtils.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
+                                                SharedDataManager.getRequiredFBDetails(new FacebookHelperUtilsCallback() {
                                                     @Override
                                                     public void callCompleted(JSONObject responseObject) {
-                                                            FacebookHelperUtils.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
+                                                            SharedDataManager.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
 
-                                                            //FacebookHelperUtils.getInstance().userObject.fbUserName = responseObject.getString("name");
+                                                            //SharedDataManager.getInstance().userObject.fbUserName = responseObject.getString("name");
                                                             goToAccountSummaryPage();
                                                             //goToProfilePage();
                                                     }

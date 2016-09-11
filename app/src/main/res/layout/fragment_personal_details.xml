@@ -2,21 +2,194 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:background="@drawable/shadow_drawable">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/to_text_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextViewTo"
+            android:id="@+id/firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="First Name"
             android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
             />
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_email_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/email_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email Address"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_mobile_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/mobile_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_dob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date of Birth"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gender"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_pan_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/pan_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PAN number"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_adhaar_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/adhaar_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Adhaar number"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/to_text_input_layout_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <AutoCompleteTextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Address"
+            android:layout_marginTop="25dp"
+            android:theme="@style/TextLabel"
+            android:textColor="@color/NavBarColor"
+            android:textColorHint="@color/NavBarColor"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

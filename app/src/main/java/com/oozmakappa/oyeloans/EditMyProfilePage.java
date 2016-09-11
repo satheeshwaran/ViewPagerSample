@@ -16,10 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oozmakappa.oyeloans.Models.LoanUser;
-import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -70,7 +68,7 @@ public class EditMyProfilePage extends AppCompatActivity implements AppBarLayout
         }
 
     private void setUpData(){
-        LoanUser user = FacebookHelperUtils.getInstance().userObject;
+        LoanUser user = SharedDataManager.getInstance().userObject;
         ((TextView)findViewById(R.id.profileName)).setText(user.fbUserName);
         ((TextView)findViewById(R.id.email)).setText(user.emailID);
         ((TextView)findViewById(R.id.main_textview_title)).setText(user.fbUserName);
