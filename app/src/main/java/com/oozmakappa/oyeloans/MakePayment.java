@@ -124,38 +124,40 @@ public class MakePayment extends AppCompatActivity {
             selectedLoanObject = loanObject;
         }
 
-        HashMap<String,String> amountDueMap = new HashMap<>();
-        amountDueMap.put("title","Amount Due");
-        amountDueMap.put("subTitle","on 26/05/2016");
-        amountDueMap.put("requiresEditText","false");
-        amountDueMap.put("amountValue",selectedLoanObject.getLoanAmount());
+        if (selectedLoanObject != null) {
+            HashMap<String, String> amountDueMap = new HashMap<>();
+            amountDueMap.put("title", "Amount Due");
+            amountDueMap.put("subTitle", "on 26/05/2016");
+            amountDueMap.put("requiresEditText", "false");
+            amountDueMap.put("amountValue", selectedLoanObject.getLoanAmount());
 
 
-        HashMap<String,String> fullBalanceMap = new HashMap<>();
-        fullBalanceMap.put("title","Full Balance");
-        fullBalanceMap.put("subTitle","This will pay off your loan");
-        fullBalanceMap.put("amountValue",selectedLoanObject.getLoanAmount());
-        fullBalanceMap.put("requiresEditText","false");
+            HashMap<String, String> fullBalanceMap = new HashMap<>();
+            fullBalanceMap.put("title", "Full Balance");
+            fullBalanceMap.put("subTitle", "This will pay off your loan");
+            fullBalanceMap.put("amountValue", selectedLoanObject.getLoanAmount());
+            fullBalanceMap.put("requiresEditText", "false");
 
-        HashMap<String,String> otherAmountMap = new HashMap<>();
-        otherAmountMap.put("subTitle","");
-        otherAmountMap.put("title","Other Amount");
-        otherAmountMap.put("requiresEditText","true");
+            HashMap<String, String> otherAmountMap = new HashMap<>();
+            otherAmountMap.put("subTitle", "");
+            otherAmountMap.put("title", "Other Amount");
+            otherAmountMap.put("requiresEditText", "true");
 
-        makePaymentValues.add(amountDueMap);
-        makePaymentValues.add(fullBalanceMap);
-        makePaymentValues.add(otherAmountMap);
+            makePaymentValues.add(amountDueMap);
+            makePaymentValues.add(fullBalanceMap);
+            makePaymentValues.add(otherAmountMap);
 
-        adapter = new MakePaymentAmountsAdapter(this,makePaymentValues);
-        ListView paymentAmountsList = (ListView) findViewById(R.id.makePaymentAmountsList);
-        paymentAmountsList.setAdapter(adapter);
-        paymentAmountsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setSelectedIndex(position);
-                adapter.notifyDataSetChanged();
-            }
-        });
+            adapter = new MakePaymentAmountsAdapter(this, makePaymentValues);
+            ListView paymentAmountsList = (ListView) findViewById(R.id.makePaymentAmountsList);
+            paymentAmountsList.setAdapter(adapter);
+            paymentAmountsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.setSelectedIndex(position);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
 }
