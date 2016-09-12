@@ -20,6 +20,7 @@ import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -156,8 +157,9 @@ public class AccountSummaryActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(),"Make payment button Clicked", Toast.LENGTH_SHORT).show();
-
+                SharedDataManager.getInstance().activeLoans = loanArray;
                 Intent makePaymentIntent = new Intent(AccountSummaryActivity.this,MakePayment.class);
+                makePaymentIntent.putExtra("MultiLoanPayment",true);
                 startActivity(makePaymentIntent);
             }
         });

@@ -12,31 +12,25 @@
         android:layout_height="200dp"
         android:layout_width="match_parent"
         />
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/paymentOptionsListView">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/debitCardFragmentContainer"
-        android:orientation="horizontal"
-        android:background="@color/WhiteColor">
-    </LinearLayout>
-    </HorizontalScrollView>
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/rounded_button_yellow"
-        android:text="@string/addNewDebitCard"
-        android:id="@+id/addNewDebitCard"
-        android:textColor="@color/WhiteColor"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paymentOptionsListView"
+        android:paddingBottom="10dp"
+        android:id="@+id/debitCardFragmentContainer"
+        android:background="@color/cardview_light_background">
+        <android.support.v4.view.ViewPager
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:id="@+id/debitCardPager">
+        </android.support.v4.view.ViewPager>
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/titles"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/debitCardPager"/>
+    </RelativeLayout>
 
     <Button
         android:layout_width="300dp"

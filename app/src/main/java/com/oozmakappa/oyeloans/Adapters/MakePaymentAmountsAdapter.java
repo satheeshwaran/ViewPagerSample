@@ -73,7 +73,7 @@ public class MakePaymentAmountsAdapter extends ArrayAdapter<String> {
         if (!requiresTextField) {
             amountValue.setText(map.get("amountValue"));
             amountEditValue.setVisibility(View.INVISIBLE);
-
+            amountValue.setVisibility(View.VISIBLE);
         }else{
             amountValue.setVisibility(View.INVISIBLE);
             amountEditValue.setVisibility(View.VISIBLE);

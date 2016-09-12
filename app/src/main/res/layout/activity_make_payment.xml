@@ -13,6 +13,19 @@ tools:context="com.oozmakappa.oyeloans.MakePayment">
             android:layout_height="150dp"
          android:id="@+id/loanDetailsLayout"
          android:background="@color/colorPrimary">
+
+         <Spinner
+             android:id="@+id/loanpicker_spinner"
+             android:layout_width="300dp"
+             android:layout_height="50dp"
+             android:popupBackground="@null"
+             android:layout_marginTop="20dp"
+             android:spinnerMode="dialog"
+             android:layout_centerHorizontal="true"
+             android:dropDownSelector="@color/grey_400"
+                 />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +35,8 @@ tools:context="com.oozmakappa.oyeloans.MakePayment">
         android:textAlignment="center"
         android:layout_centerInParent="true"
         android:textColor="@color/WhiteColor"
+        android:layout_below="@+id/loanpicker_spinner"
+        android:layout_marginTop="15dp"
         />
 
         <TextView

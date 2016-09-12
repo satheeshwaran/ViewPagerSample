@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="200dp"
+    android:background="@drawable/add_new_card"
+    android:layout_centerInParent="true">
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/add"
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true"
+        android:id="@+id/addCardButton"
+        android:clickable="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Add New Card"
+        android:textStyle="bold"
+        android:layout_below="@id/addCardButton"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"/>
+</RelativeLayout>

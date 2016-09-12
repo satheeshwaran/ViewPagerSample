@@ -86,7 +86,11 @@
         </activity>
         <activity android:name="com.cooltechworks.creditcarddesign.CardEditActivity"
             android:screenOrientation="portrait"
-            />
+            android:label="@string/AddCardScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity" />
+        </activity>
     </application>
 
 </manifest>

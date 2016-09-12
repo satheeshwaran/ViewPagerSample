@@ -1,45 +1,37 @@
 package layout;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import com.cooltechworks.creditcarddesign.CreditCardView;
-import com.oozmakappa.oyeloans.Models.DebitCard;
 import com.oozmakappa.oyeloans.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
+ * {@link AddNewDebitCardFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SelectDebitCardFragment#newInstance} factory method to
+ * Use the {@link AddNewDebitCardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelectDebitCardFragment extends Fragment {
+public class AddNewDebitCardFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private DebitCard debitCard;
     private OnFragmentInteractionListener mListener;
-
-    public SelectDebitCardFragment() {
+    public AddNewDebitCardFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SelectDebitCardFragment newInstance(DebitCard card) {
-        SelectDebitCardFragment fragment = new SelectDebitCardFragment();
-        fragment.debitCard = card;
+    public static AddNewDebitCardFragment newInstance() {
+        AddNewDebitCardFragment fragment = new AddNewDebitCardFragment();
         return fragment;
     }
 
@@ -47,23 +39,24 @@ public class SelectDebitCardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_select_debit_card, container, false);
-        CreditCardView creditCardView = (CreditCardView) view.findViewById(R.id.debitCard);
-        creditCardView.setCVV(this.debitCard.debitCardCVV);
-        creditCardView.setCardHolderName(this.debitCard.debitCardName);
-        creditCardView.setCardExpiry(this.debitCard.debitCardExiry);
-        creditCardView.setCardNumber(this.debitCard.debitCardNumber);
-
+        View view = inflater.inflate(R.layout.fragment_add_new_debit_card, container, false);
+        Button addButton = (Button) view.findViewById(R.id.addCardButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onFragmentInteraction(null);
+                }
+            }
+        });
         return view;
     }
 
@@ -88,4 +81,10 @@ public class SelectDebitCardFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(null);
+        }
+    }
 }

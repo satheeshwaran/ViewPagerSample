@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_centerInParent="true"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:padding="5dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/loan_spinner"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="Select Loan"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@id/imageView"
+        android:layout_centerVertical="true"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/imageView"/>
+</RelativeLayout>
