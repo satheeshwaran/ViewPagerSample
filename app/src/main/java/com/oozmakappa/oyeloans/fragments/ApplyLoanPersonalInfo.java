@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.oozmakappa.oyeloans.R;
 
@@ -31,6 +33,21 @@ public class ApplyLoanPersonalInfo extends Fragment {
 
     @Override
     public void onStart() {
+
+        Spinner staticSpinner = (Spinner) getActivity().findViewById(R.id.static_spinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+                .createFromResource(getActivity(), R.array.gender_array,
+                        R.layout.spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        staticSpinner.setAdapter(staticAdapter);
+
         super.onStart();
     }
 
