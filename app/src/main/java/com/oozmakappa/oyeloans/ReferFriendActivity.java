@@ -13,7 +13,7 @@ public class ReferFriendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_referralpage);
         getSupportActionBar().setTitle("Refer a friend");
-        Button sendInvite = (Button)findViewById(R.id.button);
+        Button sendInvite = (Button)findViewById(R.id.inviteFriendsButton);
 
         sendInvite.setOnClickListener(new View.OnClickListener() {
             @Override

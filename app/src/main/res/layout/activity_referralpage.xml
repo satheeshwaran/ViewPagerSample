@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:id="@+id/relativeLayout"
-            android:gravity="center_horizontal"
             android:background="@color/NavBarColor"
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
@@ -31,7 +30,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/image_width"
                 android:layout_height="@dimen/image_width"
-                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/ref"
                 app:border_color="@android:color/white"
                 app:border_width="2dp"
@@ -54,6 +53,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/userProfilePicture"
                 android:textColor="@color/WhiteColor"
+                android:layout_centerHorizontal="true"
                 />
 
             <TextView
@@ -61,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="OYE_LOAN"
+                android:textAlignment="center"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/textView10"
                 android:layout_below="@+id/textView9"
                 android:textColor="@color/WhiteColor"
@@ -74,6 +76,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Refer Your friends. You'll get 250Rs FlipKart Voucher upon their sucessfull aplication"
+            android:textAlignment="center"
             android:id="@+id/textView12"
             android:layout_below="@+id/relativeLayout"
             android:layout_marginTop="30dp"
@@ -100,7 +103,7 @@
             android:textSize="16dp"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:id="@+id/profileProceedButton"
+            android:id="@+id/inviteFriendsButton"
             android:layout_below="@+id/textView11"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp" />
