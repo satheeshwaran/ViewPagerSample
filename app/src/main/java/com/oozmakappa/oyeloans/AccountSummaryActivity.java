@@ -42,6 +42,7 @@ public class AccountSummaryActivity extends AppCompatActivity
     private ResideMenuItem itemHome;
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemSettings;
+    private ResideMenuItem referFriend;
     /*
  * Preparing the list data
  */
@@ -178,6 +179,14 @@ public class AccountSummaryActivity extends AppCompatActivity
             }
         });
 
+        referFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent referFriendPage = new Intent(AccountSummaryActivity.this,ReferFriendActivity.class);
+                startActivity(referFriendPage);
+            }
+        });
+
     }
 
     public void goToApplyLoanPage(){
@@ -251,16 +260,19 @@ public class AccountSummaryActivity extends AppCompatActivity
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        referFriend = new ResideMenuItem(this, R.drawable.icon_profile, "Refer Friend");
         ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.icon_home, "Logout");
         itemHome.setOnClickListener(this);
         itemProfile.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
         itemLogout.setOnClickListener(this);
+        referFriend.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
 
