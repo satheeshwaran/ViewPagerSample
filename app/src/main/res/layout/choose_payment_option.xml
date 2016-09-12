@@ -32,6 +32,26 @@
             android:layout_below="@+id/debitCardPager"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paymentOptionsListView"
+        android:paddingBottom="10dp"
+        android:id="@+id/netBankingContainer"
+        android:background="@color/cardview_light_background">
+
+        <Spinner
+            android:id="@+id/netbanking_spinner"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:popupBackground="@null"
+            android:layout_marginTop="20dp"
+            android:spinnerMode="dialog"
+            android:layout_centerHorizontal="true"
+            android:dropDownSelector="@color/grey_400"
+            />
+
+        </RelativeLayout>
     <Button
         android:layout_width="300dp"
         android:layout_height="40dp"

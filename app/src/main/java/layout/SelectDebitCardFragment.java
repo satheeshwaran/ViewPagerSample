@@ -58,11 +58,13 @@ public class SelectDebitCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_debit_card, container, false);
-        CreditCardView creditCardView = (CreditCardView) view.findViewById(R.id.debitCard);
-        creditCardView.setCVV(this.debitCard.debitCardCVV);
-        creditCardView.setCardHolderName(this.debitCard.debitCardName);
-        creditCardView.setCardExpiry(this.debitCard.debitCardExiry);
-        creditCardView.setCardNumber(this.debitCard.debitCardNumber);
+        if (this.debitCard != null) {
+            CreditCardView creditCardView = (CreditCardView) view.findViewById(R.id.debitCard);
+            creditCardView.setCVV(this.debitCard.debitCardCVV);
+            creditCardView.setCardHolderName(this.debitCard.debitCardName);
+            creditCardView.setCardExpiry(this.debitCard.debitCardExiry);
+            creditCardView.setCardNumber(this.debitCard.debitCardNumber);
+        }
 
         return view;
     }

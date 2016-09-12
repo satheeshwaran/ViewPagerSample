@@ -14,13 +14,18 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.oozmakappa.oyeloans.Adapters.ChoosePaymentOptionAdapter;
+import com.oozmakappa.oyeloans.Adapters.LoanPickerAdapter;
+import com.oozmakappa.oyeloans.Adapters.NetbankingPickerAdapter;
 import com.oozmakappa.oyeloans.Models.DebitCard;
 
 import com.viewpagerindicator.CirclePageIndicator;
@@ -35,8 +40,12 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
     private static final int CONTENT_VIEW_ID = 10101010;
     private ArrayList<String> paymentOptions = new ArrayList<>();
+    private ArrayList<String> bankNames = new ArrayList<>();
+
     ChoosePaymentOptionAdapter paymentOptionsAdapter;
     RelativeLayout debitCardContainerLayout;
+    RelativeLayout netBankingContainerLayout;
+
     ArrayList<DebitCard> savedDebitCards = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,11 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
 
+        bankNames.add("HDFC Bank");
+        bankNames.add("SBI");
+        bankNames.add("Citi Bank");
+        bankNames.add("Axis Banks");
+        bankNames.add("ICICI Bank");
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -80,16 +94,17 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         }
 
         debitCardContainerLayout = (RelativeLayout) findViewById(R.id.debitCardFragmentContainer);
-
+        netBankingContainerLayout = (RelativeLayout) findViewById(R.id.netBankingContainer);
         setupSavedDebitCards();
 
-        /*Button newDebitCardButton = (Button) findViewById(R.id.addNewDebitCard);
+        Button newDebitCardButton = (Button) findViewById(R.id.makePaymentButton);
         newDebitCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
+                startActivity(paymentResultIntent);
             }
-        });*/
+        });
 
     }
 
@@ -116,6 +131,8 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         fragmentTransaction.commit();*/
 
         debitCardContainerLayout.setVisibility(View.VISIBLE);
+        netBankingContainerLayout.setVisibility(View.INVISIBLE);
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.debitCardPager);
         DebitCardPagerAdapter adapter = new DebitCardPagerAdapter(getSupportFragmentManager(),this);
         adapter.debitCards = this.savedDebitCards;
@@ -130,6 +147,24 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
     void showNetbankingLayout(){
         debitCardContainerLayout.setVisibility(View.INVISIBLE);
+        netBankingContainerLayout.setVisibility(View.VISIBLE);
+
+        Spinner spinner = (Spinner) findViewById(R.id.netbanking_spinner);
+        NetbankingPickerAdapter customAdapter=new NetbankingPickerAdapter(getApplicationContext(),this.bankNames);
+        spinner.setAdapter(customAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
     void setupSavedDebitCards(){
@@ -140,7 +175,13 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         dc.debitCardNumber = "44906789000000000";
 
         this.savedDebitCards.add(dc);
-        this.savedDebitCards.add(dc);
+
+        DebitCard dc1 = new DebitCard();
+        dc1.debitCardName = "SATHEESHWARAN J";
+        dc1.debitCardCVV = "123";
+        dc1.debitCardExiry = "11/19";
+        dc1.debitCardNumber = "57576789000000000";
+        this.savedDebitCards.add(dc1);
     }
 
     @Override

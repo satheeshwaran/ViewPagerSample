@@ -138,6 +138,9 @@
     <string name="makePayment">Make Payment</string>
     <string name="addNewDebitCard">Add New Card</string>
     <string name="AddCardScreen">Add New Card</string>
+    <string name="payment_succeeded">Payment Succeeded</string>
+    <string name="ok_button">OK</string>
+    <string name="payment_failed">Payment Failed</string>
 
     <string-array name="gender_array">
         <item>Male</item>
