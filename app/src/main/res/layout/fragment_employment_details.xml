@@ -411,18 +411,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp">
-            <Button
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_button_shape"
-                android:text="@string/proceedAppFlowButton"
-                android:textSize="16dp"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:id="@+id/profileProceedButtonPersonal"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                />
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button_shape"
+                    android:text="@string/proceedAppFlowButton"
+                    android:textSize="16dp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/profileProceedButtonEmployment"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
