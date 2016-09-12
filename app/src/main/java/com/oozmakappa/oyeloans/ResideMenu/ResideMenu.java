@@ -125,11 +125,13 @@ public class ResideMenu extends FrameLayout {
 
         LoanUser user = SharedDataManager.getInstance().userObject;
 
-        Picasso.with(this.getContext())
-                .load(user.fbProfilePicURL)
-                .placeholder(R.drawable.profile)
-                .resize(400,400)
-                .into((ImageView) findViewById(R.id.userProfilePictureSideMenu));
+        if (user.fbProfilePicURL != null && user.fbProfilePicURL.length()>0) {
+            Picasso.with(this.getContext())
+                    .load(user.fbProfilePicURL)
+                    .placeholder(R.drawable.profile)
+                    .resize(400, 400)
+                    .into((ImageView) findViewById(R.id.userProfilePictureSideMenu));
+        }
     }
 
     /**
