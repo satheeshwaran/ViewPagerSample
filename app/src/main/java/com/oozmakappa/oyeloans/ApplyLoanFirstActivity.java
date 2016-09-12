@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.oozmakappa.oyeloans.fragments.ApplyLoanEmploymentInfo;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanFirstFragment;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanPersonalInfo;
 
@@ -24,7 +25,7 @@ import java.util.HashMap;
 /**
  * Created by sankarnarayanan on 09/09/16.
  */
-public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLoanFirstFragment.OnProceedSelectedListener{
+public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLoanFirstFragment.OnProceedSelectedListener, ApplyLoanPersonalInfo.OnProceedSelectedListener{
 
 
     @Override
@@ -32,7 +33,12 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
         Log.v("data", data.toString());
         Fragment personalDetails = new ApplyLoanPersonalInfo();
         setFragment(personalDetails);
+    }
 
+    @Override
+    public void onPersonalDetailsEntered(HashMap<String,String> data){
+        Fragment employmentDetails = new ApplyLoanEmploymentInfo();
+        setFragment(employmentDetails);
     }
 
     @Override
