@@ -16,7 +16,6 @@ package com.oozmakappa.oyeloans.helper;
  */
 
 import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -26,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class VolleyRequestHelper {
         public static final String HTTP_PARAMS = "Params";
         public static final String HTTP_HEADERS = "Headers";
         public static final String HTTP_BODY_CONTENT = "Content";
-        public static final String HTTP_CONTENT_TYPE = "ContentType";
+        public static final String HTTP_CONTENT_TYPE = "Content-type";
         public static final String HTTP_PRIORITY = "Priority";
     }
 
@@ -201,8 +202,8 @@ public class VolleyRequestHelper {
             }
         };
         jsonRequest.setTag(requestName);
-        // Adding JSON Object request to request queue
-        //AppController.getInstance().addToRequestQueue(jsonRequest);
+         //Adding JSON Object request to request queue
+        AppController.getInstance().addToRequestQueue(jsonRequest);
     }
 
     /**
@@ -384,7 +385,7 @@ public class VolleyRequestHelper {
         };
         stringRequest.setTag(requestName);
         // Adding String request to request queue
-        //AppController.getInstance().addToRequestQueue(stringRequest);
+        AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
 

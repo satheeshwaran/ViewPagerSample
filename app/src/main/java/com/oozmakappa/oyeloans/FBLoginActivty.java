@@ -17,6 +17,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
@@ -87,6 +89,16 @@ public class FBLoginActivty extends AppCompatActivity {
                                                 public void callCompleted(JSONObject responseObject) {
                                                     SharedDataManager.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
                                                     //goToAccountSummaryPage();
+                                                    WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+                                                        @Override
+                                                        public void onRequestCompleted(SuccessModel model, String errorMessage){
+                                                            if (model.getStatus().equals("success")) {
+                                                                goToProfileEditPage();
+                                                            }
+                                                        }
+                                                    });
+                                                    webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
+                                                    //To be reomoved after setting up single box.
                                                     goToProfileEditPage();
                                                 }
                                             });
@@ -120,4 +132,5 @@ public class FBLoginActivty extends AppCompatActivity {
         Intent accSummaryIntent = new Intent(this,EditMyProfilePage.class);
         startActivity(accSummaryIntent);
     }
+
 }

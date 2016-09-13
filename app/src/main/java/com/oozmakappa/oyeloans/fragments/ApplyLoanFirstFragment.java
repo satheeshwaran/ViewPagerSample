@@ -13,9 +13,12 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 import java.util.HashMap;
 import java.util.Objects;
+import com.oozmakappa.oyeloans.constants.Jsonconstants;
 
 /**
  * Created by sankarnarayanan on 11/09/16.
@@ -100,6 +103,7 @@ public class ApplyLoanFirstFragment extends Fragment {
                     EditText textField = (EditText)getActivity().findViewById(R.id.editText);
                     firstPageData.put("Amount", textField.getText().toString());
                     mCallback.onLoanAmountSelected(firstPageData);
+                    constructValidateReferenceRequest();
                     // TODO Auto-generated method stub
                     break;
                 case View.NO_ID:
@@ -109,6 +113,15 @@ public class ApplyLoanFirstFragment extends Fragment {
             }
         }
     };
+
+    private void constructValidateReferenceRequest(){
+        HashMap<String,Object> validateReferenceReq = new HashMap<String,Object>();
+        validateReferenceReq.put(Jsonconstants.OL_VALIDATE_REFERALCODE_EMAIL, SharedDataManager.getInstance().userObject.emailID);
+        validateReferenceReq.put(Jsonconstants.OL_REFERRALCODE_KEY, getActivity().findViewById(R.id.referralCodeLabel));
+        validateReferenceReq.put(Jsonconstants.OL_APPID_KEY, 10001);
+        //Make web service call here.
+
+    }
 
 
     @Override
