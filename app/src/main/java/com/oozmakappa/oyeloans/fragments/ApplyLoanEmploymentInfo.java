@@ -1,5 +1,6 @@
 package com.oozmakappa.oyeloans.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
+import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.EditMyProfilePage;
 import com.oozmakappa.oyeloans.R;
 
 /**
@@ -48,8 +52,20 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         // Apply the adapter to the spinner
         staticSpinner.setAdapter(staticAdapter);
 
+        Button proceedButton = (Button) getActivity().findViewById(R.id.profileProceedButtonEmployment);
+        proceedButton.setOnClickListener(buttonClickListener);
+
         super.onStart();
     }
+
+
+    private View.OnClickListener buttonClickListener = new View.OnClickListener() {
+
+        public void onClick(View v) {
+            Intent applicationPageTwo = new Intent(getActivity(),ApplyLoanSecondActivity.class);
+            startActivity(applicationPageTwo);
+        }
+    };
 
     @Override
     public void onPause() {
