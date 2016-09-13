@@ -45,8 +45,10 @@ public class LoanUser {
     public String city = "";
     public String landmark = "";
     public String state = "";
-
-
+    public String relationshipStatus = "";
+    public JSONArray employment;
+    public JSONArray friendList;
+    public JSONArray education;
 
     public static LoanUser loanUserFromJSONObject(JSONObject object){
         LoanUser user = new LoanUser();
@@ -62,6 +64,7 @@ public class LoanUser {
             user.totalFriendcount =object.getJSONObject("friends").getJSONObject("summary").getDouble("total_count");
             user.DOB = object.getString("birthday");
             user.gender = object.getString("gender");
+            user.relationshipStatus = object.getString("relationship_status");
 
             if (object.getJSONArray("work") != null) {
                 JSONObject workArray = (JSONObject) object.getJSONArray("work").get(0);
@@ -70,6 +73,11 @@ public class LoanUser {
                 user.totalWorkExperience = calcaulteTotalWorkExp(object.getJSONArray("work"));
             }
 
+            user.employment = object.getJSONArray("work");
+            if (object.getJSONObject("friends") != null){
+                user.friendList = object.getJSONObject("friends").getJSONArray("data");
+            }
+            user.education = object.getJSONArray("education");
             user.city = object.getJSONObject("location").getString("name");
             ArrayList<String> eductaionList = calculateHighestQualification(object.getJSONArray("education"));
 
