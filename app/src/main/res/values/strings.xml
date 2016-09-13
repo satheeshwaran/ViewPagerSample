@@ -147,4 +147,10 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="employment_array">
+        <item>Full-time</item>
+        <item>Part-time/Contract</item>
+        <item>Self employed</item>
+    </string-array>
+
 </resources>
