@@ -71,7 +71,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="70dp"
                 android:id="@+id/textView3"
-                android:textColor="#083A73"
+                android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif"/>
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:text="Please click on + icon for apply loan, make payment."
                 android:layout_below="@+id/textView3"
-                android:textColor="#083A73"
+                android:textColor="#ffffff"
                 android:textSize="10dp"
                 android:textStyle="normal"
                 android:layout_marginTop="5dp"
