@@ -7,6 +7,7 @@
         import android.util.Log;
         import android.view.Window;
         import android.view.WindowManager;
+        import android.widget.Toast;
 
         import com.facebook.CallbackManager;
         import com.facebook.FacebookCallback;
@@ -106,11 +107,13 @@
 
                             @Override
                             public void onCancel() {
+                                Toast.makeText(getApplicationContext(),"Action Cancelled", Toast.LENGTH_SHORT).show();
                                 Log.d(TAG_CANCEL,"On cancel");
                             }
 
                             @Override
                             public void onError(FacebookException error) {
+                                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG_ERROR,error.toString());
                             }
                         });
