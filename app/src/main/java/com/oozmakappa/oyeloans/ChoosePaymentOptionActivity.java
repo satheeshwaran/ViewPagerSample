@@ -15,16 +15,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.oozmakappa.oyeloans.Adapters.ChoosePaymentOptionAdapter;
-import com.oozmakappa.oyeloans.Adapters.LoanPickerAdapter;
 import com.oozmakappa.oyeloans.Adapters.NetbankingPickerAdapter;
 import com.oozmakappa.oyeloans.Models.DebitCard;
 
@@ -38,13 +34,14 @@ import layout.SelectDebitCardFragment;
 
 public class ChoosePaymentOptionActivity extends AppCompatActivity implements OnFragmentInteractionListener{
 
-    private static final int CONTENT_VIEW_ID = 10101010;
     private ArrayList<String> paymentOptions = new ArrayList<>();
     private ArrayList<String> bankNames = new ArrayList<>();
 
     ChoosePaymentOptionAdapter paymentOptionsAdapter;
     RelativeLayout debitCardContainerLayout;
     RelativeLayout netBankingContainerLayout;
+    DebitCardPagerAdapter dcAdapter;
+    ViewPager debitCardPager;
 
     ArrayList<DebitCard> savedDebitCards = new ArrayList<>();
     @Override
@@ -66,8 +63,12 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         bankNames.add("ICICI Bank");
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0);
+        }
+
 
         paymentOptions.add("Debit Card");
         paymentOptions.add("NetBanking");
@@ -106,6 +107,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             }
         });
 
+        showDebitCardLayout();
     }
 
     void showDebitCardLayout() {
@@ -133,14 +135,14 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         debitCardContainerLayout.setVisibility(View.VISIBLE);
         netBankingContainerLayout.setVisibility(View.INVISIBLE);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.debitCardPager);
-        DebitCardPagerAdapter adapter = new DebitCardPagerAdapter(getSupportFragmentManager(),this);
-        adapter.debitCards = this.savedDebitCards;
-        viewPager.setAdapter(adapter);
+        debitCardPager = (ViewPager) findViewById(R.id.debitCardPager);
+        dcAdapter = new DebitCardPagerAdapter(getSupportFragmentManager(),this);
+        dcAdapter.debitCards = this.savedDebitCards;
+        debitCardPager.setAdapter(dcAdapter);
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
         titleIndicator.setFillColor(R.color.deep_orange_500);
-        titleIndicator.setViewPager(viewPager);
+        titleIndicator.setViewPager(debitCardPager);
 
 
     }
@@ -202,7 +204,15 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             String expiry = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY);
             String cvv = data.getStringExtra(CreditCardUtils.EXTRA_CARD_CVV);
 
-            // Your processing goes here.
+            DebitCard newlyAddedCard = new DebitCard();
+            newlyAddedCard.debitCardNumber = cardNumber;
+            newlyAddedCard.debitCardExiry = expiry;
+            newlyAddedCard.debitCardCVV =cvv;
+            newlyAddedCard.debitCardName = cardHolderName;
+
+            savedDebitCards.add(newlyAddedCard);
+            dcAdapter.notifyDataSetChanged();
+            debitCardPager.setCurrentItem(0);
 
         }
     }

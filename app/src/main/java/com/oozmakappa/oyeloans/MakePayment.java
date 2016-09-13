@@ -54,25 +54,26 @@ public class MakePayment extends AppCompatActivity {
             Window window = this.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
+            window.setStatusBarColor(this.getResources().getColor(R.color.NavBarColor));
         }
 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setElevation(0);
+
 
         Button proceedButton = (Button) findViewById(R.id.proceedToPay);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(adapter.selectedIndex != -1) {
+                if(adapter!= null && adapter.selectedIndex != -1) {
                     Intent choosePaymentIntent = new Intent(MakePayment.this, ChoosePaymentOptionActivity.class);
                     startActivity(choosePaymentIntent);
                 }
             }
         });
-
 
 
     }

@@ -63,12 +63,11 @@
             <include layout="@layout/item_divider"/>
 
             <Button
-                android:id="@+id/draw_cash"
+                android:id="@+id/payment_success_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:onClick="drawCashFromOffer"
                 android:text="@string/ok_button"
                 android:textAllCaps="false"
                 android:background="@drawable/rounded_button_shape"

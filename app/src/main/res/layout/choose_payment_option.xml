@@ -3,26 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity">
 
-    <ListView
-        android:id="@+id/paymentOptionsListView"
-        android:choiceMode="singleChoice"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_height="200dp"
-        android:layout_width="match_parent"
-        />
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/amountPayableContainer"
+        android:layout_margin="8dp"
+        app:cardElevation="0dp"
+        app:contentPadding="10dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Amount Payable"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:id="@+id/amountPayableTitle"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:text="Rs. 3000"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="right"
+            android:id="@+id/payableAmountValue"/>
+
+        <ListView
+            android:id="@+id/paymentOptionsListView"
+            android:choiceMode="singleChoice"
+            android:descendantFocusability="beforeDescendants"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/amountPayableTitle"
+            android:layout_marginTop="25dp"
+            android:scrollbars="none"
+            />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/paymentOptionsCardView"
+        android:layout_below="@+id/amountPayableContainer"
+        android:layout_margin="8dp"
+        app:cardElevation="0dp"
+        app:contentPadding="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/paymentOptionsListView"
-        android:paddingBottom="10dp"
         android:id="@+id/debitCardFragmentContainer"
         android:background="@color/cardview_light_background">
+        <TextView
+            android:layout_width="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:text="Select A Card"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="right"
+            android:id="@+id/selectACardTitle"/>
         <android.support.v4.view.ViewPager
             android:layout_width="wrap_content"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:id="@+id/debitCardPager">
         </android.support.v4.view.ViewPager>
         <com.viewpagerindicator.CirclePageIndicator
@@ -35,27 +84,88 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/paymentOptionsListView"
-        android:paddingBottom="10dp"
-        android:id="@+id/netBankingContainer"
-        android:background="@color/cardview_light_background">
+        android:id="@+id/netBankingContainer">
+        <TextView
+            android:layout_width="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:text="Popular Banks"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="right"
+            android:id="@+id/poularBanksTitle"/>
 
+        <layout.ToggleButtonGroupTableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/popularBanksRadioGroup"
+            android:layout_below="@+id/poularBanksTitle"
+            android:padding="5dp">
+            <TableRow
+                android:padding="10dp">
+                <RadioButton android:id="@+id/popularBank1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="13px"
+                    android:drawableStart="@drawable/hdfc_bank"
+                    android:drawableLeft="@drawable/hdfc_bank"/>
+
+                    <RadioButton android:id="@+id/popularBank2"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textSize="13px"
+                        android:drawableStart="@drawable/axis_bank"
+                        android:drawableLeft="@drawable/axis_bank"/>
+            </TableRow>
+            <TableRow
+                android:padding="10dp">
+                    <RadioButton android:id="@+id/popularBank3"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textSize="13px"
+                        android:drawableStart="@drawable/icici_bank"
+                        android:drawableLeft="@drawable/icici_bank"/>
+                    <RadioButton android:id="@+id/popularBank4"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textSize="13px"
+                        android:drawableStart="@drawable/citi_bank"
+                        android:drawableLeft="@drawable/citi_bank"
+                        />
+            </TableRow>
+        </layout.ToggleButtonGroupTableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:text="All Banks"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="right"
+            android:id="@+id/AllBanksTitle"
+            android:layout_below="@+id/popularBanksRadioGroup"/>
         <Spinner
             android:id="@+id/netbanking_spinner"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:popupBackground="@null"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:spinnerMode="dialog"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/AllBanksTitle"
             android:dropDownSelector="@color/grey_400"
             />
 
         </RelativeLayout>
+    </android.support.v7.widget.CardView>
     <Button
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
