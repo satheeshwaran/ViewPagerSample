@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.cooltechworks.creditcarddesign.CreditCardView;
 import com.oozmakappa.oyeloans.Models.DebitCard;
@@ -65,7 +67,15 @@ public class SelectDebitCardFragment extends Fragment {
             creditCardView.setCardExpiry(this.debitCard.debitCardExiry);
             creditCardView.setCardNumber(this.debitCard.debitCardNumber);
         }
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
+                ImageView selected = (ImageView)v.findViewById(R.id.selectedIcon);
+                selected.bringToFront();
+                return false;
+            }
+        });
         return view;
     }
 

@@ -41,6 +41,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
     RelativeLayout debitCardContainerLayout;
     RelativeLayout netBankingContainerLayout;
     DebitCardPagerAdapter dcAdapter;
+    ViewPager debitCardPager;
 
     ArrayList<DebitCard> savedDebitCards = new ArrayList<>();
     @Override
@@ -134,14 +135,14 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         debitCardContainerLayout.setVisibility(View.VISIBLE);
         netBankingContainerLayout.setVisibility(View.INVISIBLE);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.debitCardPager);
+        debitCardPager = (ViewPager) findViewById(R.id.debitCardPager);
         dcAdapter = new DebitCardPagerAdapter(getSupportFragmentManager(),this);
         dcAdapter.debitCards = this.savedDebitCards;
-        viewPager.setAdapter(dcAdapter);
+        debitCardPager.setAdapter(dcAdapter);
 
         CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titles);
         titleIndicator.setFillColor(R.color.deep_orange_500);
-        titleIndicator.setViewPager(viewPager);
+        titleIndicator.setViewPager(debitCardPager);
 
 
     }
@@ -211,6 +212,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
             savedDebitCards.add(newlyAddedCard);
             dcAdapter.notifyDataSetChanged();
+            debitCardPager.setCurrentItem(0);
 
         }
     }
