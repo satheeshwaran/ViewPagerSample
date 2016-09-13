@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Loan Home Page"
+                android:text="Submit Docs."
                 android:id="@+id/textView4"
                 android:layout_toEndOf="@+id/menuIcon"
                 android:layout_below="@+id/textView2"

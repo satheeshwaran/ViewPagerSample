@@ -89,7 +89,7 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
 
         RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom);
         sliderView.setEnabled(true);
-        sliderView.setClickable(false); 
+        sliderView.setClickable(false);
         sliderView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

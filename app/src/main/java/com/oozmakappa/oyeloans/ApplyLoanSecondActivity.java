@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.github.channguyen.rsv.RangeSliderView;
 import com.oozmakappa.oyeloans.Adapters.EnterDetailsPagerAdapter;
+import com.oozmakappa.oyeloans.Adapters.UploadDocsPagerAdapter;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
@@ -26,6 +27,9 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.applyloan_first_activity);
         Window window = this.getWindow();
 
@@ -43,9 +47,9 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
         ImageView backButton = (ImageView) findViewById(R.id.menuIcon);
         backButton.setOnClickListener(clickListener);
 
-        //viewPager = (ViewPager) findViewById(R.id.viewpager);
-        //viewPager.setAdapter(new EnterDetailsPagerAdapter(getSupportFragmentManager(), this));
-        //viewPager.addOnPageChangeListener(pageChangeListener);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new UploadDocsPagerAdapter(getSupportFragmentManager(), this));
+        viewPager.addOnPageChangeListener(pageChangeListener);
 
         //Initializing the tablayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -75,7 +79,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
     TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener(){
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
-            //viewPager.setCurrentItem(tab.getPosition());
+            viewPager.setCurrentItem(tab.getPosition());
         }
 
         @Override
