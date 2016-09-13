@@ -79,8 +79,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
         </activity>
-        <activity android:name=".ChoosePaymentOptionActivity">
-            <meta-data
+        <activity android:name=".ChoosePaymentOptionActivity" >
+        <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.MakePayment" />
         </activity>
@@ -90,7 +90,8 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity" />
+                android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity"
+                />
         </activity>
         <activity android:name=".ReferFriendActivity" />
         <activity android:name=".PaymentSucceededActivity" />

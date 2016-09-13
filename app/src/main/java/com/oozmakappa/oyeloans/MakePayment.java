@@ -66,7 +66,7 @@ public class MakePayment extends AppCompatActivity {
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(adapter.selectedIndex != -1) {
+                if(adapter!= null && adapter.selectedIndex != -1) {
                     Intent choosePaymentIntent = new Intent(MakePayment.this, ChoosePaymentOptionActivity.class);
                     startActivity(choosePaymentIntent);
                 }
