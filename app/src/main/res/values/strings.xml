@@ -145,6 +145,9 @@
     <string name="Application_completed">Application Completed</string>
     <string name="Application_completed_message">You will receive a notification within 24 hours on your loan application</string>
     <string name="Application_completed_thanks">Thank you for completing the application</string>
+    <string name="application_failed">Loan Application Failed</string>
+    <string name="application_failed_message">Sorry we could not approve your loan at this time on account of the information you provided.</string>
+    <string name="application_failed_sub_message">Please visit our Help / FAQ page if you have any questions</string>
 
     <string-array name="gender_array">
         <item>Male</item>
