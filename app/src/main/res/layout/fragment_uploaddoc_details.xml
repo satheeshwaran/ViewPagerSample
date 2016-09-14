@@ -21,7 +21,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
-                app:contentPadding="5dp">
+                app:contentPadding="5dp"
+                android:id="@+id/panCardView">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -60,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:cardElevation="4dp"
-                app:contentPadding="5dp">
+                app:contentPadding="5dp"
+                android:id="@+id/salarySlipView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -97,6 +99,63 @@
                 </RelativeLayout>
 
             </android.support.v7.widget.CardView>
+
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardElevation="4dp"
+                app:contentPadding="5dp"
+                android:id="@+id/salarySlipChildView"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:src="@drawable/plus_512"
+                        android:background="@color/NavBarColor"
+                        android:id="@+id/salaryslip_1"
+                        android:layout_margin="15dp"
+                        android:padding="10dp"/>
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:src="@drawable/plus_512"
+                        android:background="@color/NavBarColor"
+                        android:id="@+id/salaryslip_2"
+                        android:layout_toRightOf="@+id/salaryslip_1"
+                        android:layout_margin="15dp"
+                        android:padding="10dp"/>
+
+                    <ImageView
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:src="@drawable/plus_512"
+                        android:background="@color/NavBarColor"
+                        android:layout_toRightOf="@+id/salaryslip_2"
+                        android:id="@+id/salaryslip_3"
+                        android:layout_margin="15dp"
+                        android:padding="10dp"
+                        />
+
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

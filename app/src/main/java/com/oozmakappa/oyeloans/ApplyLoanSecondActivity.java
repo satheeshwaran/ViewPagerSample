@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
 import com.oozmakappa.oyeloans.Adapters.EnterDetailsPagerAdapter;
@@ -74,6 +75,16 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
             }
         });
 
+
+        ImageView circleView = (ImageView) findViewById(R.id.collapseIcon);
+
+        circleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideShowProgress(v);
+            }
+        });
+
     }
 
     TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener(){
@@ -133,5 +144,34 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
             getFragmentManager().popBackStack();
         }
     }
+
+
+    public void hideShowProgress(View v) {
+        RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom);
+        TextView textView1 = (TextView) findViewById(R.id.textView5);
+        TextView textView2 = (TextView) findViewById(R.id.textView6);
+        TextView textView3 = (TextView) findViewById(R.id.textView7);
+        TextView textView4 = (TextView) findViewById(R.id.textView8);
+
+        if (sliderView.getVisibility() == View.GONE) {
+            sliderView.setVisibility(View.VISIBLE);
+            textView1.setVisibility(View.VISIBLE);
+            textView2.setVisibility(View.VISIBLE);
+            textView3.setVisibility(View.VISIBLE);
+            textView4.setVisibility(View.VISIBLE);
+            ImageView currentImage = (ImageView) v;
+            currentImage.setImageResource(R.drawable.ic_keyboard_arrow_down_white_48dp);
+        } else {
+            sliderView.setVisibility(View.GONE);
+            textView1.setVisibility(View.GONE);
+            textView2.setVisibility(View.GONE);
+            textView3.setVisibility(View.GONE);
+            textView4.setVisibility(View.GONE);
+            ImageView currentImage = (ImageView) v;
+            currentImage.setImageResource(R.drawable.ic_keyboard_arrow_down_white_48dp);
+        }
+
+    }
+
 
 }

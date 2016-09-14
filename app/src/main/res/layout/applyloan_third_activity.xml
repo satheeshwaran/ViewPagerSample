@@ -18,9 +18,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/NavBarColor"
-            android:id="@+id/containerView">
+            android:background="@color/SummaryBackgroundColor">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/NavBarColor"
+                android:id="@+id/parentView"></View>
 
             <ImageView
                 android:layout_width="30dp"
@@ -46,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Submit Docs."
+                android:text="Enter details"
                 android:id="@+id/textView4"
                 android:layout_toEndOf="@+id/menuIcon"
                 android:layout_below="@+id/textView2"
@@ -54,18 +58,6 @@
                 android:layout_marginTop="3dp"
                 android:textColor="#ffffff"
                 android:textSize="10dp"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
-                android:layout_alignParentRight="true"
-                android:paddingRight="0dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="25dp"
-                android:id="@+id/collapseIcon"
-                android:background="@drawable/circle_bg_stroke"
-                android:layout_centerHorizontal="true"/>
 
             <com.github.channguyen.rsv.RangeSliderView
                 android:id="@+id/rsv_custom"
@@ -79,6 +71,7 @@
                 rsv:rangeCount="4"
                 rsv:barHeightPercent="0.05"
                 android:layout_below="@+id/textView2"
+                android:clickable="false"
                 />
 
 
@@ -105,8 +98,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="0dp"
                 android:textColor="#ffffff"
-                android:textSize="12dp"
-                android:clickable="false"/>
+                android:textSize="12dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,16 +128,6 @@
                 android:textSize="12dp"/>
 
         </RelativeLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-
 
 
         <android.support.v4.view.ViewPager
