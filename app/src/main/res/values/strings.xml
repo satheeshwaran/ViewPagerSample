@@ -131,6 +131,7 @@
     <string name="proceedAppFlowButton">Proceed</string>
     <string name="interestRateLoanAppFlow">Interest Rate of 25% to be paid in 12 months</string>
     <string name="inviteMe">Invite Friends</string>
+    <string name="verifyBtn">Verify</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

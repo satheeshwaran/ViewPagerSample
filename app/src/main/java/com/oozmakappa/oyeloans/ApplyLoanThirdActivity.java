@@ -9,22 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
-import com.oozmakappa.oyeloans.Adapters.EnterDetailsPagerAdapter;
 import com.oozmakappa.oyeloans.Adapters.UploadDocsPagerAdapter;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
  */
-public class ApplyLoanSecondActivity extends AppCompatActivity {
-
-    ViewPager viewPager;
-
-    TabLayout tabLayout;
+public class ApplyLoanThirdActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +26,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.applyloan_second_activity);
+        setContentView(R.layout.applyloan_third_activity);
         Window window = this.getWindow();
 
         // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -49,24 +43,9 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
         ImageView backButton = (ImageView) findViewById(R.id.menuIcon);
         backButton.setOnClickListener(clickListener);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new UploadDocsPagerAdapter(getSupportFragmentManager(), this));
-        viewPager.addOnPageChangeListener(pageChangeListener);
-
-        //Initializing the tablayout
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setText("Bank Info"));
-        tabLayout.addTab(tabLayout.newTab().setText("Upload Documents"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //Adding onTabSelectedListener to swipe views
-        tabLayout.setOnTabSelectedListener(tabSelectedListener);
-
-        RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom);
+        RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom_otp);
         sliderView.setEnabled(true);
-        sliderView.setInitialIndex(1);
+        sliderView.setInitialIndex(2);
         sliderView.setClickable(false);
 
         sliderView.setOnTouchListener(new View.OnTouchListener() {
@@ -86,46 +65,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
-    TabLayout.OnTabSelectedListener tabSelectedListener = new TabLayout.OnTabSelectedListener(){
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            viewPager.setCurrentItem(tab.getPosition());
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    };
-
-
-    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            TabLayout.Tab tab = tabLayout.getTabAt(position);
-            tab.select();
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
 
@@ -149,7 +89,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
 
 
     public void hideShowProgress(View v) {
-        RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom);
+        RangeSliderView sliderView = (RangeSliderView) findViewById(R.id.rsv_custom_otp);
         TextView textView1 = (TextView) findViewById(R.id.textView5);
         TextView textView2 = (TextView) findViewById(R.id.textView6);
         TextView textView3 = (TextView) findViewById(R.id.textView7);
@@ -162,7 +102,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
             textView3.setVisibility(View.VISIBLE);
             textView4.setVisibility(View.VISIBLE);
             ImageView currentImage = (ImageView) v;
-            currentImage.setImageResource(R.drawable.ic_keyboard_arrow_down_white_48dp);
+            currentImage.setImageResource(R.drawable.ic_keyboard_arrow_up_white_48dp);
         } else {
             sliderView.setVisibility(View.GONE);
             textView1.setVisibility(View.GONE);
@@ -174,6 +114,4 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
         }
 
     }
-
-
 }

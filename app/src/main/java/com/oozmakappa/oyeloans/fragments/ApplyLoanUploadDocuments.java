@@ -14,9 +14,12 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.R;
 
 import java.io.File;
@@ -54,6 +57,16 @@ public class ApplyLoanUploadDocuments extends Fragment {
         slip1.setOnClickListener(pdfListener);
         slip2.setOnClickListener(pdfListener);
         slip3.setOnClickListener(pdfListener);
+
+        Button proceedButton = (Button) getActivity().findViewById(R.id.proceedAppFlowButtonuploadComplete);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent applicationPageThree = new Intent(getActivity(),ApplyLoanThirdActivity.class);
+                startActivity(applicationPageThree);
+            }
+        });
+
         super.onStart();
     }
 

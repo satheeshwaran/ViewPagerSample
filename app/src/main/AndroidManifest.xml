@@ -98,6 +98,8 @@
         <activity android:name=".PaymentFailedActivity"></activity>
         <activity android:name=".ApplyLoanSecondActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ApplyLoanThirdActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
