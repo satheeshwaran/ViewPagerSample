@@ -188,7 +188,7 @@
                 android:textSize="16dp"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:id="@+id/profileProceedButton"
+                android:id="@+id/profileProceedButtonOtp"
                 android:layout_centerInParent="true"
                 />
         </RelativeLayout>

@@ -100,6 +100,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ApplyLoanThirdActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ApplicationCompletedActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

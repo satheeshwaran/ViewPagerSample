@@ -1,5 +1,6 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,13 +57,22 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             }
         });
 
-
         ImageView circleView = (ImageView) findViewById(R.id.collapseIcon);
 
         circleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideShowProgress(v);
+            }
+        });
+
+        Button verifyBtn = (Button) findViewById(R.id.profileProceedButtonOtp);
+
+        verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
+                startActivity(thanksScreen);
             }
         });
 

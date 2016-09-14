@@ -142,6 +142,9 @@
     <string name="payment_succeeded">Payment Succeeded</string>
     <string name="ok_button">OK</string>
     <string name="payment_failed">Payment Failed</string>
+    <string name="Application_completed">Application Completed</string>
+    <string name="Application_completed_message">You will receive a notification within 24 hours on your loan application</string>
+    <string name="Application_completed_thanks">Thank you for completing the application</string>
 
     <string-array name="gender_array">
         <item>Male</item>
