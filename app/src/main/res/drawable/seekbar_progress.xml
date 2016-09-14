@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="line">
 
     <stroke
-        android:width="15dp"
+        android:width="10dp"
         android:color="@color/fifty_percent_transparency_primary" />
 </shape>
