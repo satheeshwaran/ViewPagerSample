@@ -8,14 +8,22 @@ import java.util.HashMap;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.constants.Jsonconstants;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by sankarnarayanan on 13/09/16.
  */
 public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestCompletedListener {
+
+
+    public interface RequestNameKeys{
+        String FB_REQUEST_KEY = "fb";
+        String VALIDATE_REFERRAL_KEY = "validateReferral";
+    }
 
     VolleyRequestHelper vHelper;
 
@@ -43,14 +51,14 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public void makeFacebookServiceCall(LoanUser userObject){
         //Construct request
         try {
-        JSONObject requestMap = new JSONObject();
-        requestMap.putOpt(Jsonconstants.OL_FB_NAME_KEY, (userObject.firstName.concat(" ").concat(userObject.lastName)));
-        requestMap.putOpt(Jsonconstants.OL_FB_GENDER_KEY, userObject.gender);
-        requestMap.putOpt(Jsonconstants.OL_FB_HOMETOWN_KEY, userObject.city);
-        requestMap.putOpt(Jsonconstants.OL_FB_EMAIL_KEY, userObject.emailID);
-        requestMap.putOpt(Jsonconstants.OL_FB_DOB_KEY,userObject.DOB);
-        requestMap.putOpt(Jsonconstants.OL_FB_WORK_ID_KEY, userObject.fbUserID);
-        requestMap.putOpt(Jsonconstants.OL_FB_RELSTATUS_KEY, userObject.relationshipStatus);
+            JSONObject requestMap = new JSONObject();
+            requestMap.putOpt(Jsonconstants.OL_FB_NAME_KEY, (userObject.firstName.concat(" ").concat(userObject.lastName)));
+            requestMap.putOpt(Jsonconstants.OL_FB_GENDER_KEY, userObject.gender);
+            requestMap.putOpt(Jsonconstants.OL_FB_HOMETOWN_KEY, userObject.city);
+            requestMap.putOpt(Jsonconstants.OL_FB_EMAIL_KEY, userObject.emailID);
+            requestMap.putOpt(Jsonconstants.OL_FB_DOB_KEY,userObject.DOB);
+            requestMap.putOpt(Jsonconstants.OL_FB_WORK_ID_KEY, userObject.fbUserID);
+            requestMap.putOpt(Jsonconstants.OL_FB_RELSTATUS_KEY, userObject.relationshipStatus);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, userObject.city);
 
             JSONArray friendList = new JSONArray();
@@ -60,7 +68,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             }
 
 
-        requestMap.putOpt(Jsonconstants.OL_FB_FRIENDLIST_KEY, friendList);
+            requestMap.putOpt(Jsonconstants.OL_FB_FRIENDLIST_KEY, friendList);
 
             JSONObject historyEdu = new JSONObject();
             JSONArray education = new JSONArray();
@@ -118,12 +126,61 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString("fb", url, requestParams,Request.Method.POST,true);
+            vHelper.requestString(RequestNameKeys.FB_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
 
         }catch(Exception e){
-                Log.v("json exception", e.getLocalizedMessage());
+            Log.v("json exception", e.getLocalizedMessage());
         }
 
+
+    }
+
+
+    public void validateReferral(String code) {
+
+        try {
+            JSONObject requestMap = new JSONObject();
+            requestMap.putOpt(Jsonconstants.OL_VALIDATE_REFERALCODE_EMAIL, SharedDataManager.getInstance().userObject.emailID);
+            requestMap.putOpt(Jsonconstants.OL_REFERRALCODE_KEY, code);
+            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY,"intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "ValidateReferralCode");
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "1001");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY,"12345678");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_VALIDATEREFERRAL_KEY);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams,Request.Method.POST,true);
+
+
+        }catch (Exception e){
+            Log.v("json exception", e.getLocalizedMessage());
+        }
 
     }
 
@@ -179,7 +236,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage){
         try {
 
-            if (errorMessage == null && response != null) {
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY))) {
                 JSONObject jsonObject = new JSONObject(response);
                 SuccessModel sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
                 completionHandler.onRequestCompleted(sModel,null);

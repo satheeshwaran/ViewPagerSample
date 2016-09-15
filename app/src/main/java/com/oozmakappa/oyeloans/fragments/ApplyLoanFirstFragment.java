@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
+import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
@@ -99,10 +101,6 @@ public class ApplyLoanFirstFragment extends Fragment {
         public void onClick(View v){
             switch (v.getId()) {
                 case R.id.profileProceedButton:
-                    HashMap<String,String> firstPageData = new HashMap<String,String>();
-                    EditText textField = (EditText)getActivity().findViewById(R.id.editText);
-                    firstPageData.put("Amount", textField.getText().toString());
-                    mCallback.onLoanAmountSelected(firstPageData);
                     constructValidateReferenceRequest();
                     // TODO Auto-generated method stub
                     break;
@@ -115,10 +113,19 @@ public class ApplyLoanFirstFragment extends Fragment {
     };
 
     private void constructValidateReferenceRequest(){
-        HashMap<String,Object> validateReferenceReq = new HashMap<String,Object>();
-        validateReferenceReq.put(Jsonconstants.OL_VALIDATE_REFERALCODE_EMAIL, SharedDataManager.getInstance().userObject.emailID);
-        validateReferenceReq.put(Jsonconstants.OL_REFERRALCODE_KEY, getActivity().findViewById(R.id.referralCodeLabel));
-        validateReferenceReq.put(Jsonconstants.OL_APPID_KEY, 10001);
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage){
+                if (model.getStatus().equals("success")) {
+                    HashMap<String,String> firstPageData = new HashMap<String,String>();
+                    EditText textField = (EditText)getActivity().findViewById(R.id.editText);
+                    firstPageData.put("Amount", textField.getText().toString());
+                    mCallback.onLoanAmountSelected(firstPageData);
+                }
+            }
+        });
+        EditText referralCode = (EditText) getActivity().findViewById(R.id.editTextReferralCode);
+        webServiceHelper.validateReferral(referralCode.getText().toString());
         //Make web service call here.
 
     }

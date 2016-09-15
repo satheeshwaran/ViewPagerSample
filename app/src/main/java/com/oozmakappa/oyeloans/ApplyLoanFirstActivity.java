@@ -46,6 +46,7 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
     public void onLoanAmountSelected(HashMap<String,String> data){
         Log.v("data", data.toString());
         Fragment personalDetails = new ApplyLoanPersonalInfo();
+        viewPager.setCurrentItem(1);
     }
 
     @Override

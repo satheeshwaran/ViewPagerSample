@@ -9,6 +9,7 @@ package com.oozmakappa.oyeloans.constants;
  */
 public interface Jsonconstants {
 
+    //Referral code key
     String OL_VALIDATE_REFERALCODE_EMAIL = "Email";
     String OL_REFERRALCODE_KEY = "referral_code";
     String OL_APPID_KEY = "app_id";
@@ -43,6 +44,9 @@ public interface Jsonconstants {
     //URL Constants
     String OL_BASE_URL = "https://192.168.56.101/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
+    String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
+
+
 
 
 }
