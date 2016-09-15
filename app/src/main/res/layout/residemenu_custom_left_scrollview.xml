@@ -19,9 +19,44 @@
         app:startXPosition="2dp"
         android:id="@+id/userProfilePictureSideMenu"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_user_sidemenu"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteColor"
+        android:textStyle="bold"
+        android:text="Welcome User!"
+        android:layout_below="@id/userProfilePictureSideMenu"
+        android:layout_alignBaseline="@id/userProfilePictureSideMenu"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        />
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/placeholder"
+        android:layout_below="@id/welcome_user_sidemenu"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_location_side_menu"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteColor"
+        android:textStyle="bold"
+        android:text="Chennai"
+        android:layout_below="@id/welcome_user_sidemenu"
+        android:layout_alignBaseline="@id/userProfilePictureSideMenu"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="7dp"
+        android:textSize="10dp"
+        />
     <ScrollView
         android:id="@+id/sv_left_menu"
         android:layout_width="150dp"
@@ -29,7 +64,9 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="60dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_below="@id/userProfilePictureSideMenu"
+        android:layout_marginTop="70dp">
 
         <LinearLayout
             android:id="@+id/layout_left_menu"

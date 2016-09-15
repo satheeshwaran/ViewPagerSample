@@ -46,7 +46,8 @@
                 android:layout_marginTop="15dp"
                 android:textColor="#ffffff"
                 android:textSize="17dp"
-                android:fontFamily="sans-serif"/>
+                android:fontFamily="sans-serif"
+                android:layout_toRightOf="@+id/menuIcon" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +61,8 @@
                 android:layout_marginTop="3dp"
                 android:textColor="#ffffff"
                 android:textSize="10dp"
-                android:fontFamily="sans-serif"/>
+                android:fontFamily="sans-serif"
+                android:layout_toRightOf="@+id/menuIcon" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +72,7 @@
                 android:layout_below="@+id/textView2"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="70dp"
-                android:id="@+id/textView3"
+                android:id="@+id/welcome_user_textview"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -80,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please click on + icon for apply loan, make payment."
-                android:layout_below="@+id/textView3"
+                android:layout_below="@+id/welcome_user_textview"
                 android:textColor="#ffffff"
                 android:textSize="10dp"
                 android:textStyle="normal"

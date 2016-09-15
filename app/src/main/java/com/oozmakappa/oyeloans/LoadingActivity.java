@@ -2,6 +2,7 @@
 
         import android.content.Intent;
         import android.os.Build;
+        import android.os.Handler;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
@@ -50,12 +51,21 @@
                 AppEventsLogger.activateApp(this);
                 callbackManager = CallbackManager.Factory.create();
 
-                if (SharedDataManager.getInstance().isFBLoggedIn()){
-                    onFacebookLogin();
-                }else{
-                    //go to account login page...
-                    goToLoginPage();
-                }
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (SharedDataManager.getInstance().isFBLoggedIn()){
+                            onFacebookLogin();
+                        }else {
+                            //go to account login page...
+                            goToLoginPage();
+                        }
+                    }
+                }, 2000);
+
+
 
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_loading);

@@ -132,6 +132,10 @@ public class ResideMenu extends FrameLayout {
                     .resize(400, 400)
                     .into((ImageView) findViewById(R.id.userProfilePictureSideMenu));
         }
+
+        ((TextView)findViewById(R.id.welcome_user_sidemenu)).setText(SharedDataManager.getInstance().userObject.firstName + " " + SharedDataManager.getInstance().userObject.lastName);
+        ((TextView)findViewById(R.id.user_location_side_menu)).setText(SharedDataManager.getInstance().userObject.city);
+
     }
 
     /**

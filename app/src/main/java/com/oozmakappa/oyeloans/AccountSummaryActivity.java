@@ -13,7 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
@@ -173,13 +176,13 @@ public class AccountSummaryActivity extends AppCompatActivity
             }
         });
 
-        itemProfile.setOnClickListener(new View.OnClickListener() {
+        /*itemProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent profilePage = new Intent(AccountSummaryActivity.this,EditMyProfilePage.class);
                 startActivity(profilePage);
             }
-        });
+        });*/
 
         referFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +191,10 @@ public class AccountSummaryActivity extends AppCompatActivity
                 startActivity(referFriendPage);
             }
         });
+
+        String welcomeUserText = "Welcome " + SharedDataManager.getInstance().userObject.firstName + " " + SharedDataManager.getInstance().userObject.lastName;
+
+        ((TextView)findViewById(R.id.welcome_user_textview)).setText(welcomeUserText);
 
     }
 
@@ -260,23 +267,37 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.setScaleValue(0.4f);
 
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
-        referFriend = new ResideMenuItem(this, R.drawable.icon_profile, "Refer Friend");
-        ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.icon_home, "Logout");
+        referFriend = new ResideMenuItem(this, R.drawable.command, "Refer Friend");
+        ResideMenuItem itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
+        ResideMenuItem chatWithUS = new ResideMenuItem(this,R.drawable.messenger, "Chat");
+        ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.logout, "Logout");
+
+        itemLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logOut();
+                Intent loginIntent = new Intent(AccountSummaryActivity.this,FBLoginActivty.class);
+                startActivity(loginIntent);
+                AccountSummaryActivity.this.finish();
+            }
+        });
+
         itemHome.setOnClickListener(this);
-        itemProfile.setOnClickListener(this);
+       // itemProfile.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
-        itemLogout.setOnClickListener(this);
+        //itemLogout.setOnClickListener(this);
+        itemFAQ.setOnClickListener(this);
+        chatWithUS.setOnClickListener(this);
         referFriend.setOnClickListener(this);
-
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
+        //resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemFAQ, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-
 
     }
 
