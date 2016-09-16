@@ -1,8 +1,10 @@
 package com.oozmakappa.oyeloans;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -271,6 +274,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         referFriend = new ResideMenuItem(this, R.drawable.command, "Refer Friend");
         ResideMenuItem itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
         ResideMenuItem chatWithUS = new ResideMenuItem(this,R.drawable.messenger, "Chat");
+        ResideMenuItem rateUs = new ResideMenuItem(this,R.drawable.star, "Rate Us");
         ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.logout, "Logout");
 
         itemLogout.setOnClickListener(new View.OnClickListener() {
@@ -280,6 +284,14 @@ public class AccountSummaryActivity extends AppCompatActivity
                 Intent loginIntent = new Intent(AccountSummaryActivity.this,FBLoginActivty.class);
                 startActivity(loginIntent);
                 AccountSummaryActivity.this.finish();
+            }
+        });
+
+
+        rateUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AccountSummaryActivity.this.ShowDialog();
             }
         });
 
@@ -296,6 +308,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemFAQ, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(rateUs, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
@@ -313,6 +326,32 @@ public class AccountSummaryActivity extends AppCompatActivity
            // Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT).show();
         }
     };
+
+
+    public void ShowDialog()
+    {
+        final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
+        final RatingBar rating = new RatingBar(this);
+        rating.setMax(4);
+        rating.setNumStars(0);
+        rating.setStepSize(1);
+        rating.setRating(5);
+        popDialog.setTitle("Please rate us!! ");
+        popDialog.setView(rating);
+        popDialog.setPositiveButton(android.R.string.ok,
+        new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //txtView.setText(String.valueOf(rating.getProgress()));
+                dialog.dismiss();
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        popDialog.create();
+        popDialog.show();
+    }
 
 
     @Override
