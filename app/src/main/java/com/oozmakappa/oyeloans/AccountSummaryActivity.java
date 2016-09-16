@@ -2,6 +2,7 @@ package com.oozmakappa.oyeloans;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -277,6 +278,13 @@ public class AccountSummaryActivity extends AppCompatActivity
         ResideMenuItem rateUs = new ResideMenuItem(this,R.drawable.star, "Rate Us");
         ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.logout, "Logout");
 
+        chatWithUS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+            }
+        });
+
         itemLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,11 +308,11 @@ public class AccountSummaryActivity extends AppCompatActivity
         itemSettings.setOnClickListener(this);
         //itemLogout.setOnClickListener(this);
         itemFAQ.setOnClickListener(this);
-        chatWithUS.setOnClickListener(this);
+        //chatWithUS.setOnClickListener(this);
         referFriend.setOnClickListener(this);
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         //resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
+        //resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemFAQ, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);

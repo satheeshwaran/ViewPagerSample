@@ -1,13 +1,16 @@
         package com.oozmakappa.oyeloans;
 
+        import android.app.ProgressDialog;
         import android.content.Intent;
         import android.os.Build;
         import android.os.Handler;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
+        import android.view.View;
         import android.view.Window;
         import android.view.WindowManager;
+        import android.widget.ProgressBar;
         import android.widget.Toast;
 
         import com.facebook.CallbackManager;
@@ -26,6 +29,7 @@
         import com.oozmakappa.oyeloans.utils.SharedDataManager;
         import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
         import com.oozmakappa.oyeloans.utils.OyeConstants;
+        import com.oozmakappa.oyeloans.utils.Utils;
 
         import org.json.JSONObject;
 
@@ -52,6 +56,7 @@
                 callbackManager = CallbackManager.Factory.create();
 
 
+                Utils.showLoading(this,"Loading...");
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -60,6 +65,7 @@
                             onFacebookLogin();
                         }else {
                             //go to account login page...
+                            Utils.removeLoading();
                             goToLoginPage();
                         }
                     }
@@ -100,6 +106,7 @@
                                                                 @Override
                                                                 public void onRequestCompleted(SuccessModel model, String errorMessage){
                                                                     if (model.getStatus().equals("success")) {
+                                                                        Utils.removeLoading();
                                                                         goToAccountSummaryPage();
                                                                     }
                                                                 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.oozmakappa.oyeloans">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -28,10 +29,11 @@
             android:value="@string/facebook_app_id" />
 
         <activity
+            tools:replace="android:theme"
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/FullyTranslucent"/>
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -102,6 +104,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ApplicationCompletedActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
