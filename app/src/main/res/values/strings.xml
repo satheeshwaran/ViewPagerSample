@@ -150,6 +150,8 @@
     <string name="application_failed_sub_message">Please visit our Help / FAQ page if you have any questions</string>
     <string name="highestEducationTitle">Highest Education</string>
     <string name="editProfileSaveButton">Save and Proceed</string>
+    <string name="appointment_title">Fix an Appointment</string>
+    <string name="book_appointment">Book Appointment</string>
 
     <string-array name="gender_array">
         <item>Male</item>

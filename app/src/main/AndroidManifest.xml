@@ -118,7 +118,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".FixAppointmentActivity" />
+        <activity android:name=".TermsAndConditionsActivity"
+            android:label="Terms And Conditions"></activity>
     </application>
 
 </manifest>

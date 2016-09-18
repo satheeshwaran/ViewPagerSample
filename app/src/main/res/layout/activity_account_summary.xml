@@ -144,6 +144,15 @@
                     fab:fab_size="mini"
                     fab:fab_label="Make Payment" />
 
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/termsAndConditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_assignment_white_48dp"
+                    fab:fab_size="mini"
+                    fab:fab_label="Terms and Conditions" />
+
+
             </com.github.clans.fab.FloatingActionMenu>
 
 

@@ -161,6 +161,8 @@ public class AccountSummaryActivity extends AppCompatActivity
 
         FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
         FloatingActionButton applyLoanBtn = (FloatingActionButton) findViewById(R.id.fab1);
+        FloatingActionButton termsButton = (FloatingActionButton) findViewById(R.id.termsAndConditions);
+
         makePaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +179,14 @@ public class AccountSummaryActivity extends AppCompatActivity
             public void onClick(View v) {
                 goToApplyLoanPage();
                 Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        termsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent makePaymentIntent = new Intent(AccountSummaryActivity.this,TermsAndConditionsActivity.class);
+                startActivity(makePaymentIntent);
             }
         });
 
@@ -257,7 +267,7 @@ public class AccountSummaryActivity extends AppCompatActivity
 
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
-        referFriend = new ResideMenuItem(this, R.drawable.command, "Refer Friend");
+        referFriend = new ResideMenuItem(this, R.drawable.command, "Refer A Friend");
         ResideMenuItem itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
         ResideMenuItem chatWithUS = new ResideMenuItem(this,R.drawable.messenger, "Chat");
         ResideMenuItem rateUs = new ResideMenuItem(this,R.drawable.star, "Rate Us");
@@ -303,6 +313,7 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(rateUs, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
+
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
     }

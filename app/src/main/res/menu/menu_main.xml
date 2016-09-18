@@ -4,7 +4,7 @@
     tools:context=".MyProfilePage">
 
     <item android:id="@+id/menu_share"
-        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:icon="@drawable/ic_edit"
         app:showAsAction="always"
         android:title="Edit Profile" />
 </menu>
