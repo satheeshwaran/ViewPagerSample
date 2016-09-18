@@ -2,6 +2,7 @@ package com.oozmakappa.oyeloans.ResideMenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -15,6 +16,7 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.MyProfilePage;
 import com.oozmakappa.oyeloans.R;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.squareup.picasso.Picasso;
@@ -132,6 +134,16 @@ public class ResideMenu extends FrameLayout {
                     .resize(400, 400)
                     .into((ImageView) findViewById(R.id.userProfilePictureSideMenu));
         }
+
+        ImageView profileImage = (ImageView)findViewById(R.id.userProfilePictureSideMenu);
+        profileImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewProfileActivity = new Intent(getContext(), MyProfilePage.class);
+                viewProfileActivity.putExtra("AllEdit",false);
+                getContext().startActivity(viewProfileActivity);
+            }
+        });
 
         ((TextView)findViewById(R.id.welcome_user_sidemenu)).setText(SharedDataManager.getInstance().userObject.firstName);
         ((TextView)findViewById(R.id.user_location_side_menu)).setText(SharedDataManager.getInstance().userObject.city);

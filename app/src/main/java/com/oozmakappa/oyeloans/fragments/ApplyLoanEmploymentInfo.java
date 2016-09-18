@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
-import com.oozmakappa.oyeloans.EditMyProfilePage;
 import com.oozmakappa.oyeloans.R;
 
 /**

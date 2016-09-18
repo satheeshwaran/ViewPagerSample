@@ -17,13 +17,13 @@ import java.util.Locale;
  * Created by satheeshwaran on 9/7/16.
  */
 public class LoanUser {
-    public String firstName;
-    public String lastName;
-    public String fbUserID;
-    public String emailID;
-    public String PANNumber;
-    public String mobileNumber;
-    public String landlineNumber;
+    public String firstName="";
+    public String lastName="";
+    public String fbUserID="";
+    public String emailID="";
+    public String PANNumber="";
+    public String mobileNumber="";
+    public String landlineNumber="";
 
     public String fbUserName = "";
     public String fbProfileLink = "";
@@ -33,18 +33,21 @@ public class LoanUser {
     public int ageRange;
     public double totalFriendcount;
     public String gender = "";
-    public String highestEducation;
-    public String highestEducationPlace;
-    public String highestEducationYear;
+    public String highestEducation = "";
+    public String highestEducationPlace= "";
+    public String highestEducationYear ="";
 
-    public String workPlace;
-    public String workTitle;
+    public String workPlace ="";
+    public String workTitle ="";
+    public String workStartDate="";
     public int totalWorkExperience;
+    public String doorNumber = "";
     public String street = "";
     public String locaility = "";
     public String city = "";
     public String landmark = "";
     public String state = "";
+    public String PINCode = "";
     public String relationshipStatus = "";
     public JSONArray employment;
     public JSONArray friendList;

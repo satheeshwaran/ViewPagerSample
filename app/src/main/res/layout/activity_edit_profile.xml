@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/mainDetails"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/NavBarColor">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/editprofileImage"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_width"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/profile"
+                    app:border_color="@android:color/white"
+                    app:border_width="2dp"
+                    app:finalHeight="@dimen/image_final_width"
+                    app:finalYPosition="2dp"
+                    app:layout_behavior="com.oozmakappa.oyeloans.AvatarImageBehavior"
+                    app:startHeight="2dp"
+                    app:startToolbarPosition="2dp"
+                    app:startXPosition="2dp" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editprofileImage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="satheesh4590@gmail.com"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGray"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/nameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Personal Information" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/nameTitle"
+                        android:layout_marginTop="25dp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp">
+
+                        <TextView
+                            android:id="@+id/firstNameTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="First Name" />
+
+                        <EditText
+                            android:id="@+id/editFirstNameValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter your first name"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/lastNameTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Last Name" />
+
+                        <EditText
+                            android:id="@+id/editLastNameValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter your last name"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+                    </TableLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/phoneNumberTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Phone Number" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/phoneNumberTitle"
+                        android:layout_marginTop="25dp" />
+
+
+                    <EditText
+                        android:id="@+id/editphoneNumberValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35dp"
+                        android:hint="A Valid Indian Phone Number"
+                        android:lineSpacingExtra="8dp"
+                        android:textSize="14dp" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/DOBTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/DOBTitle" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/DOBTitle"
+                        android:layout_marginTop="25dp" />
+
+
+                    <EditText
+                        android:id="@+id/editDOBAgeValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35dp"
+                        android:focusable="false"
+                        android:hint="Enter DOB as per records"
+                        android:lineSpacingExtra="8dp"
+                        android:textSize="14dp" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/addressTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Address" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/addressTitle"
+                        android:layout_marginTop="25dp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp">
+
+                        <TextView
+                            android:id="@+id/flatTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Flat No/Door No" />
+
+                        <EditText
+                            android:id="@+id/editdoorNumberValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter Door/Flat Number"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/streetTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Street Name" />
+
+
+                        <EditText
+                            android:id="@+id/editStreetNameValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter Your street"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/streetName1Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Locality/Landmark" />
+
+
+                        <EditText
+                            android:id="@+id/editStreetName1Value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter Locality"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/cityTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="City" />
+
+
+                        <EditText
+                            android:id="@+id/editCityValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter City"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/stateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="State" />
+
+
+                        <EditText
+                            android:id="@+id/editStateValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter State"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/pinTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="PIN CODE" />
+
+                        <EditText
+                            android:id="@+id/editPINCodeValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter PIN Code"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+                    </TableLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="2dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/educationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/highestEducationTitle" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/educationTitle"
+                        android:layout_marginTop="25dp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp">
+
+                        <TextView
+                            android:id="@+id/collegeTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="College/University" />
+
+                        <EditText
+                            android:id="@+id/universityValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter University"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/degreeTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Degree/Specialization" />
+
+
+                        <EditText
+                            android:id="@+id/degreeValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Enter Degree"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/passoutTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Year Passed Out" />
+
+
+                        <EditText
+                            android:id="@+id/passoutYearValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:focusable="false"
+                            android:hint="Enter Year passed out"
+                            android:lineSpacingExtra="8dp"
+                            android:textSize="14dp" />
+
+                    </TableLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="2dp"
+                    app:contentPadding="16dp">
+
+                    <TextView
+                        android:id="@+id/employmentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Employment" />
+
+                    <include
+                        layout="@layout/item_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/employmentTitle"
+                        android:layout_marginTop="25dp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp">
+
+                        <TextView
+                            android:id="@+id/companyTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Current Company" />
+
+
+                        <EditText
+                            android:id="@+id/editEmploymentValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/dummyEmployment"
+                            android:paddingBottom="10dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/designationTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Current Company" />
+
+
+                        <EditText
+                            android:id="@+id/editDesignationValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/dummyEmployment"
+                            android:paddingBottom="10dp"
+                            android:textSize="14dp" />
+                        <TextView
+                            android:id="@+id/startDateEmploymentTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Start Date" />
+
+
+                        <EditText
+                            android:id="@+id/editEmploymentStartDateValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:focusable="false"
+                            android:hint="Enter start date"
+                            android:paddingBottom="10dp"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/workExpTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Total Work Experience" />
+
+                        <EditText
+                            android:id="@+id/editTotalExperienceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/dummyTotalExp"
+                            android:textSize="14dp" />
+                    </TableLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <RelativeLayout android:padding="20dp">
+
+                    <Button
+                        android:id="@+id/editProfileProceedButton"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/rounded_button_shape"
+                        android:text="@string/editProfileSaveButton"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

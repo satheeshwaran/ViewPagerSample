@@ -17,7 +17,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/NavigationMenuColor</item>
-        <item name="android:textColorHint">@color/NavBarColor</item>
+        <item name="android:textColorHint">@color/grey_800</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

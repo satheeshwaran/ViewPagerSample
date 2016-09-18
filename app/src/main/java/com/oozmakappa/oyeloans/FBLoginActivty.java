@@ -24,6 +24,7 @@ import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +50,7 @@ public class FBLoginActivty extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
+                Utils.showLoading(FBLoginActivty.this,"Building spaceships...");
                 onFacebookLogin();
             }
             @Override
@@ -95,12 +97,14 @@ public class FBLoginActivty extends AppCompatActivity {
                                                         public void onRequestCompleted(SuccessModel model, String errorMessage){
                                                             if (model.getStatus().equals("success")) {
                                                                 FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
+                                                                Utils.removeLoading();
                                                                 goToProfileEditPage();
                                                             }
                                                         }
                                                     });
                                                     webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
                                                     //To be reomoved after setting up single box.
+                                                    Utils.removeLoading();
                                                     goToProfileEditPage();
                                                 }
                                             });
@@ -131,8 +135,9 @@ public class FBLoginActivty extends AppCompatActivity {
 
 
     void goToProfileEditPage(){
-        Intent accSummaryIntent = new Intent(this,EditMyProfilePage.class);
-        startActivity(accSummaryIntent);
+        Intent editProfileIntent = new Intent(this,MyProfilePage.class);
+        editProfileIntent.putExtra("AllEdit",true);
+        startActivity(editProfileIntent);
     }
 
 }

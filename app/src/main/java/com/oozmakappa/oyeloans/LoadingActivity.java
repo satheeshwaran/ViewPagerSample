@@ -1,9 +1,11 @@
         package com.oozmakappa.oyeloans;
 
         import android.app.ProgressDialog;
+        import android.content.DialogInterface;
         import android.content.Intent;
         import android.os.Build;
         import android.os.Handler;
+        import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
@@ -127,13 +129,35 @@
 
                             @Override
                             public void onCancel() {
-                                Toast.makeText(getApplicationContext(),"Action Cancelled", Toast.LENGTH_SHORT).show();
+
+                                Utils.removeLoading();
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoadingActivity.this);
+                                alertDialogBuilder.setMessage("You need to accept all the permissions before proceeding to submit a loan, would you like to retry?");
+
+                                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Utils.showLoading(LoadingActivity.this,"Loading...");
+                                        onFacebookLogin();
+                                    }
+                                });
+
+                                alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
+                               // Toast.makeText(getApplicationContext(),"Action Cancelled", Toast.LENGTH_SHORT).show();
                                 Log.d(TAG_CANCEL,"On cancel");
                             }
 
                             @Override
                             public void onError(FacebookException error) {
-                                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG_ERROR,error.toString());
                             }
                         });
@@ -152,7 +176,7 @@
             }
 
             void goToProfilePage(){
-                Intent profilePage = new Intent(this,EditMyProfilePage.class);
+                Intent profilePage = new Intent(this,MyProfilePage.class);
                 startActivity(profilePage);
             }
 
