@@ -22,6 +22,7 @@ public class LoanUser {
     public String fbUserID;
     public String emailID;
     public String PANNumber;
+    public String aadharNumber;
     public String mobileNumber;
     public String landlineNumber;
 
@@ -40,6 +41,9 @@ public class LoanUser {
     public String workPlace;
     public String workTitle;
     public int totalWorkExperience;
+    public String address1 = "";
+    public String address2 = "";
+    public String pincode;
     public String street = "";
     public String locaility = "";
     public String city = "";
