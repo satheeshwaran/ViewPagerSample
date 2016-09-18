@@ -22,6 +22,7 @@
         import com.facebook.appevents.AppEventsLogger;
         import com.facebook.login.LoginManager;
         import com.facebook.login.LoginResult;
+        import com.google.firebase.messaging.FirebaseMessaging;
         import com.oozmakappa.oyeloans.Models.LoanUser;
         import com.oozmakappa.oyeloans.Models.SuccessModel;
         import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -63,6 +64,8 @@
                     public void run() {
                         if (SharedDataManager.getInstance().isFBLoggedIn()){
                             onFacebookLogin();
+                            FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
+
                         }else {
                             //go to account login page...
                             Utils.removeLoading();

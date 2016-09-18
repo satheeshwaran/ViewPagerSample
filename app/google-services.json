@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "445773686331",
+    "firebase_url": "https://oyeloans-545ec.firebaseio.com",
+    "project_id": "oyeloans-545ec",
+    "storage_bucket": "oyeloans-545ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445773686331:android:9dc791a89d8ce3ea",
+        "android_client_info": {
+          "package_name": "com.oozmakappa.oyeloans"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445773686331-e99he5tvg1sn6tukqtfiga66s9tlub9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_E_LcPc5z0Ub-33F-YKnYiJp2lbgVYhk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
