@@ -25,6 +25,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         String FB_REQUEST_KEY = "fb";
         String VALIDATE_REFERRAL_KEY = "validateReferral";
         String NEW_APPLICATION_REQUEST_KEY = "newapplication";
+        String EMPLOYMENTINFO_REQUEST_KEY = "employmentinfo";
     }
 
     private JSONObject authObject = new JSONObject();
@@ -91,7 +92,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI002");
             this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
-            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
 
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_NEWAPPLICATION_SERVICE_KEY);
@@ -123,6 +124,60 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             Log.v("json exception", e.getLocalizedMessage());
         }
 
+    }
+
+    public void makeEmploymentInfoServiceCall(Application applicationObject) {
+        //Construct request
+        try {
+            JSONObject requestMap = new JSONObject();
+            requestMap.putOpt(Jsonconstants.OL_EI_APPLICATIONID_KEY, applicationObject.applicationID);
+            requestMap.putOpt(Jsonconstants.OL_EI_DEGREE_KEY, applicationObject.loanUserObject.highestEducation);
+            requestMap.putOpt(Jsonconstants.OL_EI_INSTITUTION_KEY, applicationObject.loanUserObject.highestEducationPlace);
+
+            if (applicationObject.loanUserObject.employmentInfo != null){
+                HashMap<String, Object> employmentInfo = applicationObject.loanUserObject.employmentInfo;
+                requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, employmentInfo.get("emp_status"));
+                requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, employmentInfo.get("emp_name"));
+                requestMap.putOpt(Jsonconstants.OL_EI_PHONE_KEY, employmentInfo.get("emp_phone"));
+                requestMap.putOpt(Jsonconstants.OL_EI_INCOME_KEY, employmentInfo.get("income_per_month"));
+            }
+
+            // Construct the auth object for the request
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
+
+            // Construct the request info object for the request
+            this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "AddEmploymentInfo");
+            this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI003");
+            this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
+
+        }catch(Exception e){
+            Log.v("json exception", e.getLocalizedMessage());
+        }
     }
 
     public void makeFacebookServiceCall(LoanUser userObject){
