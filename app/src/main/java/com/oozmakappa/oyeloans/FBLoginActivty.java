@@ -16,6 +16,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -93,6 +94,7 @@ public class FBLoginActivty extends AppCompatActivity {
                                                         @Override
                                                         public void onRequestCompleted(SuccessModel model, String errorMessage){
                                                             if (model.getStatus().equals("success")) {
+                                                                FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                                                                 goToProfileEditPage();
                                                             }
                                                         }

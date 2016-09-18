@@ -40,6 +40,10 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.github.cooltechworks:CreditCardView:v1.0.1'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
-
-
+    compile 'me.wangyuwei:LoadingiVew:1.0.5'
+    compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.google.firebase:firebase-crash:9.4.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
