@@ -68,17 +68,17 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         // Construct the request
         try{
             JSONObject requestMap = new JSONObject();
-            requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.firstName.concat(" ").concat(applicationObject.lastName)));
-            requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.emailID);
-            requestMap.putOpt(Jsonconstants.OL_NA_MOBILE_NO_KEY, applicationObject.mobile);
-            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, applicationObject.dob);
-            requestMap.putOpt(Jsonconstants.OL_NA_GENDER_KEY, applicationObject.gender);
-            requestMap.putOpt(Jsonconstants.OL_NA_PAN_KEY, applicationObject.panNumber);
-            requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.aadharNumber);
-            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.buildingNumber.concat(" ").concat(applicationObject.buildingName));
-            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.streetName);
-            requestMap.putOpt(Jsonconstants.OL_NA_PINCODE_KEY, applicationObject.pinCode);
-            requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.city);
+            requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.loanUserObject.firstName.concat(" ").concat(applicationObject.loanUserObject.lastName)));
+            requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.loanUserObject.emailID);
+            requestMap.putOpt(Jsonconstants.OL_NA_MOBILE_NO_KEY, applicationObject.loanUserObject.mobileNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, applicationObject.loanUserObject.DOB);
+            requestMap.putOpt(Jsonconstants.OL_NA_GENDER_KEY, applicationObject.loanUserObject.gender);
+            requestMap.putOpt(Jsonconstants.OL_NA_PAN_KEY, applicationObject.loanUserObject.PANNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.loanUserObject.aadharNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.loanUserObject.address1);
+            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.address2);
+            requestMap.putOpt(Jsonconstants.OL_NA_PINCODE_KEY, applicationObject.loanUserObject.pincode);
+            requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
             requestMap.putOpt(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationObject.applicationID);
             requestMap.putOpt(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
             requestMap.putOpt(Jsonconstants.OL_NA_LOAN_DURATION_KEY, applicationObject.loanDuration);
