@@ -49,6 +49,15 @@ public interface Jsonconstants {
     String OL_NA_LOAN_DURATION_KEY = "loan_duration";
     String OL_NA_FIRST_PAYDATE = "first_paydate";
 
+    // Employment info service constants
+    String OL_EI_STATUS_KEY = "employment_status";
+    String OL_EI_EMPLOYER_KEY = "employer_name";
+    String OL_EI_PHONE_KEY = "employer_phone";
+    String OL_EI_INCOME_KEY = "gross_monthly_income";
+    String OL_EI_APPLICATIONID_KEY = "app_id";
+    String OL_EI_DEGREE_KEY = "highest_degree";
+    String OL_EI_INSTITUTION_KEY = "last_instituition_studied";
+
     //General auth & request info constants.
     String OL_AUTH_KEY = "auth";
     String OL_USERNAME_KEY = "username";
@@ -65,6 +74,7 @@ public interface Jsonconstants {
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
     String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";
+    String OL_EMPLOYMENTINFO_SERVICE_KEY = "employeeinfo/";
 
 
 
