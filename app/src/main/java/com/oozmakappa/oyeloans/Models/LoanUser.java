@@ -49,6 +49,7 @@ public class LoanUser {
     public String state = "";
     public String PINCode = "";
     public String relationshipStatus = "";
+    public String aadharNumber = "";
     public JSONArray employment;
     public JSONArray friendList;
     public JSONArray education;

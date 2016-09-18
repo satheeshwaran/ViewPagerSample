@@ -3,6 +3,7 @@ package com.oozmakappa.oyeloans.helper;
 import android.util.Log;
 import com.android.volley.Request;
 import com.oozmakappa.oyeloans.DataExtraction.AppConstants;
+import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import java.util.HashMap;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
@@ -23,6 +24,21 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public interface RequestNameKeys{
         String FB_REQUEST_KEY = "fb";
         String VALIDATE_REFERRAL_KEY = "validateReferral";
+        String NEW_APPLICATION_REQUEST_KEY = "newapplication";
+    }
+
+    private JSONObject authObject = new JSONObject();
+
+    private JSONObject requestInfo = new JSONObject();
+
+    public WebServiceCallHelper() {
+        try {
+            this.authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, Jsonconstants.OL_PASSWORD_VALUE);
+            this.authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, Jsonconstants.OL_USERNAME_VALUE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     VolleyRequestHelper vHelper;
@@ -46,6 +62,67 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
     public WebServiceCallHelper(OnWebServiceRequestCompletedListener handler){
         completionHandler = handler;
+    }
+
+    public void makeNewApplicationServiceCall(Application applicationObject) {
+        // Construct the request
+        try{
+            JSONObject requestMap = new JSONObject();
+            requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.loanUserObject.firstName.concat(" ").concat(applicationObject.loanUserObject.lastName)));
+            requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.loanUserObject.emailID);
+            requestMap.putOpt(Jsonconstants.OL_NA_MOBILE_NO_KEY, applicationObject.loanUserObject.mobileNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, applicationObject.loanUserObject.DOB);
+            requestMap.putOpt(Jsonconstants.OL_NA_GENDER_KEY, applicationObject.loanUserObject.gender);
+            requestMap.putOpt(Jsonconstants.OL_NA_PAN_KEY, applicationObject.loanUserObject.PANNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.loanUserObject.aadharNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.loanUserObject.doorNumber);
+            requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.street);
+            requestMap.putOpt(Jsonconstants.OL_NA_PINCODE_KEY, applicationObject.loanUserObject.PINCode);
+            requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
+            requestMap.putOpt(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationObject.applicationID);
+            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
+            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_DURATION_KEY, applicationObject.loanDuration);
+            requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, applicationObject.firstPayDate);
+
+            // Construct the auth object for the request
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
+
+            // Construct the request info object for the request
+            this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
+            this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI002");
+            this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_NEWAPPLICATION_SERVICE_KEY);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
+
+
+
+        }catch(Exception e){
+            Log.v("json exception", e.getLocalizedMessage());
+        }
+
     }
 
     public void makeFacebookServiceCall(LoanUser userObject){

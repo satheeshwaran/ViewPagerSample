@@ -32,10 +32,29 @@ public interface Jsonconstants {
     String OL_FB_RELSTATUS_KEY = "relationship_status";
     String OL_FB_FRIENDLIST_KEY = "friend_list";
 
+    // New Application service constants
+    String OL_NA_NAME_KEY = "full_name";
+    String OL_NA_EMAIL_KEY = "email";
+    String OL_NA_MOBILE_NO_KEY = "mobile_no";
+    String OL_NA_DOB_KEY = "dob";
+    String OL_NA_GENDER_KEY = "gender";
+    String OL_NA_PAN_KEY = "pan_number";
+    String OL_NA_AADHAR_KEY = "aadhar";
+    String OL_NA_ADDRESS1_KEY = "address1";
+    String OL_NA_ADDRESS2_KEY = "address2";
+    String OL_NA_PINCODE_KEY = "pincode";
+    String OL_NA_CITY_KEY = "city";
+    String OL_NA_APPLICATIONID_KEY = "app_id";
+    String OL_NA_LOAN_AMOUNT_KEY = "loan_amount";
+    String OL_NA_LOAN_DURATION_KEY = "loan_duration";
+    String OL_NA_FIRST_PAYDATE = "first_paydate";
+
     //General auth & request info constants.
     String OL_AUTH_KEY = "auth";
     String OL_USERNAME_KEY = "username";
+    String OL_USERNAME_VALUE = "intest";
     String OL_PASSWORD_KEY = "password";
+    String OL_PASSWORD_VALUE = "selective";
     String OL_REQUESTINFO_KEY = "request_info";
     String OL_SERVICENAME_KEY = "service_name";
     String OL_SERVICECODE_KEY = "service_code";
@@ -45,6 +64,7 @@ public interface Jsonconstants {
     String OL_BASE_URL = "https://192.168.56.101/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
+    String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";
 
 
 
