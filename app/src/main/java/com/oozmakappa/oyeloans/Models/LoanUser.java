@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,6 +23,7 @@ public class LoanUser {
     public String fbUserID="";
     public String emailID="";
     public String PANNumber="";
+    public String aadharNumber = "";;
     public String mobileNumber="";
     public String landlineNumber="";
 
@@ -42,15 +44,18 @@ public class LoanUser {
     public String workStartDate="";
     public int totalWorkExperience;
     public String doorNumber = "";
+
+    public String PINCode = "";
     public String street = "";
     public String locaility = "";
     public String city = "";
     public String landmark = "";
     public String state = "";
-    public String PINCode = "";
     public String relationshipStatus = "";
-    public String aadharNumber = "";
+
     public JSONArray employment;
+    public HashMap<String, Object> employmentInfo = null;
+
     public JSONArray friendList;
     public JSONArray education;
 
