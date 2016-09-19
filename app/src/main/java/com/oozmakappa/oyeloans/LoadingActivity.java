@@ -190,7 +190,7 @@
             }
 
             void goToAccountSummaryPage(){
-                Intent accSummaryIntent = new Intent(this,LoanApprovedActivity.class);
+                Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
                 startActivity(accSummaryIntent);
 
             }
