@@ -7,6 +7,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.oozmakappa.oyeloans.Models.LoanUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,5 +86,12 @@ public class FacebookHelperUtils {
                     }
 
                 }).executeAsync();
+    }
+
+    public static boolean checkIfValidFBProfile(LoanUser user){
+
+        if (user.totalFriendcount<10 || user.isFBProfileVerified || user.emailID.length()<=0  || user.ageRange < 21)
+            return false;
+        return true;
     }
 }

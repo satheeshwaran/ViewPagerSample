@@ -1,9 +1,11 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -77,7 +79,26 @@ public class MyProfilePage extends AppCompatActivity implements AppBarLayout.OnO
             actionBar.setElevation(0);
         }
 
-        setUpData();
+        if(getIntent().getBooleanExtra("ShowInsufficientInformation", false))
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyProfilePage.this);
+            alertDialogBuilder.setMessage("We could not get sufficient information from your Facebook profile. Please fill up all the fields in the next page");
+            alertDialogBuilder.setTitle("Oops!!");
+
+            alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent editProfileIntent = new Intent(MyProfilePage.this, EditProfileActivity.class);
+                    editProfileIntent.putExtra("AllEdit",true);
+                    startActivity(editProfileIntent);
+                }
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+            setUpData();
 
         //Button editButton = (Button) findViewById(R.id.profil)
     }

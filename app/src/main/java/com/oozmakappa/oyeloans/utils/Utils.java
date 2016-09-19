@@ -15,14 +15,18 @@ public class Utils {
 
     public static void showLoading(Context context,String text){
 
-        if (mDialog != null)
-            if (mDialog.isShowing())
-                mDialog.dismiss();
+        try {
+            if (mDialog != null)
+                if (mDialog.isShowing())
+                    mDialog.dismiss();
 
-        mDialog = new ProgressDialog(context);
-        mDialog.setMessage(text);
-        mDialog.setCancelable(false);
-        mDialog.show();
+            mDialog = new ProgressDialog(context);
+            mDialog.setMessage(text);
+            mDialog.setCancelable(false);
+            mDialog.show();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public static void removeLoading(){

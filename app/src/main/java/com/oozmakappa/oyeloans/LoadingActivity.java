@@ -1,6 +1,6 @@
         package com.oozmakappa.oyeloans;
 
-        import android.app.ProgressDialog;
+
         import android.content.DialogInterface;
         import android.content.Intent;
         import android.os.Build;
@@ -9,11 +9,8 @@
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
-        import android.view.View;
         import android.view.Window;
         import android.view.WindowManager;
-        import android.widget.ProgressBar;
-        import android.widget.Toast;
 
         import com.facebook.CallbackManager;
         import com.facebook.FacebookCallback;

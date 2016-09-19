@@ -98,14 +98,14 @@ public class FBLoginActivty extends AppCompatActivity {
                                                             if (model.getStatus().equals("success")) {
                                                                 FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                                                                 Utils.removeLoading();
-                                                                goToProfileEditPage();
+                                                                goToProfileEditPage(!FacebookHelperUtils.checkIfValidFBProfile(SharedDataManager.getInstance().userObject));
                                                             }
                                                         }
                                                     });
                                                     webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
                                                     //To be reomoved after setting up single box.
                                                     Utils.removeLoading();
-                                                    goToProfileEditPage();
+                                                    goToProfileEditPage(!FacebookHelperUtils.checkIfValidFBProfile(SharedDataManager.getInstance().userObject));
                                                 }
                                             });
                                         }
@@ -134,10 +134,10 @@ public class FBLoginActivty extends AppCompatActivity {
     }
 
 
-    void goToProfileEditPage(){
+    void goToProfileEditPage(Boolean status){
         Intent editProfileIntent = new Intent(this,MyProfilePage.class);
         editProfileIntent.putExtra("AllEdit",true);
+        editProfileIntent.putExtra("ShowInsufficientInformation",status);
         startActivity(editProfileIntent);
     }
-
 }
