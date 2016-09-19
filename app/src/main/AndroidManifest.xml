@@ -14,7 +14,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <application
         android:name=".DataExtraction.AppController"
         android:allowBackup="true"
@@ -130,6 +132,13 @@
             android:name=".LoanReasonActivity"
             android:label="Tell Us Why" />
         <activity android:name=".LoanRejectionActivity"></activity>
+
+        <receiver android:name=".Services.OyeLoansIncomingSMSReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

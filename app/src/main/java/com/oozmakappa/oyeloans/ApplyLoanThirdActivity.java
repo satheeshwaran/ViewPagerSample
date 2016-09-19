@@ -1,6 +1,9 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -21,6 +24,10 @@ import com.oozmakappa.oyeloans.Adapters.UploadDocsPagerAdapter;
  * Created by sankarnarayanan on 14/09/16.
  */
 public class ApplyLoanThirdActivity extends AppCompatActivity {
+
+    BroadcastReceiver receiver;
+    IntentFilter filter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,32 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             }
         });
 
+        listenForSMSOTP();
+    }
+
+    private void listenForSMSOTP() {
+
+        try {
+            receiver = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+
+                    if (action.equals("SMS OTP ACTION")) {
+                        String otp = intent.getStringExtra("OTP");
+                        ((TextView)findViewById(R.id.otpEntryField)).setText(otp);
+                    }
+                }
+
+            };
+
+            filter = new IntentFilter("SMS OTP ACTION");
+            registerReceiver(receiver, filter);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -87,13 +120,11 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() == 0) {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
             super.onBackPressed();
-        }
-        else if(getFragmentManager().getBackStackEntryCount() == 1) {
+        } else if (getFragmentManager().getBackStackEntryCount() == 1) {
             moveTaskToBack(false);
-        }
-        else {
+        } else {
             getFragmentManager().popBackStack();
         }
     }
