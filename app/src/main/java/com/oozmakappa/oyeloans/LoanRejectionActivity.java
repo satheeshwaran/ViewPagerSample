@@ -28,7 +28,7 @@ public class LoanRejectionActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
         }
-        
+
         Button loanRejectionOk = (Button) findViewById(R.id.loan_rejected_ok);
         loanRejectionOk.setOnClickListener(new View.OnClickListener() {
             @Override

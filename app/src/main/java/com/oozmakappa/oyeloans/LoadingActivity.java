@@ -191,7 +191,7 @@
             }
 
             void goToAccountSummaryPage(){
-                Intent accSummaryIntent = new Intent(this,LoanRejectionActivity.class);
+                Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
                 startActivity(accSummaryIntent);
 
             }
