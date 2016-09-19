@@ -11,6 +11,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.oozmakappa.oyeloans.utils.Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -30,7 +32,8 @@ public class FixAppointmentActivity extends AppCompatActivity {
         bookAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Integrate web service heree...
+                // TODO: Integrate web service here...
+                Utils.showLoading(FixAppointmentActivity.this,"Booking your appointment...");
                 finish();
             }
         });
@@ -73,14 +76,6 @@ public class FixAppointmentActivity extends AppCompatActivity {
     void setupDatePickerForAppointmentTime() {
 
         final EditText timeField = (EditText) findViewById(R.id.appointmentTimeField);
-        final TimePickerDialog.OnTimeSetListener onTimeSetListener= new TimePickerDialog.OnTimeSetListener(){
-
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timeField.setText(Integer.toString(hourOfDay) + ":" + Integer.toString(minute));
-            }
-        };
-
 
         timeField.setOnClickListener(new View.OnClickListener() {
 
@@ -89,8 +84,14 @@ public class FixAppointmentActivity extends AppCompatActivity {
 
                 int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
                 int minute = myCalendar.get(Calendar.MINUTE);
-                new TimePickerDialog(FixAppointmentActivity.this, onTimeSetListener, hour, minute,
-                        DateFormat.is24HourFormat(FixAppointmentActivity.this));
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(FixAppointmentActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        timeField.setText(Integer.toString(selectedHour) + ":" + Integer.toString(selectedMinute));
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.show();
             }
         });
 

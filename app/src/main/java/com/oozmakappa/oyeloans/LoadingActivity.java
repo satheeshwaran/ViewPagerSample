@@ -154,6 +154,29 @@
 
                             @Override
                             public void onError(FacebookException error) {
+
+                                Utils.removeLoading();
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoadingActivity.this);
+                                alertDialogBuilder.setMessage(error.getLocalizedMessage());
+
+                                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Utils.showLoading(LoadingActivity.this,"Loading...");
+                                        onFacebookLogin();
+                                    }
+                                });
+
+                                alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
+
                                 //Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG_ERROR,error.toString());
                             }
@@ -167,7 +190,7 @@
             }
 
             void goToAccountSummaryPage(){
-                Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
+                Intent accSummaryIntent = new Intent(this,LoanApprovedActivity.class);
                 startActivity(accSummaryIntent);
 
             }

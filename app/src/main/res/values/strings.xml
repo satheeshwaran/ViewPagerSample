@@ -152,6 +152,10 @@
     <string name="editProfileSaveButton">Save and Proceed</string>
     <string name="appointment_title">Fix an Appointment</string>
     <string name="book_appointment">Book Appointment</string>
+    <string name="loan_approved">Congratuations!!</string>
+    <string name="tell_us_why">Tell us why you need these funds?</string>
+    <string name="submit_reason">Submit</string>
+    <string name="loan_reason_icon">Loan Reason Icon</string>
 
     <string-array name="gender_array">
         <item>Male</item>

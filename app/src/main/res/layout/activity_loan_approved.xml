@@ -21,68 +21,65 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="10dp" >
+            android:padding="30dp" >
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/appointment" />
+                android:layout_margin="10dp"
+                android:src="@drawable/loan_approved" />
 
-            <include layout="@layout/item_divider" />
+            <include layout="@layout/item_divider"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="@string/appointment_title"
-                android:textSize="24sp"
-                android:paddingBottom="20dp"/>
+                android:text="@string/loan_approved"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
 
 
             <TextView
                 android:id="@+id/available_amount_redraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Everything looks good as of now, but we need to meet you in person to collect a signed cheque for ECS and few other documents. Please schedule an appointment and we will send one of our agents to meet you at your home."
+                android:text="Your Loan application (#424252) with us,has been approved by us and we will deposit your approved amount of Rs.4000 at the earliest. You will get an email intimation of the same."
                 android:textSize="16sp"
                 android:drawablePadding="10dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"/>
 
             <include layout="@layout/item_divider"/>
 
-            <EditText
-            android:id="@+id/appointmentDateTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:focusable="false"
-            android:hint="Choose Date"
-            android:paddingBottom="10dp"
-            android:textSize="14dp" />
-
-
-            <EditText
-                android:id="@+id/appointmentTimeField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:focusable="false"
-                android:hint="Choose Time"
-                android:paddingBottom="10dp"
-                android:textSize="14dp" />
-
             <Button
-                android:id="@+id/bookAppointmentButton"
+                android:id="@+id/tell_us_loan_reason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="@string/book_appointment"
+                android:text="@string/tell_us_why"
                 android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <Button
+                android:id="@+id/loan_approved_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/ok_button"
+                android:textAllCaps="false"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/WhiteColor"
+
                 android:background="@drawable/rounded_button_shape"
-                android:layout_marginTop="20dp"
                 />
 
         </LinearLayout>
