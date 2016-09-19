@@ -157,9 +157,10 @@
 
                                 Utils.removeLoading();
                                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoadingActivity.this);
-                                alertDialogBuilder.setMessage(error.getLocalizedMessage());
+                                alertDialogBuilder.setMessage("Something wrong has happened");
+                                alertDialogBuilder.setTitle("Oops!!");
 
-                                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                alertDialogBuilder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface arg0, int arg1) {
                                         Utils.showLoading(LoadingActivity.this,"Loading...");
@@ -190,7 +191,7 @@
             }
 
             void goToAccountSummaryPage(){
-                Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
+                Intent accSummaryIntent = new Intent(this,LoanRejectionActivity.class);
                 startActivity(accSummaryIntent);
 
             }

@@ -156,6 +156,8 @@
     <string name="tell_us_why">Tell us why you need these funds?</string>
     <string name="submit_reason">Submit</string>
     <string name="loan_reason_icon">Loan Reason Icon</string>
+    <string name="loan_declined">Extremely Sorry!</string>
+    <string name="what_to_do">What else can I do now?</string>
 
     <string-array name="gender_array">
         <item>Male</item>

@@ -123,10 +123,13 @@
         <activity
             android:name=".TermsAndConditionsActivity"
             android:label="Terms And Conditions" />
-        <activity android:name=".LoanApprovedActivity"
-            android:label="Loan Approved"/>
-        <activity android:name=".LoanReasonActivity"
-            android:label="Tell Us Why"></activity>
+        <activity
+            android:name=".LoanApprovedActivity"
+            android:label="Loan Approved" />
+        <activity
+            android:name=".LoanReasonActivity"
+            android:label="Tell Us Why" />
+        <activity android:name=".LoanRejectionActivity"></activity>
     </application>
 
 </manifest>

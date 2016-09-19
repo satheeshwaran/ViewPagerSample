@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/home_category"
+        android:src="@drawable/medical_category"
         android:contentDescription="@string/loan_reason_icon" />
 
     <TextView
