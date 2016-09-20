@@ -22,8 +22,12 @@ import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.oozmakappa.oyeloans.Adapters.ChoosePaymentOptionAdapter;
 import com.oozmakappa.oyeloans.Adapters.NetbankingPickerAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.Utils;
 import com.oozmakappa.oyeloans.Models.DebitCard;
 
+import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -98,7 +102,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         netBankingContainerLayout = (RelativeLayout) findViewById(R.id.netBankingContainer);
         setupSavedDebitCards();
 
-        Button newDebitCardButton = (Button) findViewById(R.id.makePaymentButton);
+        Button newDebitCardButton = (Button) findViewById(R.id.makePaymentButton1);
         newDebitCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +112,28 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         });
 
         showDebitCardLayout();
+
+        Button makepaymentButton = (Button) findViewById(R.id.makePaymentButton1);
+        makepaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                com.oozmakappa.oyeloans.utils.Utils.showLoading(ChoosePaymentOptionActivity.this,"Making payment...");
+                //TO-DO:// add loan object here...
+                LoanSummaryModel loan = new LoanSummaryModel();
+                loan.setLoanId("1");
+                loan.setLoanAmount("10000");
+                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+                    @Override
+                    public void onRequestCompleted(SuccessModel model, String errorMessage){
+                        com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                        if (model.getStatus().equals("success")) {
+                        }
+                    }
+                });
+                webServiceHelper.makePaymentCall(loan);
+            }
+        });
     }
 
     void showDebitCardLayout() {

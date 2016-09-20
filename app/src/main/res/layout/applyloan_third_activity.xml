@@ -169,16 +169,15 @@
             android:layout_height="120dp"
             android:id="@+id/sms_otp_progress_bar"
             app:cpb_background_progressbar_color="@color/grey_400"
-            app:cpb_background_progressbar_width="5dp"
+            app:cpb_background_progressbar_width="2dp"
             app:cpb_progressbar_color="@color/colorPrimary"
-            app:cpb_progressbar_width="10dp"
+            app:cpb_progressbar_width="5dp"
             android:layout_centerInParent="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/secondsTextView"
             android:text="30"
-            android:textStyle="bold"
             android:layout_centerInParent="true"
             android:textSize="40dp"/>
         </RelativeLayout>

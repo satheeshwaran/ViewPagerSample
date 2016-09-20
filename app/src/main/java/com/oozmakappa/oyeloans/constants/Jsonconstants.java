@@ -77,6 +77,7 @@ public interface Jsonconstants {
     String OL_EMPLOYMENTINFO_SERVICE_KEY = "employeeinfo/";
 
 
-
+    String OL_PAYMENTGATEWAY_SERVICE = "paymentgateway/";
+    String OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE = "fcm/store/";
 
 }

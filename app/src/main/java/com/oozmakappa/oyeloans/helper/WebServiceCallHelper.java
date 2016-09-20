@@ -4,8 +4,11 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.oozmakappa.oyeloans.DataExtraction.AppConstants;
 import com.oozmakappa.oyeloans.Models.Application;
+import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import java.util.HashMap;
+import java.util.UUID;
+
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.constants.Jsonconstants;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
@@ -317,6 +320,102 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
 
+    public void makePaymentCall(LoanSummaryModel loanObject){
+        try {
+            JSONObject requestMap = new JSONObject();
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY,"intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "paymentgateway");
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "1001");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY,"12345678");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            JSONObject customerDetailsMap = new JSONObject();
+            customerDetailsMap.put("loanid",loanObject.getLoanId());
+            customerDetailsMap.put("amount",loanObject.getLoanAmount());
+            UUID uniqueKey = UUID.randomUUID();
+            customerDetailsMap.put("transaction_id","IN1354");
+            requestMap.putOpt("customer_details",customerDetailsMap);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_PAYMENTGATEWAY_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams,Request.Method.POST,true);
+
+
+        }catch (Exception e){
+            Log.v("json exception", e.getLocalizedMessage());
+        }
+
+    }
+
+    public void registerFCMToken(String token,String email){
+        try {
+            JSONObject requestMap = new JSONObject();
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY,"intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "storetoken");
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "1001");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY,"12345678");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            requestMap.putOpt("token",token);
+            requestMap.putOpt("email",email);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams,Request.Method.POST,true);
+
+
+        }catch (Exception e){
+            Log.v("json exception", e.getLocalizedMessage());
+        }
+    }
 
     //Call backs
 
