@@ -130,7 +130,7 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
                 secondsTextView.setText(Integer.toString((int) (millisUntilFinished / 1000)));
-                circularProgressBar.setProgressWithAnimation((int) ((millisUntilFinished / 1000)/0.30), animationDuration);
+                circularProgressBar.setProgressWithAnimation((int) ((millisUntilFinished / 1000)/0.60), animationDuration);
             }
 
             public void onFinish() {
