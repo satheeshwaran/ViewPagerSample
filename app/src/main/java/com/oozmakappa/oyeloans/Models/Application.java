@@ -5,12 +5,9 @@ package com.oozmakappa.oyeloans.Models;
  */
 public class Application {
     public String applicationID;
-
     public String loanAmount;
     public String loanDuration;
-
     public LoanUser loanUserObject;
-
     public String firstPayDate;
 
 }

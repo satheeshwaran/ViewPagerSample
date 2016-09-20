@@ -178,7 +178,7 @@ public class AccountSummaryActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 goToApplyLoanPage();
-                Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
