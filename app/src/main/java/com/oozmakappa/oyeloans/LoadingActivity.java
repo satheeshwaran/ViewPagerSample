@@ -191,7 +191,7 @@
             }
 
             void goToAccountSummaryPage(){
-                Intent accSummaryIntent = new Intent(this,AccountSummaryActivity.class);
+                Intent accSummaryIntent = new Intent(this,DashboardActivity.class);
                 startActivity(accSummaryIntent);
 
             }
