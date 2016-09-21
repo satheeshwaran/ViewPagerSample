@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/NavBarColor">
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_menu_white_24dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/menuimage"
+            android:id="@+id/menuIcon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Loan Summary"
+            android:id="@+id/textView2"
+            android:layout_toEndOf="@+id/menuIcon"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@+id/menuIcon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Loan, Application History"
+            android:id="@+id/textView4"
+            android:layout_toEndOf="@+id/menuIcon"
+            android:layout_below="@+id/textView2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="3dp"
+            android:textColor="#ffffff"
+            android:textSize="10dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@+id/menuIcon" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/NavBarColor">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/titlesDashboard"
+            android:layout_height="20dp"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/viewpager"
+
+            app:fillColor="@color/deep_orange_500"
+            app:strokeColor="@color/WhiteColor"
+            app:pageColor="@color/eighty_percent_transparency_white"/>
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleContainer"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:background="@color/grey_400"
+            android:layout_below="@id/titlesDashboard">
+
+        </ListView>
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu_red"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            fab:menu_labels_ellipsize="end"
+            fab:menu_labels_singleLine="true"
+            fab:menu_backgroundColor="#ccffffff"
+            fab:menu_fab_label="Menu label">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                fab:fab_size="mini"
+                fab:fab_label="Apply Loan" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                fab:fab_size="mini"
+                fab:fab_label="Make Payment" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/termsAndConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_assignment_white_24dp"
+                fab:fab_size="mini"
+                fab:fab_label="Terms and Conditions" />
+
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</LinearLayout>

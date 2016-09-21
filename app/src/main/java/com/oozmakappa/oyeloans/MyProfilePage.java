@@ -67,7 +67,7 @@ public class MyProfilePage extends AppCompatActivity implements AppBarLayout.OnO
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent accountSummaryIntent = new Intent(MyProfilePage.this, AccountSummaryActivity.class);
+                Intent accountSummaryIntent = new Intent(MyProfilePage.this, DashboardActivity.class);
                 startActivity(accountSummaryIntent);
             }
         });

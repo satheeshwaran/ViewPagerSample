@@ -118,6 +118,10 @@
             android:name=".ApplicationCompletedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service android:name=".Services.OyeLoansFCMNotificationMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
