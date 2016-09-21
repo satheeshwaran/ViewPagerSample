@@ -25,6 +25,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
+import com.oozmakappa.oyeloans.utils.OyeConstants;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 
@@ -116,6 +117,8 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
 
         secondsTextView.setText("--");
 
+        listenForSMSOTP();
+
         makeGenerateOTPCall();
     }
 
@@ -176,7 +179,9 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                     String action = intent.getAction();
 
                     if (action.equals("SMS OTP ACTION")) {
-                         otp = intent.getStringExtra("OTP");
+                        //OTP for your mobile number verification is 666443. Do not share this OTP with anyone for security reasons
+                         String otpMessage = intent.getStringExtra("OTP");
+                        otp = otpMessage.substring(otpMessage.substring(0,otpMessage.indexOf(".")).lastIndexOf(" "), otpMessage.indexOf("."));
                         ((TextView) findViewById(R.id.otpEntryField)).setText(otp);
                         smsOTPReceived = true;
                     }

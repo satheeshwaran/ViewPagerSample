@@ -503,7 +503,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                 completionHandler.onRequestCompleted(sModel, null);
                 Log.v("response", response);
             } else {
-
+                completionHandler.onRequestCompleted(null, null);
             }
         } catch (Exception e) {
 
