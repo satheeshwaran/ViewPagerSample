@@ -81,4 +81,6 @@ public interface Jsonconstants {
     String OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE = "fcm/store/";
     String OL_OTP_GENERATION_SERVICE = "otp/sendotp/";
     String OL_OTP_VALIDATION_SERVICE = "otp/validateotp/";
+    String OL_REFERRAL_CODE_SERVICE = "referral/get/";
+
 }

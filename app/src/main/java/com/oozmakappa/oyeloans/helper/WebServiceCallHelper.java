@@ -384,6 +384,19 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
     }
 
+    public void getReferallCodeService(String email){
+        try {
+            JSONObject requestMap = requestObjectWithDetails("GetReferralCode", "1001", "12345678");
+            requestMap.put("Email",email);
+            requestMap.putOpt("app_id", "10001");
+            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_REFERRAL_CODE_SERVICE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
     private JSONObject requestObjectWithDetails(String serviceName, String serviceID, String requestID) {
 
         try {
@@ -486,6 +499,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY))) {
                 JSONObject jsonObject = new JSONObject(response);
                 SuccessModel sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
+                sModel.response = response;
                 completionHandler.onRequestCompleted(sModel, null);
                 Log.v("response", response);
             } else {

@@ -44,6 +44,7 @@ public class SuccessModel {
     String serviceName;
     String description;
     String requestId;
+    public String response;
 
     public static SuccessModel sucessModelFromJSONObject(JSONObject object){
 
