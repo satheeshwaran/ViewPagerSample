@@ -70,6 +70,7 @@ public class MakePayment extends AppCompatActivity {
             public void onClick(View v) {
                 if(adapter!= null && adapter.selectedIndex != -1) {
                     Intent choosePaymentIntent = new Intent(MakePayment.this, ChoosePaymentOptionActivity.class);
+                    choosePaymentIntent.putExtra("payable_amount","8000");
                     startActivity(choosePaymentIntent);
                 }
             }

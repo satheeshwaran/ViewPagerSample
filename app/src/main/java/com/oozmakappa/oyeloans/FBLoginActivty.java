@@ -1,7 +1,9 @@
 package com.oozmakappa.oyeloans;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class FBLoginActivty extends AppCompatActivity {
 
     private static final String TAG_CANCEL = "CANCELLED";
     private static final String TAG_ERROR = "ERROR";
+    private static final String TAG_RESPONSE = "REPSONSE";
 
     CallbackManager callbackManager;
 
@@ -135,9 +138,35 @@ public class FBLoginActivty extends AppCompatActivity {
 
 
     void goToProfileEditPage(Boolean status){
+        registerForNotifications();
         Intent editProfileIntent = new Intent(this,MyProfilePage.class);
         editProfileIntent.putExtra("AllEdit",true);
         editProfileIntent.putExtra("ShowInsufficientInformation",status);
         startActivity(editProfileIntent);
+    }
+
+    void registerForNotifications() {
+        try {
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            String token = preferences.getString(OyeConstants.FCM_REGISTRATION_TOKEN, null);
+
+            if (token != null && token.length() >0) {
+                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                    @Override
+                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                        if (model.getStatus().equals("success")) {
+                            Log.i(TAG_RESPONSE,"push notification service completed.");
+                        }
+                    }
+                });
+                webServiceHelper.registerFCMToken(token, SharedDataManager.getInstance().userObject.emailID);
+            }else {
+                FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

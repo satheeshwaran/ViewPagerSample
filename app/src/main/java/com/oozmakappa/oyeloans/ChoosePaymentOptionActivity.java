@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.oozmakappa.oyeloans.Adapters.ChoosePaymentOptionAdapter;
@@ -60,18 +62,20 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
 
-        bankNames.add("HDFC Bank");
-        bankNames.add("SBI");
-        bankNames.add("Citi Bank");
-        bankNames.add("Axis Banks");
-        bankNames.add("ICICI Bank");
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
         }
+
+        bankNames.add("HDFC Bank");
+        bankNames.add("SBI");
+        bankNames.add("Citi Bank");
+        bankNames.add("Axis Banks");
+        bankNames.add("ICICI Bank");
+
+
 
 
         paymentOptions.add("Debit Card");
@@ -106,12 +110,15 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         newDebitCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
-                startActivity(paymentResultIntent);
+
             }
         });
 
         showDebitCardLayout();
+
+        final String paymentAmount = getIntent().getStringExtra("payable_amount");
+
+        ((TextView)findViewById(R.id.payableAmountValue)).setText("Rs." + paymentAmount);
 
         Button makepaymentButton = (Button) findViewById(R.id.makePaymentButton1);
         makepaymentButton.setOnClickListener(new View.OnClickListener() {
@@ -120,14 +127,23 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
                 com.oozmakappa.oyeloans.utils.Utils.showLoading(ChoosePaymentOptionActivity.this,"Making payment...");
                 //TO-DO:// add loan object here...
-                LoanSummaryModel loan = new LoanSummaryModel();
+                final LoanSummaryModel loan = new LoanSummaryModel();
                 loan.setLoanId("1");
                 loan.setLoanAmount("10000");
                 WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
                     @Override
                     public void onRequestCompleted(SuccessModel model, String errorMessage){
                         com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                        if (model.getStatus().equals("success")) {
+                        if (model.getStatus().equals("1")) {
+                            Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
+                            paymentResultIntent.putExtra("payment_amount",paymentAmount);
+                            paymentResultIntent.putExtra("remaining_amount",loan.getLoanAmount());
+                            startActivity(paymentResultIntent);
+                        }else{
+                            Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentFailedActivity.class);
+                            paymentResultIntent.putExtra("payment_amount",paymentAmount);
+                            paymentResultIntent.putExtra("remaining_amount",loan.getLoanAmount());
+                            startActivity(paymentResultIntent);
                         }
                     }
                 });

@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:name=".DataExtraction.AppController"
         android:allowBackup="true"
@@ -97,8 +98,16 @@
                 android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity" />
         </activity>
         <activity android:name=".ReferFriendActivity" />
-        <activity android:name=".PaymentSucceededActivity" />
-        <activity android:name=".PaymentFailedActivity" />
+        <activity android:name=".PaymentSucceededActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.MakePayment" />
+        </activity>
+        <activity android:name=".PaymentFailedActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.MakePayment" />
+        </activity>
         <activity
             android:name=".ApplyLoanSecondActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -135,7 +144,7 @@
 
         <receiver android:name=".Services.OyeLoansIncomingSMSReceiver">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 

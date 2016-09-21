@@ -70,7 +70,7 @@ public interface Jsonconstants {
     String OL_REQUESTID_KEY = "request_id";
 
     //URL Constants
-    String OL_BASE_URL = "https://192.168.56.101/";
+    String OL_BASE_URL = "https://dev.intest.com/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
     String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";
@@ -79,5 +79,6 @@ public interface Jsonconstants {
 
     String OL_PAYMENTGATEWAY_SERVICE = "paymentgateway/";
     String OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE = "fcm/store/";
-
+    String OL_OTP_GENERATION_SERVICE = "otp/sendotp/";
+    String OL_OTP_VALIDATION_SERVICE = "otp/validateotp/";
 }
