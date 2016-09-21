@@ -18,12 +18,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.oozmakappa.oyeloans.Adapters.ChoosePaymentOptionAdapter;
 import com.oozmakappa.oyeloans.Adapters.NetbankingPickerAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.Utils;
 import com.oozmakappa.oyeloans.Models.DebitCard;
 
+import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -56,18 +62,20 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
 
-        bankNames.add("HDFC Bank");
-        bankNames.add("SBI");
-        bankNames.add("Citi Bank");
-        bankNames.add("Axis Banks");
-        bankNames.add("ICICI Bank");
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
         }
+
+        bankNames.add("HDFC Bank");
+        bankNames.add("SBI");
+        bankNames.add("Citi Bank");
+        bankNames.add("Axis Banks");
+        bankNames.add("ICICI Bank");
+
+
 
 
         paymentOptions.add("Debit Card");
@@ -98,16 +106,51 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
         netBankingContainerLayout = (RelativeLayout) findViewById(R.id.netBankingContainer);
         setupSavedDebitCards();
 
-        Button newDebitCardButton = (Button) findViewById(R.id.makePaymentButton);
+        Button newDebitCardButton = (Button) findViewById(R.id.makePaymentButton1);
         newDebitCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
-                startActivity(paymentResultIntent);
+
             }
         });
 
         showDebitCardLayout();
+
+        final String paymentAmount = getIntent().getStringExtra("payable_amount");
+
+        ((TextView)findViewById(R.id.payableAmountValue)).setText("Rs." + paymentAmount);
+
+        Button makepaymentButton = (Button) findViewById(R.id.makePaymentButton1);
+        makepaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                com.oozmakappa.oyeloans.utils.Utils.showLoading(ChoosePaymentOptionActivity.this,"Making payment...");
+                //TO-DO:// add loan object here...
+                final LoanSummaryModel loan = new LoanSummaryModel();
+                loan.setLoanId("1");
+                loan.setLoanAmount("10000");
+                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+                    @Override
+                    public void onRequestCompleted(SuccessModel model, String errorMessage){
+                        com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                        ChoosePaymentOptionActivity.this.finish();
+                        if (model.getStatus().equals("1")) {
+                            Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
+                            paymentResultIntent.putExtra("payment_amount",paymentAmount);
+                            paymentResultIntent.putExtra("remaining_amount",loan.getLoanAmount());
+                            startActivity(paymentResultIntent);
+                        }else{
+                            Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentFailedActivity.class);
+                            paymentResultIntent.putExtra("payment_amount",paymentAmount);
+                            paymentResultIntent.putExtra("remaining_amount",loan.getLoanAmount());
+                            startActivity(paymentResultIntent);
+                        }
+                    }
+                });
+                webServiceHelper.makePaymentCall(loan);
+            }
+        });
     }
 
     void showDebitCardLayout() {

@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.oozmakappa.oyeloans.PaymentSucceededActivity">
+    tools:context="com.oozmakappa.oyeloans.PaymentFailedActivity">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,17 +38,19 @@
 
 
             <TextView
-                android:id="@+id/new_credit_limit"
+                android:id="@+id/payment_failed_message"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Payment of Rs.3500 succeeded!!"
+                android:text="Payment of Rs.3500 failed!!"
                 android:textSize="16sp"
                 android:drawablePadding="10dp"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/available_amount_redraw"
+                android:id="@+id/exisiting_loan_amount_message"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your Existing Loan balance would be Rs.74000"
@@ -63,13 +61,14 @@
             <include layout="@layout/item_divider"/>
 
             <Button
-                android:id="@+id/draw_cash"
+                android:id="@+id/payment_failure_ok"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:onClick="drawCashFromOffer"
                 android:text="@string/ok_button"
+                android:textColor="@color/WhiteColor"
                 android:textAllCaps="false"
                 android:background="@drawable/rounded_button_shape"
                 />

@@ -14,7 +14,7 @@ public class ApplicationFailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loan_application_failed);
-        Button okButton = (Button)findViewById(R.id.draw_cash);
+        Button okButton = (Button)findViewById(R.id.payment_success_ok);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,24 +1,33 @@
 package com.oozmakappa.oyeloans;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
-import com.oozmakappa.oyeloans.Adapters.UploadDocsPagerAdapter;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
+
 
 /**
  * Created by sankarnarayanan on 14/09/16.
@@ -27,7 +36,10 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
 
     BroadcastReceiver receiver;
     IntentFilter filter;
-
+    TextView secondsTextView;
+    Boolean smsOTPReceived = false;
+    Boolean smsOTPGenerated = false;
+    String otp= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +86,84 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
         });
 
         Button verifyBtn = (Button) findViewById(R.id.profileProceedButtonOtp);
+        //verifyBtn.setEnabled(false);
 
         verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
-                startActivity(thanksScreen);
+
+                com.oozmakappa.oyeloans.utils.Utils.showLoading(ApplyLoanThirdActivity.this, "Validating your mobile number...");
+
+                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                    @Override
+                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                        com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                        if (model.getStatus().equals("success")) {
+                            Utils.removeLoading();
+                            Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
+                            startActivity(thanksScreen);
+                            ApplyLoanThirdActivity.this.finish();
+
+                        }
+                    }
+                });
+                webServiceHelper.validateOTPService(((TextView) findViewById(R.id.otpEntryField)).getText().toString(),SharedDataManager.getInstance().userObject.mobileNumber);
+
             }
         });
 
-        listenForSMSOTP();
+        secondsTextView = (TextView) findViewById(R.id.secondsTextView);
+
+        secondsTextView.setText("--");
+
+        makeGenerateOTPCall();
+    }
+
+    private void makeGenerateOTPCall() {
+        if (SharedDataManager.getInstance().userObject.mobileNumber != null && SharedDataManager.getInstance().userObject.mobileNumber.length() > 0) {
+            com.oozmakappa.oyeloans.utils.Utils.showLoading(ApplyLoanThirdActivity.this, "Sending an OTP to your mobile number...");
+            //TO-DO:// add loan object here...
+            final WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                    if (model.getStatus().equals("success")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                smsOTPGenerated = true;
+                                listenForSMSOTP();
+                                setupCounter();
+                            }
+                        });
+
+                    } else {
+                        showOTPGenertionError();
+                    }
+                }
+            });
+            webServiceHelper.generateOTPService(SharedDataManager.getInstance().userObject.mobileNumber);
+        }
+    }
+
+    private void showOTPGenertionError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                alertDialogBuilder.setTitle("Something went wrong!");
+                alertDialogBuilder.setMessage("Please try again later or enter a valid mobile number");
+
+                alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     private void listenForSMSOTP() {
@@ -96,8 +176,9 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                     String action = intent.getAction();
 
                     if (action.equals("SMS OTP ACTION")) {
-                        String otp = intent.getStringExtra("OTP");
-                        ((TextView)findViewById(R.id.otpEntryField)).setText(otp);
+                         otp = intent.getStringExtra("OTP");
+                        ((TextView) findViewById(R.id.otpEntryField)).setText(otp);
+                        smsOTPReceived = true;
                     }
                 }
 
@@ -109,6 +190,59 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             System.out.println(e);
         }
 
+    }
+
+    private void setupCounter() {
+
+
+        final CircularProgressBar circularProgressBar = (CircularProgressBar) findViewById(R.id.sms_otp_progress_bar);
+        final int animationDuration = 1000; // 2500ms = 2,5s
+        circularProgressBar.setProgressWithAnimation(100, animationDuration);
+
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                secondsTextView.setText(Integer.toString((int) (millisUntilFinished / 1000)));
+                circularProgressBar.setProgressWithAnimation((int) ((millisUntilFinished / 1000) / 0.60), animationDuration);
+            }
+
+            public void onFinish() {
+                secondsTextView.setText("0");
+                circularProgressBar.setProgressWithAnimation(0, animationDuration);
+
+                if (!smsOTPReceived && !((Activity) ApplyLoanThirdActivity.this).isFinishing()) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                    alertDialogBuilder.setTitle("Something went wrong!");
+                    alertDialogBuilder.setMessage("Please enter OTP manually");
+
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(((TextView) findViewById(R.id.otpEntryField)), InputMethodManager.SHOW_IMPLICIT);
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+
+        }.start();
+
+        /*final int[] i = {30};
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                i[0]--;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        secondsTextView.setText(Integer.toString(i[0]));
+                    }
+                });
+            }
+        }, 0, 1000);*/
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -155,5 +289,36 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             currentImage.setImageResource(R.drawable.ic_keyboard_arrow_down_white_48dp);
         }
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            if (receiver != null) {
+                unregisterReceiver(receiver);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if (receiver != null) {
+                unregisterReceiver(receiver);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (smsOTPGenerated)
+            listenForSMSOTP();
     }
 }

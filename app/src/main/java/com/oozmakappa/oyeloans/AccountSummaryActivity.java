@@ -23,7 +23,10 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.LoanSummaryExpandableAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
@@ -178,7 +181,7 @@ public class AccountSummaryActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 goToApplyLoanPage();
-                Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -210,6 +213,10 @@ public class AccountSummaryActivity extends AppCompatActivity
 
         ((TextView)findViewById(R.id.welcome_user_textview)).setText(welcomeUserText);
 
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Account Summary");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     public void goToApplyLoanPage(){
@@ -276,7 +283,11 @@ public class AccountSummaryActivity extends AppCompatActivity
         chatWithUS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
 

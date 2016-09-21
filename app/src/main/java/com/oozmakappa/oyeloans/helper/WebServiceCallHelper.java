@@ -1,11 +1,16 @@
 package com.oozmakappa.oyeloans.helper;
 
 import android.util.Log;
+
 import com.android.volley.Request;
 import com.oozmakappa.oyeloans.DataExtraction.AppConstants;
 import com.oozmakappa.oyeloans.Models.Application;
+import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+
 import java.util.HashMap;
+import java.util.UUID;
+
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.constants.Jsonconstants;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
@@ -21,7 +26,7 @@ import org.json.JSONObject;
 public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestCompletedListener {
 
 
-    public interface RequestNameKeys{
+    public interface RequestNameKeys {
         String FB_REQUEST_KEY = "fb";
         String VALIDATE_REFERRAL_KEY = "validateReferral";
         String NEW_APPLICATION_REQUEST_KEY = "newapplication";
@@ -52,7 +57,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         /**
          * Called when the JSON Object request has been completed.
          *
-         * @param model  the String refers the request name
+         * @param model        the String refers the request name
          * @param errorMessage the String refers the error message when request failed to
          *                     get the response
          */
@@ -61,13 +66,13 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
 
-    public WebServiceCallHelper(OnWebServiceRequestCompletedListener handler){
+    public WebServiceCallHelper(OnWebServiceRequestCompletedListener handler) {
         completionHandler = handler;
     }
 
     public void makeNewApplicationServiceCall(Application applicationObject) {
         // Construct the request
-        try{
+        try {
             JSONObject requestMap = new JSONObject();
             requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.loanUserObject.firstName.concat(" ").concat(applicationObject.loanUserObject.lastName)));
             requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.loanUserObject.emailID);
@@ -116,11 +121,10 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
+            vHelper.requestString(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY, url, requestParams, Request.Method.POST, true);
 
 
-
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
         }
 
@@ -134,7 +138,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_EI_DEGREE_KEY, applicationObject.loanUserObject.highestEducation);
             requestMap.putOpt(Jsonconstants.OL_EI_INSTITUTION_KEY, applicationObject.loanUserObject.highestEducationPlace);
 
-            if (applicationObject.loanUserObject.employmentInfo != null){
+            if (applicationObject.loanUserObject.employmentInfo != null) {
                 HashMap<String, Object> employmentInfo = applicationObject.loanUserObject.employmentInfo;
                 requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, employmentInfo.get("emp_status"));
                 requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, employmentInfo.get("emp_name"));
@@ -173,14 +177,14 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
+            vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams, Request.Method.POST, true);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
         }
     }
 
-    public void makeFacebookServiceCall(LoanUser userObject){
+    public void makeFacebookServiceCall(LoanUser userObject) {
         //Construct request
         try {
             JSONObject requestMap = new JSONObject();
@@ -188,13 +192,13 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_FB_GENDER_KEY, userObject.gender);
             requestMap.putOpt(Jsonconstants.OL_FB_HOMETOWN_KEY, userObject.city);
             requestMap.putOpt(Jsonconstants.OL_FB_EMAIL_KEY, userObject.emailID);
-            requestMap.putOpt(Jsonconstants.OL_FB_DOB_KEY,userObject.DOB);
+            requestMap.putOpt(Jsonconstants.OL_FB_DOB_KEY, userObject.DOB);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_ID_KEY, userObject.fbUserID);
             requestMap.putOpt(Jsonconstants.OL_FB_RELSTATUS_KEY, userObject.relationshipStatus);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, userObject.city);
 
             JSONArray friendList = new JSONArray();
-            for (int i=0; i< userObject.friendList.length(); i++) {
+            for (int i = 0; i < userObject.friendList.length(); i++) {
                 JSONObject currObject = userObject.friendList.getJSONObject(i);
                 friendList.put(currObject.get("name"));
             }
@@ -204,37 +208,37 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             JSONObject historyEdu = new JSONObject();
             JSONArray education = new JSONArray();
-            for (int i=0; i< userObject.education.length(); i++){
+            for (int i = 0; i < userObject.education.length(); i++) {
                 JSONObject currObject = userObject.education.getJSONObject(i);
                 JSONObject constructedObject = new JSONObject();
-                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY,currObject.getJSONObject("school").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY,currObject.get("id"));
-                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY,currObject.get("type"));
+                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY, currObject.getJSONObject("school").get("name"));
+                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
+                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY, currObject.get("type"));
                 education.put(constructedObject);
             }
             historyEdu.put(Jsonconstants.OL_FB_HISTORY_KEY, education);
             requestMap.putOpt(Jsonconstants.OL_FB_EDUCATION_KEY, historyEdu);
             JSONObject historyWork = new JSONObject();
             JSONArray work = new JSONArray();
-            for (int i=0; i< userObject.employment.length(); i++) {
+            for (int i = 0; i < userObject.employment.length(); i++) {
                 JSONObject currObject = userObject.employment.getJSONObject(i);
                 JSONObject constructedObject = new JSONObject();
-                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY,currObject.getJSONObject("position").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY,currObject.getJSONObject("location").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY,currObject.getJSONObject("employer").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY,currObject.get("id"));
+                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY, currObject.getJSONObject("position").get("name"));
+                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, currObject.getJSONObject("location").get("name"));
+                constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY, currObject.getJSONObject("employer").get("name"));
+                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
                 work.put(constructedObject);
             }
             historyWork.put(Jsonconstants.OL_FB_HISTORY_KEY, work);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_KEY, historyWork);
             JSONObject authObject = new JSONObject();
-            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY,"fb");
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "fb");
             authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "fb@123");
             requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
             JSONObject requestInfo = new JSONObject();
             requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "Fb");
             requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "2000");
-            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY,"12345678");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "12345678");
             requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_FBSERVICE_KEY);
@@ -258,9 +262,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString(RequestNameKeys.FB_REQUEST_KEY, url, requestParams,Request.Method.POST,true);
+            vHelper.requestString(RequestNameKeys.FB_REQUEST_KEY, url, requestParams, Request.Method.POST, true);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
         }
 
@@ -276,13 +280,13 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_REFERRALCODE_KEY, code);
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             JSONObject authObject = new JSONObject();
-            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY,"intest");
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
             authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
             requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
             JSONObject requestInfo = new JSONObject();
             requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "ValidateReferralCode");
             requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "1001");
-            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY,"12345678");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "12345678");
             requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
 
             vHelper = new VolleyRequestHelper(this);
@@ -307,16 +311,140 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams,Request.Method.POST,true);
+            vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams, Request.Method.POST, true);
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
         }
 
     }
 
 
+    public void makePaymentCall(LoanSummaryModel loanObject) {
+        try {
+
+            JSONObject requestMap = requestObjectWithDetails("paymentgateway", "1001", "12345678");
+
+            JSONObject customerDetailsMap = new JSONObject();
+            customerDetailsMap.put("loanid",Integer.parseInt(loanObject.getLoanId()));
+            customerDetailsMap.put("amount",Long.parseLong(loanObject.getLoanAmount()));
+            UUID uniqueKey = UUID.randomUUID();
+            customerDetailsMap.put("transaction_id", "IN1354");
+            requestMap.putOpt("customer_details", customerDetailsMap);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_PAYMENTGATEWAY_SERVICE));
+
+        } catch (Exception e) {
+            Log.v("json exception", e.getLocalizedMessage());
+        }
+
+    }
+
+    public void registerFCMToken(String token, String email) {
+        try {
+            JSONObject requestMap = requestObjectWithDetails("storetoken", "1001", "12345678");
+
+            requestMap.putOpt("token", token);
+            requestMap.putOpt("email", email);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE));
+
+
+        } catch (Exception e) {
+            Log.v("json exception", e.getLocalizedMessage());
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void generateOTPService(String mobileNumber) {
+
+        try {
+            JSONObject requestMap = requestObjectWithDetails("OTPGenerator", "2000", "12345678");
+            requestMap.put("mobile_number",Long.parseLong(mobileNumber));
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_GENERATION_SERVICE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+
+    }
+
+    public void validateOTPService(String otp, String mobileNumber) {
+        try {
+            JSONObject requestMap = requestObjectWithDetails("OTPValidator", "2001", "12345678");
+            requestMap.put("mobile_number",Long.parseLong(mobileNumber));
+            requestMap.putOpt("otp", otp);
+            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_VALIDATION_SERVICE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+
+    }
+
+    public void getReferallCodeService(String email){
+        try {
+            JSONObject requestMap = requestObjectWithDetails("GetReferralCode", "1001", "12345678");
+            requestMap.put("Email",email);
+            requestMap.putOpt("app_id", "10001");
+            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_REFERRAL_CODE_SERVICE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    private JSONObject requestObjectWithDetails(String serviceName, String serviceID, String requestID) {
+
+        try {
+            JSONObject requestMap = new JSONObject();
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, serviceName);
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, serviceID);
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, requestID);
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            return requestMap;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private void initiateVolleyCall(JSONObject requestMap, String serviceEndPoint) {
+        vHelper = new VolleyRequestHelper(this);
+        String url = serviceEndPoint;
+        // Post the device data
+        final HashMap<Object, Object> requestParams = new HashMap<>();
+
+        // Priority
+        requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+        // Headers
+        final HashMap<String, String> headers = new HashMap<>();
+        headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+        requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+        // Body
+        final String content = requestMap.toString();
+        requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+        // Content Type
+        requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+        HttpsTrustManager.allowAllSSL();
+
+        vHelper.requestString(RequestNameKeys.VALIDATE_REFERRAL_KEY, url, requestParams, Request.Method.POST, true);
+    }
 
     //Call backs
 
@@ -331,9 +459,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
      *                     get the response
      */
     public void onRequestCompleted(String requestName, boolean status,
-                                   JSONObject response, String errorMessage){
+                                   JSONObject response, String errorMessage) {
 
-        Log.v("response",response.toString());
+        Log.v("response", response.toString());
 
     }
 
@@ -348,9 +476,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
      *                     get the response
      */
     public void onRequestCompleted(String requestName, boolean status,
-                                   JSONArray response, String errorMessage){
+                                   JSONArray response, String errorMessage) {
 
-        Log.v("response",response.toString());
+        Log.v("response", response.toString());
 
     }
 
@@ -365,18 +493,19 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
      *                     get the response
      */
     public void onRequestCompleted(String requestName, boolean status,
-                                   String response, String errorMessage){
+                                   String response, String errorMessage) {
         try {
 
             if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY))) {
                 JSONObject jsonObject = new JSONObject(response);
                 SuccessModel sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
-                completionHandler.onRequestCompleted(sModel,null);
+                sModel.response = response;
+                completionHandler.onRequestCompleted(sModel, null);
                 Log.v("response", response);
             } else {
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

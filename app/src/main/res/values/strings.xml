@@ -158,6 +158,7 @@
     <string name="loan_reason_icon">Loan Reason Icon</string>
     <string name="loan_declined">Extremely Sorry!</string>
     <string name="what_to_do">What else can I do now?</string>
+    <string name="share_referall">Refer Your friends. You\'ll get 250Rs FlipKart Voucher upon their sucessfull application</string>
 
     <string-array name="gender_array">
         <item>Male</item>

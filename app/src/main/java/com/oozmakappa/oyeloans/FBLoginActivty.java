@@ -1,11 +1,12 @@
 package com.oozmakappa.oyeloans;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 import android.widget.Button;
 
 import com.facebook.CallbackManager;
@@ -16,7 +17,10 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -26,16 +30,13 @@ import com.oozmakappa.oyeloans.utils.OyeConstants;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class FBLoginActivty extends AppCompatActivity {
 
     private static final String TAG_CANCEL = "CANCELLED";
     private static final String TAG_ERROR = "ERROR";
+    private static final String TAG_RESPONSE = "REPSONSE";
 
     CallbackManager callbackManager;
 
@@ -66,6 +67,12 @@ public class FBLoginActivty extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.HowItWorks);
         button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Login screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+
     }
 
     void onFacebookLogin(){
@@ -135,9 +142,35 @@ public class FBLoginActivty extends AppCompatActivity {
 
 
     void goToProfileEditPage(Boolean status){
+        registerForNotifications();
         Intent editProfileIntent = new Intent(this,MyProfilePage.class);
         editProfileIntent.putExtra("AllEdit",true);
         editProfileIntent.putExtra("ShowInsufficientInformation",status);
         startActivity(editProfileIntent);
+    }
+
+    void registerForNotifications() {
+        try {
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            String token = preferences.getString(OyeConstants.FCM_REGISTRATION_TOKEN, null);
+
+            if (token != null && token.length() >0) {
+                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                    @Override
+                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                        if (model.getStatus().equals("success")) {
+                            Log.i(TAG_RESPONSE,"push notification service completed.");
+                        }
+                    }
+                });
+                webServiceHelper.registerFCMToken(token, SharedDataManager.getInstance().userObject.emailID);
+            }else {
+                FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -23,8 +23,12 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.DataExtraction.model.CalendarEvent;
 import com.oozmakappa.oyeloans.DataExtraction.model.MobileData;
+import com.oozmakappa.oyeloans.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,21 @@ import java.util.List;
 public class AppController extends Application {
 
     private static final String TAG = AppController.class.getSimpleName();
+
+    private Tracker mTracker;
+
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return mTracker;
+    }
 
     public interface DataFetchListener {
         /**

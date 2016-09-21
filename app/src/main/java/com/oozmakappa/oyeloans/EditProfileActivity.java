@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -291,7 +292,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         if (!enableAllEdit) {
-            phoneNumberField.setEnabled(false);
+           // phoneNumberField.setEnabled(false);
             dobField.setEnabled(false);
             firstNameField.setEnabled(false);
             lastNameField.setEnabled(false);
@@ -317,6 +318,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean isValidMobile(String phone)
     {
-        return android.util.Patterns.PHONE.matcher(phone).matches();
+        //^[2-9]{2}[0-9]{8}$
+        return  Pattern.compile("\\+?\\d[\\d -]{8,12}\\d").matcher(phone).matches();
     }
 }
