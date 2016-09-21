@@ -23,8 +23,10 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -77,6 +79,11 @@ public class LoadingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loading screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     void onFacebookLogin() {

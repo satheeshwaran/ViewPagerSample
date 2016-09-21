@@ -134,6 +134,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
                     @Override
                     public void onRequestCompleted(SuccessModel model, String errorMessage){
                         com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                        ChoosePaymentOptionActivity.this.finish();
                         if (model.getStatus().equals("1")) {
                             Intent paymentResultIntent = new Intent(ChoosePaymentOptionActivity.this,PaymentSucceededActivity.class);
                             paymentResultIntent.putExtra("payment_amount",paymentAmount);

@@ -101,12 +101,12 @@
         <activity android:name=".PaymentSucceededActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oozmakappa.oyeloans.MakePayment" />
+                android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
         </activity>
         <activity android:name=".PaymentFailedActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oozmakappa.oyeloans.MakePayment" />
+                android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
         </activity>
         <activity
             android:name=".ApplyLoanSecondActivity"
@@ -133,7 +133,11 @@
         <activity android:name=".FixAppointmentActivity" />
         <activity
             android:name=".TermsAndConditionsActivity"
-            android:label="Terms And Conditions" />
+            android:label="Terms And Conditions">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
+        </activity>
         <activity
             android:name=".LoanApprovedActivity"
             android:label="Loan Approved" />

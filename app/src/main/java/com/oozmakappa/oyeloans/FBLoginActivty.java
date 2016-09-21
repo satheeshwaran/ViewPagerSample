@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 import android.widget.Button;
 
 import com.facebook.CallbackManager;
@@ -18,7 +17,10 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -28,11 +30,7 @@ import com.oozmakappa.oyeloans.utils.OyeConstants;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class FBLoginActivty extends AppCompatActivity {
 
@@ -69,6 +67,12 @@ public class FBLoginActivty extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.HowItWorks);
         button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Login screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+
     }
 
     void onFacebookLogin(){
