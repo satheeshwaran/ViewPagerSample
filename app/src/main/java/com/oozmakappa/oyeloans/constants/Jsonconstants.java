@@ -13,6 +13,7 @@ public interface Jsonconstants {
     String OL_VALIDATE_REFERALCODE_EMAIL = "Email";
     String OL_REFERRALCODE_KEY = "referral_code";
     String OL_APPID_KEY = "app_id";
+    String OL_APPID_VALUE = "10001";
 
     //Face book auth registration constants.
     String OL_FB_NAME_KEY = "name";
@@ -58,6 +59,19 @@ public interface Jsonconstants {
     String OL_EI_DEGREE_KEY = "highest_degree";
     String OL_EI_INSTITUTION_KEY = "last_instituition_studied";
 
+    // Bank Info service constants
+    String OL_BI_IFSC_KEY = "ifsc_code";
+    String OL_BI_BANK_ADDRESS1_KEY = "branch_address1";
+    String OL_BI_BANK_ADDRESS2_KEY = "branch_address2";
+
+    String OL_LOANID_KEY = "loan_id";
+
+    // Due date generator service constants
+    String OL_DD_LOAN_DURATION_KEY = "loan_duration";
+    String OL_DD_FIRST_PAYDATE_KEY = "first_paydate";
+    String OL_DD_LOAN_AMOUNT_KEY = "loan_amount";
+    String OL_DD_GENERATE_AGREEMENT_KEY = "generate_agreement";
+
     //General auth & request info constants.
     String OL_AUTH_KEY = "auth";
     String OL_USERNAME_KEY = "username";
@@ -73,14 +87,21 @@ public interface Jsonconstants {
     String OL_BASE_URL = "https://dev.intest.com/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
+
     String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";
     String OL_EMPLOYMENTINFO_SERVICE_KEY = "employeeinfo/";
-
 
     String OL_PAYMENTGATEWAY_SERVICE = "paymentgateway/";
     String OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE = "fcm/store/";
     String OL_OTP_GENERATION_SERVICE = "otp/sendotp/";
     String OL_OTP_VALIDATION_SERVICE = "otp/validateotp/";
     String OL_REFERRAL_CODE_SERVICE = "referral/get/";
+
+    String OL_BANKINFO_SERVICE = "bankinfo/";
+    String OL_LOANINFO_SERVICE = "loan/loanschedule/";
+    String OL_DUEDATE_GENERATOR_SERVICE = "schedule/process/";
+    String OL_GET_PAYDATES_SERVICE = "getpaydates/";
+    String OL_GET_PERSONALINFO_SERVICE = "personal/personalInfo/";
+    String OL_GET_EMPLOYMENTINFO_SERVICE = "getemploymentinfo/";
 
 }
