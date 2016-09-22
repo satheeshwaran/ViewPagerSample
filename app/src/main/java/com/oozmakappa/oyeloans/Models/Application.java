@@ -8,6 +8,7 @@ public class Application {
     public String loanAmount;
     public String loanDuration;
     public LoanUser loanUserObject;
+    public BankInfo bankInfoObject;
     public String firstPayDate;
 
 }
