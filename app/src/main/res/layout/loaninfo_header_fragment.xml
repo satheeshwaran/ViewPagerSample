@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,16 +16,17 @@
             android:text="Loan Id"
             android:gravity="center"
             android:textColor="@color/WhiteColor"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="45dp"
             android:id="@+id/loanIdentifier"
             android:textSize="20dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="0dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_below="@+id/loanIdentifier"
+            android:layout_marginTop="0dp"
             android:id="@+id/relativeContainer">
 
             <TextView
@@ -41,11 +41,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300"
-                android:textSize="70dp"
+                android:foregroundGravity="center"
+                android:text="1,00,000"
+                android:textSize="35dp"
                 android:layout_toRightOf="@+id/rupeeIcon"
                 android:id="@+id/amountValue"
-                android:textColor="@color/WhiteColor"/>
+                android:gravity="center"
+                android:textColor="@color/WhiteColor"
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +58,8 @@
                 android:id="@+id/paiseValue"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/WhiteColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
 
         </RelativeLayout>
@@ -67,11 +71,23 @@
             android:layout_centerHorizontal="true"
             android:text="Outstanding Balance"
             android:gravity="center"
-            android:paddingBottom="40dp"
             android:textColor="@color/WhiteColor"
-            android:layout_below="@+id/relativeContainer"/>
+            android:layout_below="@+id/relativeContainer"
+            android:layout_marginTop="1dp"
+            android:id="@+id/outstandin_balance_title"
+            android:textSize="10sp" />
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Loan Amount: Rs.1,00,000"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/WhiteColor"
+            android:layout_below="@+id/outstandin_balance_title"/>
 
 
 
