@@ -196,9 +196,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 DashboardActivity.this.ShowDialog();
             }
         });
+        itemFAQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent faqIntent = new Intent(DashboardActivity.this,FAQActivity.class);
+                startActivity(faqIntent);
+            }
+        });
         itemHome.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
-        itemFAQ.setOnClickListener(this);
         referFriend.setOnClickListener(this);
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);

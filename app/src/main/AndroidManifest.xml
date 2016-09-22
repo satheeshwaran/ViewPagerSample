@@ -117,7 +117,6 @@
         <activity
             android:name=".ApplicationCompletedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -138,9 +137,9 @@
         <activity
             android:name=".TermsAndConditionsActivity"
             android:label="Terms And Conditions">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.oozmakappa.oyeloans.AccountSummaryActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
         <activity
             android:name=".LoanApprovedActivity"
@@ -148,7 +147,7 @@
         <activity
             android:name=".LoanReasonActivity"
             android:label="Tell Us Why" />
-        <activity android:name=".LoanRejectionActivity"></activity>
+        <activity android:name=".LoanRejectionActivity" />
 
         <receiver android:name=".Services.OyeLoansIncomingSMSReceiver">
             <intent-filter>
@@ -156,6 +155,12 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".FAQActivity"
+            android:label="Oye Loans FAQ">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
+        </activity>
     </application>
 
 </manifest>
