@@ -5,6 +5,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.oozmakappa.oyeloans.DataExtraction.AppConstants;
 import com.oozmakappa.oyeloans.Models.Application;
+import com.oozmakappa.oyeloans.Models.BankInfo;
+import com.oozmakappa.oyeloans.Models.Loan;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
@@ -396,6 +398,104 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
         }
     }
+
+    public void makeBankInfoServiceCall(Application applicationObject) {
+        try{
+            JSONObject requestMap = requestObjectWithDetails("AddBankInfo", "GAI004", "1285");
+            BankInfo bankInfoObject = applicationObject.bankInfoObject;
+
+            requestMap.put(Jsonconstants.OL_BI_IFSC_KEY, bankInfoObject.ifscCode);
+            requestMap.put(Jsonconstants.OL_BI_BANK_ADDRESS1_KEY, bankInfoObject.bankAddress1);
+            requestMap.put(Jsonconstants.OL_BI_BANK_ADDRESS2_KEY, bankInfoObject.bankAddress2);
+            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, Jsonconstants.OL_APPID_VALUE);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_BANKINFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void getLoanInfoService(Loan loanObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("loaninfoprovider", "LI001", "1");
+
+            requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_LOANINFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+
+    }
+
+    public void makeDueDateGenerationService(Application applicationObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("due_date_generator", "2002", "12345678");
+
+            requestMap.put(Jsonconstants.OL_DD_LOAN_DURATION_KEY, applicationObject.loanDuration);
+            requestMap.put(Jsonconstants.OL_DD_FIRST_PAYDATE_KEY, applicationObject.firstPayDate);
+            requestMap.put(Jsonconstants.OL_DD_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+            requestMap.put(Jsonconstants.OL_DD_GENERATE_AGREEMENT_KEY, "false");
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_DUEDATE_GENERATOR_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void getPaydatesService(String loanID, String applicationID){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("GetPaydates", "1001", "12345678");
+
+            requestMap.put(Jsonconstants.OL_LOANID_KEY, loanID);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationID);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_PAYDATES_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void getPersonalInfoService(String emailID){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("getpersonalinfo", "1001", "12345615");
+
+            requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_PERSONALINFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void getEmploymentInfoService(String emailID){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("getpersonalinfo", "1001", "12345615");
+
+            requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, Jsonconstants.OL_APPID_VALUE);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_EMPLOYMENTINFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+
+
+
 
     private JSONObject requestObjectWithDetails(String serviceName, String serviceID, String requestID) {
 
