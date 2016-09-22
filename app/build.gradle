@@ -48,6 +48,7 @@ dependencies {
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
     compile 'com.loopeer.library:cardstack:1.0.1'
+    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'

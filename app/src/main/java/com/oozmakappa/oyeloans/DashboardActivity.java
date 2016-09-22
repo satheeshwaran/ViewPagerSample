@@ -1,10 +1,15 @@
 package com.oozmakappa.oyeloans;
 
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
@@ -14,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -23,6 +30,7 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
 import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
@@ -30,6 +38,7 @@ import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import org.json.JSONObject;
 
@@ -134,6 +143,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
+        animateLoanArcWithAmount(80);
     }
 
     @Override
@@ -291,6 +301,38 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     public void goToApplyLoanPage(){
         Intent goToApplyLoanFirstScreenIntent = new Intent(this,LoanApplicationStepsActivity.class);
         startActivity(goToApplyLoanFirstScreenIntent);
+    }
+
+    private void animateLoanArcWithAmount(final int percentage){
+        final ArcProgress loanArcProgress = (ArcProgress) findViewById(R.id.loan_arc_progress);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
+                animation.setDuration(percentage * 25);//25 for a fast but not to fast animation
+                animation.setInterpolator(new DecelerateInterpolator());
+                animation.start();
+
+                /*new CountDownTimer(2000, 500) {
+
+                    public void onTick(long millisUntilFinished) {
+                        loanArcProgress.setProgress((int)(Math.random() * 100));
+
+                    }
+
+                    public void onFinish() {
+                        loanArcProgress.setProgress(80);
+                    }
+
+                }.start();*/
+
+            }
+        }, 2000);
+
+
+
     }
 
 }
