@@ -12,11 +12,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.BankInfo;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+
+import java.util.regex.Pattern;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
@@ -25,6 +28,9 @@ public class ApplyLoanBankInfo extends Fragment {
 
     AutoCompleteTextView accountNumber;
     AutoCompleteTextView ifscCode;
+    AutoCompleteTextView bankAddr1;
+    AutoCompleteTextView bankAddr2;
+
     String fieldError = "";
 
     @Override
@@ -40,11 +46,15 @@ public class ApplyLoanBankInfo extends Fragment {
 
         accountNumber = (AutoCompleteTextView) v.findViewById(R.id.account_number);
         ifscCode = (AutoCompleteTextView) v.findViewById(R.id.ifsc_code);
+        bankAddr1 = (AutoCompleteTextView) v.findViewById(R.id.bank_addr_1);
+        bankAddr2 = (AutoCompleteTextView) v.findViewById(R.id.bank_addr_2);
 
         Application application = SharedDataManager.getInstance().activeApplication;
         if (application.bankInfoObject != null) {
             accountNumber.setText(application.bankInfoObject.accountNumber);
             ifscCode.setText(application.bankInfoObject.ifscCode);
+            bankAddr1.setText(application.bankInfoObject.bankAddress1);
+            bankAddr2.setText(application.bankInfoObject.bankAddress2);
         }
 
         Button proceedButton = (Button) v.findViewById(R.id.profileProceedButtonBankInfo);
@@ -79,13 +89,18 @@ public class ApplyLoanBankInfo extends Fragment {
 
 
     private boolean performValidations() {
-        if (accountNumber.getText().length() <= 0 || ifscCode.getText().length() <= 0) {
+        if (accountNumber.getText().length() <= 0 || ifscCode.getText().length() <= 0 || bankAddr1.getText().length() <= 0 || bankAddr2.getText().length() <= 0) {
             fieldError = "None of the fields can be empty, Please fill up all";
             return false;
         }
-
+        if (!Pattern.compile("[A-Z|a-z]{4}[0][\\d]{6}$").matcher(ifscCode.getText().toString()).matches()) {
+            fieldError = "Invalid IFSC Code";
+            return false;
+        }
+//^[A-Z]{4}[0]\\w{6}$
         return true;
     }
+
 
     private void populateGivenData(){
         Application application = SharedDataManager.getInstance().activeApplication;
@@ -93,6 +108,8 @@ public class ApplyLoanBankInfo extends Fragment {
 
         application.bankInfoObject.accountNumber = accountNumber.getText().toString();
         application.bankInfoObject.ifscCode = ifscCode.getText().toString();
+        application.bankInfoObject.bankAddress1 = bankAddr1.getText().toString();
+        application.bankInfoObject.bankAddress2 = bankAddr2.getText().toString();
 
     }
 

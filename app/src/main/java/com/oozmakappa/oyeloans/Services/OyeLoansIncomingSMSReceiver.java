@@ -25,7 +25,7 @@ public class OyeLoansIncomingSMSReceiver extends BroadcastReceiver {
                     String phoneNumber = currentMessage.getDisplayOriginatingAddress();
                     String senderNum = phoneNumber;
                     String message = currentMessage.getDisplayMessageBody();
-                    if (senderNum.equals(OyeConstants.smsOTPIncomingMessageSenderNumber)) {
+                    if (senderNum.equals(OyeConstants.smsOTPIncomingMessageSenderNumber1) || senderNum.equals(OyeConstants.smsOTPIncomingMessageSenderNumber2)) {
                         System.out.println(message);
                         try {
                             Intent sendOTPIntent = new Intent("SMS OTP RECIEVED");

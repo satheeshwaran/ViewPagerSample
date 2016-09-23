@@ -57,7 +57,7 @@ public interface Jsonconstants {
     String OL_EI_INCOME_KEY = "gross_monthly_income";
     String OL_EI_APPLICATIONID_KEY = "app_id";
     String OL_EI_DEGREE_KEY = "highest_degree";
-    String OL_EI_INSTITUTION_KEY = "last_instituition_studied";
+    String OL_EI_INSTITUTION_KEY = "last_institution_studied";
 
     // Bank Info service constants
     String OL_BI_IFSC_KEY = "ifsc_code";

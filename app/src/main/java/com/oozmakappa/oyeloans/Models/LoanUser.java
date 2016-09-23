@@ -43,6 +43,7 @@ public class LoanUser {
     public String workTitle ="";
     public String workStartDate="";
     public String workPhone="";
+    public String workStatus = "";
     public int totalWorkExperience;
     public String doorNumber = "";
 

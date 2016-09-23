@@ -105,7 +105,7 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                         @Override
                         public void onRequestCompleted(SuccessModel model, String errorMessage) {
                             com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                            if (errorMessage == null && errorMessage.length() == 0 && model.getStatus().equals("success")) {
+                            if (errorMessage == null && model!=null && model.getStatus().equals("success")) {
                                 makeLoanApplicationCall();
                             }else{
                                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
@@ -320,11 +320,8 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             @Override
             public void onRequestCompleted(SuccessModel model, String errorMessage) {
                 com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                if (errorMessage == null && errorMessage.length() == 0 && model.getStatus().equals("success")) {
-                    Utils.removeLoading();
-                    Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
-                    startActivity(thanksScreen);
-                    ApplyLoanThirdActivity.this.finish();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    makeEmploymenInfoCall();
 
                 }else{
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
@@ -343,6 +340,70 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             }
         });
         webServiceHelper.makeNewApplicationServiceCall(SharedDataManager.getInstance().activeApplication, com.oozmakappa.oyeloans.DataExtraction.Utils.getDeviceId(ApplyLoanThirdActivity.this));
+    }
+
+    private void makeEmploymenInfoCall(){
+
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    makeBankInfoService();
+
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                    alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
+                        alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unkown error");
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeEmploymentInfoServiceCall(SharedDataManager.getInstance().activeApplication);
+
+    }
+
+    private void makeBankInfoService(){
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    Utils.removeLoading();
+                    Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
+                    startActivity(thanksScreen);
+                    ApplyLoanThirdActivity.this.finish();
+
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                    alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
+                    alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unkown error");
+
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeBankInfoServiceCall(SharedDataManager.getInstance().activeApplication);
     }
 
     @Override

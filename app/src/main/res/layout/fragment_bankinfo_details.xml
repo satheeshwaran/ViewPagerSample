@@ -90,6 +90,46 @@
                             android:textSize="15dp"
                             />
                     </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/to_text_input_layout_add_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_below="@+id/to_text_input_layout_ifsc_code"
+                        android:layout_marginTop="20dp">
+                        <AutoCompleteTextView
+                            android:id="@+id/bank_addr_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Bank Address"
+                            android:layout_marginTop="0dp"
+                            android:theme="@style/TextLabel"
+                            android:textColor="@color/NavBarColor"
+                            android:textColorHint="@color/NavBarColor"
+                            android:textSize="15dp"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/to_text_input_layout_add_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_below="@+id/to_text_input_layout_add_1"
+                        android:layout_marginTop="20dp">
+                        <AutoCompleteTextView
+                            android:id="@+id/bank_addr_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Bank City"
+                            android:layout_marginTop="0dp"
+                            android:theme="@style/TextLabel"
+                            android:textColor="@color/NavBarColor"
+                            android:textColorHint="@color/NavBarColor"
+                            android:textSize="15dp"
+                            />
+                    </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 

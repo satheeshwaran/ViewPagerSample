@@ -88,7 +88,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             Random ran = new Random();
             int applicationID = ran.nextInt(1000);
-
+            SharedDataManager.getInstance().activeApplication.applicationID = String.valueOf(applicationID);
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
             Calendar c = Calendar.getInstance(); // starts with today's date and time
@@ -164,12 +164,19 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public void makeEmploymentInfoServiceCall(Application applicationObject) {
         //Construct request
         try {
-            JSONObject requestMap = new JSONObject();
-            requestMap.putOpt(Jsonconstants.OL_EI_APPLICATIONID_KEY, applicationObject.applicationID);
+            JSONObject requestMap = requestObjectWithDetails("AddEmploymentInfo","GAI003","1285");
+            requestMap.put(Jsonconstants.OL_EI_APPLICATIONID_KEY, Long.parseLong(applicationObject.applicationID));
             requestMap.putOpt(Jsonconstants.OL_EI_DEGREE_KEY, applicationObject.loanUserObject.highestEducation);
             requestMap.putOpt(Jsonconstants.OL_EI_INSTITUTION_KEY, applicationObject.loanUserObject.highestEducationPlace);
 
-            if (applicationObject.loanUserObject.employmentInfo != null) {
+            requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, applicationObject.loanUserObject.workStatus);
+            requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, applicationObject.loanUserObject.workPlace);
+            requestMap.putOpt(Jsonconstants.OL_EI_PHONE_KEY, applicationObject.loanUserObject.workPhone);
+            requestMap.put(Jsonconstants.OL_EI_INCOME_KEY,Long.parseLong(applicationObject.loanUserObject.monthlyIncome));
+
+
+
+            /*if (applicationObject.loanUserObject.employmentInfo != null) {
                 HashMap<String, Object> employmentInfo = applicationObject.loanUserObject.employmentInfo;
                 requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, employmentInfo.get("emp_status"));
                 requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, employmentInfo.get("emp_name"));
@@ -184,7 +191,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "AddEmploymentInfo");
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI003");
             this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
-            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);*/
 
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY);
@@ -209,6 +216,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             HttpsTrustManager.allowAllSSL();
 
             vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams, Request.Method.POST, true);
+
+            initiateVolleyCall(requestMap,Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY);
 
         } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
@@ -436,7 +445,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.put(Jsonconstants.OL_BI_IFSC_KEY, bankInfoObject.ifscCode);
             requestMap.put(Jsonconstants.OL_BI_BANK_ADDRESS1_KEY, bankInfoObject.bankAddress1);
             requestMap.put(Jsonconstants.OL_BI_BANK_ADDRESS2_KEY, bankInfoObject.bankAddress2);
-            requestMap.putOpt(Jsonconstants.OL_APPID_KEY, Jsonconstants.OL_APPID_VALUE);
+            requestMap.put(Jsonconstants.OL_EI_APPLICATIONID_KEY, Long.parseLong(applicationObject.applicationID));
 
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_BANKINFO_SERVICE));
 
@@ -688,7 +697,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY)))
+            if (errorMessage == null && response != null)
             {
                 JSONObject jsonObject = new JSONObject(response);
                 if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){

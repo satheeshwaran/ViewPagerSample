@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Created by sankarnarayanan on 12/09/16.
@@ -41,6 +43,7 @@ public class ApplyLoanEmploymentInfo extends Fragment {
     AutoCompleteTextView grossMonthlyIncome;
     Spinner employmentTypeSpinner;
     String fieldError = "";
+    String employmentStatus = "Full-time";
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -156,6 +159,20 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         // Apply the adapter to the spinner
         employmentTypeSpinner.setAdapter(staticAdapter);
 
+        employmentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                employmentStatus=getResources().getStringArray(R.array.employment_array)[position];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         Button proceedButton = (Button) getActivity().findViewById(R.id.profileProceedButtonEmployment);
         proceedButton.setOnClickListener(buttonClickListener);
 
@@ -212,9 +229,18 @@ public class ApplyLoanEmploymentInfo extends Fragment {
             return false;
         }
 
+        if (!isValidMobile(workPhone.getText().toString())) {
+            fieldError = "Invalid Phone number";
+            return false;
+        }
+
         return true;
     }
 
+    private boolean isValidMobile(String phone) {
+        //^[2-9]{2}[0-9]{8}$
+        return Pattern.compile("\\+?\\d[\\d -]{8,12}\\d").matcher(phone).matches();
+    }
     private void populateGivenData(){
         LoanUser user = SharedDataManager.getInstance().userObject;
 
@@ -226,6 +252,7 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         user.workStartDate = workStartDateField.getText().toString();
         user.workPhone = workPhone.getText().toString();
         user.monthlyIncome = grossMonthlyIncome.getText().toString();
+        user.workStatus = employmentStatus;
 
     }
 
