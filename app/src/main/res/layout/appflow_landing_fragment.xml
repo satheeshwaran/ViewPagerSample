@@ -13,7 +13,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center">
@@ -21,28 +21,33 @@
 
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:inputType="number"
                 android:id="@+id/editText"
                 android:layout_gravity="center"
                 android:text="10000"
-                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textSize="50dp"
                 android:cursorVisible="false"
                 android:background="@null"
+                android:maxLength="6"
                 >
 
             </EditText>
 
                 <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:gravity="center"
                     android:src="@drawable/rupee_indian"
                     android:layout_alignLeft="@+id/editText"
-                    android:layout_marginLeft="100dp"
-                    android:layout_centerInParent="true"
+                    android:layout_alignStart="@+id/editText"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="-20dp"
+                    android:layout_marginStart="-20dp"
+
                     />
 
             </RelativeLayout>

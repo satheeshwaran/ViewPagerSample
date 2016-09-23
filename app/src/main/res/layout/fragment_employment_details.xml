@@ -33,20 +33,21 @@
                         android:layout_height="match_parent"
                         android:text="Education Details"
                         android:id="@+id/phoneNumberTitle"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/NavigationMenuColor"
                         />
                     <include layout="@layout/item_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@id/phoneNumberTitle"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_margin="10dp"/>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/to_text_input_layout_qualification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
                         android:layout_below="@+id/phoneNumberTitle"
                         android:layout_marginTop="20dp"
@@ -69,12 +70,12 @@
                         android:id="@+id/to_text_input_layout_institution"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
                         android:layout_below="@+id/to_text_input_layout_qualification"
                         android:layout_marginTop="20dp">
                         <AutoCompleteTextView
-                            android:id="@+id/lastname"
+                            android:id="@+id/universityValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Educational Institution"
@@ -82,6 +83,27 @@
                             android:theme="@style/TextLabel"
                             android:textColor="@color/NavBarColor"
                             android:textColorHint="@color/NavBarColor"
+                            android:textSize="15dp"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/to_text_input_layout_passout_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_below="@+id/to_text_input_layout_institution"
+                        android:layout_marginTop="20dp">
+                        <AutoCompleteTextView
+                            android:id="@+id/passout_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Year Completed"
+                            android:layout_marginTop="0dp"
+                            android:theme="@style/TextLabel"
+                            android:textColor="@color/NavBarColor"
+                            android:textColorHint="@color/NavBarColor"
+                            android:focusable="false"
                             android:textSize="15dp"
                             />
                     </android.support.design.widget.TextInputLayout>
@@ -104,23 +126,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Employment Details"
-                        android:id="@+id/pan_adhaar"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/employmentdetailsTitle"
                         android:textColor="@color/NavigationMenuColor"
                         />
                     <include layout="@layout/item_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@id/pan_adhaar"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_below="@id/employmentdetailsTitle"
+                        android:layout_margin="10dp"
                         android:id="@+id/employment_divider"/>
 
                     <Spinner
                         android:id="@+id/static_spinner_employment_status"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
                         android:layout_below="@+id/employment_divider"
@@ -131,7 +154,7 @@
                         android:id="@+id/to_text_input_layout_empname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
                         android:layout_below="@+id/static_spinner_employment_status"
                         android:layout_marginTop="20dp">
@@ -153,7 +176,7 @@
                         android:id="@+id/to_text_input_layout_occupation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
                         android:layout_below="@+id/to_text_input_layout_empname"
                         android:layout_marginTop="20dp">
@@ -170,14 +193,35 @@
                             />
                     </android.support.design.widget.TextInputLayout>
 
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/to_text_input_layout_date_joined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_below="@+id/to_text_input_layout_occupation"
+                        android:layout_marginTop="20dp">
+                        <AutoCompleteTextView
+                            android:id="@+id/date_joined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Date Joined"
+                            android:layout_marginTop="0dp"
+                            android:theme="@style/TextLabel"
+                            android:textColor="@color/NavBarColor"
+                            android:textColorHint="@color/NavBarColor"
+                            android:focusable="false"
+                            android:textSize="15dp"
+                            />
+                    </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/to_text_input_layout_empPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
-                        android:layout_below="@+id/to_text_input_layout_occupation"
+                        android:layout_below="@+id/to_text_input_layout_date_joined"
                         android:layout_marginTop="20dp">
                         <AutoCompleteTextView
                             android:id="@+id/emp_phone"
@@ -197,7 +241,7 @@
                         android:id="@+id/to_text_input_layout_gross_income"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="0dp"
                         android:layout_below="@+id/to_text_input_layout_empPhone"
                         android:layout_marginTop="20dp">

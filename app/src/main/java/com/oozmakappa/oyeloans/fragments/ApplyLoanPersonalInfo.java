@@ -1,20 +1,31 @@
 package com.oozmakappa.oyeloans.fragments;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.oozmakappa.oyeloans.EditProfileActivity;
+import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by sankarnarayanan on 11/09/16.
@@ -22,13 +33,31 @@ import java.util.HashMap;
 public class ApplyLoanPersonalInfo extends Fragment {
 
     OnProceedSelectedListener mCallback;
+    AutoCompleteTextView firstNameField;
+    AutoCompleteTextView lastNameField;
+    AutoCompleteTextView phoneNumberField;
+    AutoCompleteTextView dobField;
+    AutoCompleteTextView doorNumberField;
+    AutoCompleteTextView streetNameField;
+    AutoCompleteTextView localityField;
+    AutoCompleteTextView cityField;
+    AutoCompleteTextView stateField;
+    AutoCompleteTextView pinCodeField;
+    AutoCompleteTextView emailAddressField;
+    AutoCompleteTextView panNumberField;
+    AutoCompleteTextView aadharCardField;
+
+    final Calendar myCalendar = Calendar.getInstance();
+
+    String fieldError = "";
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnProceedSelectedListener {
-        /** Called by HeadlinesFragment when a list item is selected */
-        public void onPersonalDetailsEntered(HashMap<String,String> data);
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
+        public void onPersonalDetailsEntered(HashMap<String, String> data);
     }
-
 
 
     @Override
@@ -55,9 +84,72 @@ public class ApplyLoanPersonalInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_personal_details, null);
+
+        firstNameField = (AutoCompleteTextView) v.findViewById(R.id.firstname);
+        lastNameField = (AutoCompleteTextView) v.findViewById(R.id.lastname);
+        phoneNumberField = (AutoCompleteTextView) v.findViewById(R.id.mobile_phone);
+        dobField = (AutoCompleteTextView) v.findViewById(R.id.dob);
+        emailAddressField = (AutoCompleteTextView) v.findViewById(R.id.email_add);
+        panNumberField = (AutoCompleteTextView) v.findViewById(R.id.pan_number);
+        aadharCardField = (AutoCompleteTextView) v.findViewById(R.id.adhaar_number);
+        doorNumberField = (AutoCompleteTextView) v.findViewById(R.id.address_number);
+        streetNameField = (AutoCompleteTextView) v.findViewById(R.id.street_name);
+        localityField = (AutoCompleteTextView) v.findViewById(R.id.address_value);
+        cityField = (AutoCompleteTextView) v.findViewById(R.id.city);
+        pinCodeField = (AutoCompleteTextView) v.findViewById(R.id.pin_code);
+        stateField = (AutoCompleteTextView) v.findViewById(R.id.state_value);
+
+        setupDatePickerForDOB();
+
+        LoanUser user = SharedDataManager.getInstance().userObject;
+        if (user != null) {
+            firstNameField.setText(user.firstName);
+            lastNameField.setText(user.lastName);
+            phoneNumberField.setText(user.mobileNumber);
+            dobField.setText(user.DOB);
+            emailAddressField.setText(user.emailID);
+            panNumberField.setText(user.PANNumber);
+            aadharCardField.setText(user.aadharNumber);
+            streetNameField.setText(user.street);
+            localityField.setText(user.locaility);
+            cityField.setText(user.city);
+            stateField.setText(user.state);
+            pinCodeField.setText(user.PINCode);
+        }
+
         return v;
     }
 
+    void setupDatePickerForDOB() {
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                dobField.setText(sdf.format(myCalendar.getTime()));
+            }
+
+        };
+
+
+        dobField.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+    }
 
     @Override
     public void onStart() {
@@ -90,7 +182,6 @@ public class ApplyLoanPersonalInfo extends Fragment {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -105,12 +196,27 @@ public class ApplyLoanPersonalInfo extends Fragment {
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.profileProceedButtonPersonal:
-                    HashMap<String,String> firstPageData = new HashMap<String,String>();
-                    firstPageData.put("Amount", "Data");
-                    mCallback.onPersonalDetailsEntered(firstPageData);
+                    if (performValidations()) {
+                        HashMap<String, String> firstPageData = new HashMap<String, String>();
+
+                        populateGivenData();
+
+                        firstPageData.put("Amount", "Data");
+                        mCallback.onPersonalDetailsEntered(firstPageData);
+                    } else {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                        alertDialogBuilder.setMessage(fieldError);
+                        alertDialogBuilder.setTitle("Unable to save!!");
+
+                        alertDialogBuilder.setNegativeButton("Let me fix it!", null);
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+
                     // TODO Auto-generated method stub
                     break;
                 case View.NO_ID:
@@ -120,5 +226,75 @@ public class ApplyLoanPersonalInfo extends Fragment {
             }
         }
     };
+
+    private boolean performValidations() {
+        if (firstNameField.getText().length() <= 0 || lastNameField.getText().length() <= 0 || phoneNumberField.getText().length() <= 0 || dobField.getText().length() <= 0
+                || doorNumberField.getText().length() <= 0 || streetNameField.getText().length() <= 0
+                || cityField.getText().length() <= 0 || stateField.getText().length() <= 0 || pinCodeField.getText().length() <= 0
+                || panNumberField.getText().length() <= 0
+                || aadharCardField.getText().length() <= 0) {
+            fieldError = "None of the fields can be empty, Please fill up all";
+            return false;
+        }
+
+        if (!isValidPanCard(panNumberField.getText().toString())) {
+            fieldError = "Invlaid PAN Number";
+            return false;
+        }
+
+        if (!isValidAadharNumber(aadharCardField.getText().toString())) {
+            fieldError = "Invlaid Aadhar Number";
+            return false;
+        }
+
+        if (!isValidMobile(phoneNumberField.getText().toString())) {
+            fieldError = "Invalid Phone number";
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidMobile(String phone) {
+        //^[2-9]{2}[0-9]{8}$
+        return Pattern.compile("\\+?\\d[\\d -]{8,12}\\d").matcher(phone).matches();
+    }
+
+    private boolean isValidPanCard(String panCard){
+
+        //panCard= panCard.trim();
+
+        Pattern pattern = Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}");
+
+        Matcher matcher = pattern.matcher(panCard);
+
+        return matcher.matches();
+
+    }
+
+
+    private boolean isValidAadharNumber(String aadharCard){
+        //aadharCard= aadharCard.trim();
+
+        Pattern pattern = Pattern.compile("\\d{4}\\s?\\d{4}\\s?\\d{4}");
+
+        Matcher matcher = pattern.matcher(aadharCard);
+
+        return matcher.matches();
+    }
+
+
+    private void populateGivenData(){
+        LoanUser user = SharedDataManager.getInstance().userObject;
+        user.firstName = firstNameField.getText().toString();
+        user.lastName = lastNameField.getText().toString();
+        user.mobileNumber = phoneNumberField.getText().toString();
+        user.DOB = dobField.getText().toString();
+        user.doorNumber = doorNumberField.getText().toString();
+        user.street = streetNameField.getText().toString();
+        user.locaility = localityField.getText().toString();
+        user.city = cityField.getText().toString();
+        user.state = stateField.getText().toString();
+        user.PINCode = pinCodeField.getText().toString();
+    }
 
 }

@@ -420,6 +420,19 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
+    public void getLoanInfoService(Loan loanObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("loaninfoprovider", "LI001", "1");
+
+            requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_LOANINFO_SERVICE));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+
+    }
 
     public void makeDueDateGenerationService(Application applicationObject){
         try{
