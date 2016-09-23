@@ -22,8 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.channguyen.rsv.RangeSliderView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.EnterDetailsPagerAdapter;
 import com.oozmakappa.oyeloans.Adapters.LoanStepsPagerAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanEmploymentInfo;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanFirstFragment;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanPersonalInfo;
@@ -47,6 +50,15 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
         Log.v("data", data.toString());
         Fragment personalDetails = new ApplyLoanPersonalInfo();
         viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Application Bank n Employment screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     @Override

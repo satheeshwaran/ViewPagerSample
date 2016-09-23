@@ -15,8 +15,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.LoanPickerAdapter;
 import com.oozmakappa.oyeloans.Adapters.MakePaymentAmountsAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
@@ -77,6 +80,15 @@ public class MakePayment extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Make Payment screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     @Override

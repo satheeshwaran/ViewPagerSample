@@ -17,7 +17,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
@@ -177,6 +180,10 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         proceedButton.setOnClickListener(buttonClickListener);
 
         super.onStart();
+        Tracker t = ((AppController) getActivity().getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Enter Employment info screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
 

@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.OyeConstants;
@@ -49,6 +52,15 @@ public class ReferFriendActivity extends AppCompatActivity {
         else
             ((TextView)findViewById(R.id.referal_code_textview)).setText(referallCode);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Refer a Friend screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
 

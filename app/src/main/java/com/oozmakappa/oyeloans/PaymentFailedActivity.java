@@ -9,7 +9,20 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
+
 public class PaymentFailedActivity extends AppCompatActivity {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Payment Failed screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

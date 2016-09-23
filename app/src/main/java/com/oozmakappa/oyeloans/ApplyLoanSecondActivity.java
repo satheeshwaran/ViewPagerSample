@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.EnterDetailsPagerAdapter;
 import com.oozmakappa.oyeloans.Adapters.UploadDocsPagerAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
@@ -25,6 +28,15 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     TabLayout tabLayout;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Upload files screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

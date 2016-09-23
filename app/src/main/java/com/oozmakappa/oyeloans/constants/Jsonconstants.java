@@ -105,5 +105,6 @@ public interface Jsonconstants {
     String OL_GET_PERSONALINFO_SERVICE = "personal/personalInfo/";
     String OL_GET_EMPLOYMENTINFO_SERVICE = "getemploymentinfo/";
     String OL_GET_LOAN_HISTORY = "/customerhistory/";
+    String OL_SENDPHONE_DATA_SERVICE = "/updatephone/";
 
 }

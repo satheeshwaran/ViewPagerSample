@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.loopeer.cardstack.CardStackView;
 import com.oozmakappa.oyeloans.Adapters.FAQStackAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 
 import java.util.Arrays;
 
@@ -38,6 +41,15 @@ public class FAQActivity extends AppCompatActivity {
     };
     private CardStackView mStackView;
     private FAQStackAdapter mTestStackAdapter;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("FAQ");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
 
     @Override

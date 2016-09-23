@@ -8,10 +8,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
+
 /**
  * Created by sankarnarayanan on 09/09/16.
  */
 public class LoanInfoActivity  extends AppCompatActivity {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan Info Screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
