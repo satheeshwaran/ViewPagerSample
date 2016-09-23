@@ -42,6 +42,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         String EMPLOYMENTINFO_REQUEST_KEY = "employmentinfo";
         String LOAN_HISTORY_KEY = "loanApplicationHistory";
         String LOAN_INFO_KEY = "loanInfo";
+        String UPLOAD_PHONE_DATA_KEY = "uploadDeviceData";
     }
 
     private JSONObject authObject = new JSONObject();
@@ -587,6 +588,52 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
 
 
+    public void sendMobileDeviceDataToServer(JSONObject deviceData){
+        try {
+
+            JSONObject requestMap = deviceData;
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "PhoneData");
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI004");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1289");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_SENDPHONE_DATA_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.UPLOAD_PHONE_DATA_KEY, url, requestParams, Request.Method.POST, true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
 
 
     private JSONObject requestObjectWithDetails(String serviceName, String serviceID, String requestID) {
@@ -688,7 +735,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY)))
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY)))
             {
                 JSONObject jsonObject = new JSONObject(response);
                 if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){
