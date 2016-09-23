@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.R;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -94,6 +97,10 @@ public class ApplyLoanFirstFragment extends Fragment {
         Button proceedButton = (Button) getActivity().findViewById(R.id.profileProceedButton);
         proceedButton.setOnClickListener(buttonClickListener);
         super.onStart();
+        Tracker t = ((AppController) getActivity().getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Apply Loan screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {

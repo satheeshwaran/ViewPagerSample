@@ -21,7 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
@@ -41,6 +44,15 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
     Boolean smsOTPReceived = false;
     Boolean smsOTPGenerated = false;
     String otp= "";
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - OTP screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

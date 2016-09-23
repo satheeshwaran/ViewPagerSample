@@ -18,8 +18,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
 import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.R;
 
 import java.io.File;
@@ -68,6 +71,10 @@ public class ApplyLoanUploadDocuments extends Fragment {
         });
 
         super.onStart();
+        Tracker t = ((AppController) getActivity().getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - upload document screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
 

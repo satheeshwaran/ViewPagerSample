@@ -100,6 +100,15 @@ public class AccountSummaryActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Enter bank info screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
+
 
 
     @Override

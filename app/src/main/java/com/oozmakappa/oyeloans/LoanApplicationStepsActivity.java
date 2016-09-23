@@ -12,6 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.oozmakappa.oyeloans.Adapters.LoanStepsPagerAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
@@ -74,6 +77,10 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
     @Override
     protected void onStart() {
         super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan Application Steps");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     @Override

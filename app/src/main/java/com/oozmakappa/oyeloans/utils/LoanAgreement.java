@@ -9,23 +9,14 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.utils.Utils;
 
-public class TermsAndConditionsActivity extends AppCompatActivity {
+public class LoanAgreement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_terms_and_conditions);
-
-        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
-        t.setScreenName("Edit Profile");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
-        t.enableAutoActivityTracking(true);
-        super.onStart();
+        setContentView(R.layout.activity_loan_agreement);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -41,18 +32,17 @@ public class TermsAndConditionsActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
 
-        WebView webView = (WebView) findViewById(R.id.termsAndConditionsWebView);
-        webView.loadUrl("file:///android_asset/Terms_and_conditions.html");
+        WebView webView = (WebView) findViewById(R.id.loanAgreementWebView);
+        webView.loadUrl("file:///android_asset/LoanAgreement.html");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon)
             {
-                Utils.showLoading(TermsAndConditionsActivity.this,"Loading...");
+                Utils.showLoading(LoanAgreement.this,"Loading...");
                 // TODO show you progress image
                 super.onPageStarted(view, url, favicon);
             }
-
 
             @Override
             public void onPageFinished(WebView view, String url)

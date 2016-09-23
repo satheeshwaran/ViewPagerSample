@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.EditProfileActivity;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
@@ -174,6 +177,10 @@ public class ApplyLoanPersonalInfo extends Fragment {
         }
 
         super.onStart();
+        Tracker t = ((AppController) getActivity().getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Enter personal info screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
     @Override

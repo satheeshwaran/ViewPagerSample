@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.BankInfo;
 import com.oozmakappa.oyeloans.Models.LoanUser;
@@ -56,6 +59,10 @@ public class ApplyLoanBankInfo extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Tracker t = ((AppController) getActivity().getApplication()).getDefaultTracker();
+        t.setScreenName("Loan application - Enter bank info screen");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
     }
 
 

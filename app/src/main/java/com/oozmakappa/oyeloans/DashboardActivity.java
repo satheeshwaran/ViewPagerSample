@@ -32,6 +32,8 @@ import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.crash.FirebaseCrash;
 import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
 import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
@@ -75,6 +77,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ResideMenuItem referFriend;
     private AccountSummaryActivity mContext;
     public ArrayList<LoanSummaryModel> loanArray = new ArrayList<LoanSummaryModel>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,7 +162,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onStart() {
         super.onStart();
-    }
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("DashBoard - Loan Summary");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+        }
+
+
 
     @Override
     protected void onPause() {

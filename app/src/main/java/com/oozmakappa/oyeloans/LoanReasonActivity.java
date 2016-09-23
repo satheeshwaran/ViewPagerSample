@@ -9,9 +9,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.LoanReasonAdapter;
+import com.oozmakappa.oyeloans.DataExtraction.AppController;
 
 public class LoanReasonActivity extends AppCompatActivity {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Loan Reason");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
