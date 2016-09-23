@@ -82,6 +82,7 @@ public interface Jsonconstants {
     String OL_SERVICENAME_KEY = "service_name";
     String OL_SERVICECODE_KEY = "service_code";
     String OL_REQUESTID_KEY = "request_id";
+    String OL_DEVICE_ID_KEY = "device_id";
 
     //URL Constants
     String OL_BASE_URL = "https://dev.intest.com/";

@@ -60,6 +60,7 @@ public class LoanUser {
     public JSONArray friendList;
     public JSONArray education;
 
+    ///Use only for facebook data..
     public static LoanUser loanUserFromJSONObject(JSONObject object){
         LoanUser user = new LoanUser();
         try {
@@ -73,6 +74,16 @@ public class LoanUser {
             user.ageRange = object.getJSONObject("age_range").getInt("min");
             user.totalFriendcount =object.getJSONObject("friends").getJSONObject("summary").getDouble("total_count");
             user.DOB = object.getString("birthday");
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                Date formatedDate = sdf.parse(user.DOB);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                user.DOB = sdf1.format(formatedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             user.gender = object.getString("gender");
             user.relationshipStatus = object.getString("relationship_status");
 

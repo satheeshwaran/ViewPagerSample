@@ -10,7 +10,13 @@ import com.oozmakappa.oyeloans.Models.Loan;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Random;
 import java.util.UUID;
 
 import com.oozmakappa.oyeloans.Models.SuccessModel;
@@ -72,34 +78,54 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         completionHandler = handler;
     }
 
-    public void makeNewApplicationServiceCall(Application applicationObject) {
+    public void makeNewApplicationServiceCall(Application applicationObject,String deviceID) {
         // Construct the request
         try {
-            JSONObject requestMap = new JSONObject();
+            JSONObject requestMap = requestObjectWithDetails("NewApplication", "GAI002", "1285");
+
+            Random ran = new Random();
+            int applicationID = ran.nextInt(1000);
+
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            Calendar c = Calendar.getInstance(); // starts with today's date and time
+            c.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
+            Date date = c.getTime();
+            String firstPayDate = sdf1.format(date);
+
             requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.loanUserObject.firstName.concat(" ").concat(applicationObject.loanUserObject.lastName)));
             requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.loanUserObject.emailID);
             requestMap.putOpt(Jsonconstants.OL_NA_MOBILE_NO_KEY, applicationObject.loanUserObject.mobileNumber);
-            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, applicationObject.loanUserObject.DOB);
+            String dob = applicationObject.loanUserObject.DOB;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date formatedDate = sdf.parse(dob);
+                dob = sdf1.format(formatedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, dob);
             requestMap.putOpt(Jsonconstants.OL_NA_GENDER_KEY, applicationObject.loanUserObject.gender);
             requestMap.putOpt(Jsonconstants.OL_NA_PAN_KEY, applicationObject.loanUserObject.PANNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.loanUserObject.aadharNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.loanUserObject.doorNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.street);
-            requestMap.putOpt(Jsonconstants.OL_NA_PINCODE_KEY, applicationObject.loanUserObject.PINCode);
+            requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY,Integer.parseInt(applicationObject.loanUserObject.PINCode));
             requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
-            requestMap.putOpt(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationObject.applicationID);
-            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
-            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_DURATION_KEY, applicationObject.loanDuration);
-            requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, applicationObject.firstPayDate);
+            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY,applicationID);
+            requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
+            requestMap.put(Jsonconstants.OL_NA_LOAN_DURATION_KEY, 12);
+            requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, firstPayDate);
+            requestMap.putOpt(Jsonconstants.OL_DEVICE_ID_KEY, deviceID);
 
             // Construct the auth object for the request
-            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
+            //requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
 
             // Construct the request info object for the request
-            this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
+            /*this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI002");
             this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
-            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);*/
 
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_NEWAPPLICATION_SERVICE_KEY);

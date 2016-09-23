@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.oozmakappa.oyeloans.ApplyLoanFirstActivity;
+import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
 import com.oozmakappa.oyeloans.EditProfileActivity;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.R;
@@ -205,6 +207,8 @@ public class ApplyLoanPersonalInfo extends Fragment {
                         populateGivenData();
 
                         firstPageData.put("Amount", "Data");
+                        ((ApplyLoanFirstActivity)getActivity()).setCurrentItem(2, true);
+
                         mCallback.onPersonalDetailsEntered(firstPageData);
                     } else {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -295,6 +299,8 @@ public class ApplyLoanPersonalInfo extends Fragment {
         user.city = cityField.getText().toString();
         user.state = stateField.getText().toString();
         user.PINCode = pinCodeField.getText().toString();
+        user.aadharNumber = aadharCardField.getText().toString();
+        user.PANNumber = panNumberField.getText().toString();
     }
 
 }

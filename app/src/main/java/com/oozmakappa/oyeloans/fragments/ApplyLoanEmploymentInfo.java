@@ -127,7 +127,7 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         };
 
 
-        passoutYearField.setOnClickListener(new View.OnClickListener() {
+        workStartDateField.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

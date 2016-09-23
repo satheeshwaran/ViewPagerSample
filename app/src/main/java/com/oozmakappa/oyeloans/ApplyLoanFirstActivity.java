@@ -203,4 +203,7 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
     }
 
 
+    public void setCurrentItem(int i, boolean b) {
+        viewPager.setCurrentItem(i,b);
+    }
 }
