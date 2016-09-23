@@ -99,10 +99,11 @@ public interface Jsonconstants {
     String OL_REFERRAL_CODE_SERVICE = "referral/get/";
 
     String OL_BANKINFO_SERVICE = "bankinfo/";
-    String OL_LOANINFO_SERVICE = "loan/loanschedule/";
+    String OL_LOANINFO_SERVICE = "loan/loanSchedule/";
     String OL_DUEDATE_GENERATOR_SERVICE = "schedule/process/";
     String OL_GET_PAYDATES_SERVICE = "getpaydates/";
     String OL_GET_PERSONALINFO_SERVICE = "personal/personalInfo/";
     String OL_GET_EMPLOYMENTINFO_SERVICE = "getemploymentinfo/";
+    String OL_GET_LOAN_HISTORY = "/customerhistory/";
 
 }
