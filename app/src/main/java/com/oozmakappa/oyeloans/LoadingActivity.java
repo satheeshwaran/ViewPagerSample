@@ -124,7 +124,7 @@ public class LoadingActivity extends AppCompatActivity {
                                                     });
                                                     webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
                                                     //To be reomoved after setting up single box.
-                                                    goToAccountSummaryPage();
+                                                    //goToAccountSummaryPage();
                                                 }
                                             });
                                         }
