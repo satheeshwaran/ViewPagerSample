@@ -51,9 +51,8 @@ public class AccountSummaryActivity extends AppCompatActivity
     public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
     private FloatingActionMenu menuRed;
     private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemSettings;
     private ResideMenuItem referFriend;
+    private ResideMenuItem itemFAQ;
     /*
  * Preparing the list data
  */
@@ -273,9 +272,8 @@ public class AccountSummaryActivity extends AppCompatActivity
         resideMenu.setScaleValue(0.4f);
 
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
         referFriend = new ResideMenuItem(this, R.drawable.command, "Refer A Friend");
-        ResideMenuItem itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
+        itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
         ResideMenuItem chatWithUS = new ResideMenuItem(this,R.drawable.messenger, "Chat");
         ResideMenuItem rateUs = new ResideMenuItem(this,R.drawable.star, "Rate Us");
         ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.logout, "Logout");
@@ -309,22 +307,22 @@ public class AccountSummaryActivity extends AppCompatActivity
             }
         });
 
+        itemFAQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent faqIntent = new Intent(AccountSummaryActivity.this,FAQActivity.class);
+                startActivity(faqIntent);
+            }
+        });
+
         itemHome.setOnClickListener(this);
-       // itemProfile.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
-        //itemLogout.setOnClickListener(this);
-        itemFAQ.setOnClickListener(this);
-        //chatWithUS.setOnClickListener(this);
         referFriend.setOnClickListener(this);
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        //resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
-        //resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemFAQ, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(rateUs, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
-
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
     }
