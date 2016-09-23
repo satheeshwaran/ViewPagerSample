@@ -234,8 +234,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             historyWork.put(Jsonconstants.OL_FB_HISTORY_KEY, work);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_KEY, historyWork);
             JSONObject authObject = new JSONObject();
-            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "fb");
-            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "fb@123");
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
             requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
             JSONObject requestInfo = new JSONObject();
             requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "Fb");

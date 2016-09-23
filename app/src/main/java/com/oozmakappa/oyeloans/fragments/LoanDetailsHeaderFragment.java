@@ -1,7 +1,9 @@
 package com.oozmakappa.oyeloans.fragments;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +11,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.oozmakappa.oyeloans.R;
 
 import org.json.JSONArray;
@@ -70,6 +74,8 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
     @Override
     public void onStart() {
+
+        //animateLoanArcWithAmount(70);
         super.onStart();
     }
 
@@ -90,5 +96,41 @@ public class LoanDetailsHeaderFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+
+
+    private void animateLoanArcWithAmount(final int percentage){
+        final ArcProgress loanArcProgress = (ArcProgress) getActivity().findViewById(R.id.loan_arc_progress);
+        loanArcProgress.setProgress(0);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
+                animation.setDuration(percentage * 10);//25 for a fast but not to fast animation
+                animation.setInterpolator(new DecelerateInterpolator());
+                animation.start();
+
+                /*new CountDownTimer(2000, 500) {
+
+                    public void onTick(long millisUntilFinished) {
+                        loanArcProgress.setProgress((int)(Math.random() * 100));
+
+                    }
+
+                    public void onFinish() {
+                        loanArcProgress.setProgress(80);
+                    }
+
+                }.start();*/
+
+            }
+        }, 2000);
+
+
+
+    }
+
 
 }

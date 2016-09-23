@@ -4,12 +4,16 @@ package com.oozmakappa.oyeloans.Adapters;
  * Created by sankarnarayanan on 21/09/16.
  */
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oozmakappa.oyeloans.MainActivity;
@@ -64,6 +68,14 @@ public class LoanDashBoardListAdapter extends BaseAdapter{
             holder.dueDate.setText(currObj.getString("scheduled_due_date"));
             holder.payableAmount = (TextView) rowView.findViewById(R.id.paymentAmountValue);
             holder.payableAmount.setText(currObj.getString("payment_amount"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                View container = (View) rowView.findViewById(R.id.indicatorView);
+                if (currObj.get("payment_amount").equals(currObj.getString("paid_amount"))) {
+                    container.setBackgroundColor(context.getResources().getColor(R.color.green_500));
+                }else{
+                    container.setBackgroundColor(context.getResources().getColor(R.color.red_500));
+                }
+            }
             rowView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -152,7 +152,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        animateLoanArcWithAmount(80);
+        //animateLoanArcWithAmount(80);
         prepareListData();
     }
 
@@ -318,38 +318,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         startActivity(goToApplyLoanFirstScreenIntent);
     }
 
-    private void animateLoanArcWithAmount(final int percentage){
-        final ArcProgress loanArcProgress = (ArcProgress) findViewById(R.id.loan_arc_progress);
-        loanArcProgress.setProgress(0);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
-                animation.setDuration(percentage * 10);//25 for a fast but not to fast animation
-                animation.setInterpolator(new DecelerateInterpolator());
-                animation.start();
-
-                /*new CountDownTimer(2000, 500) {
-
-                    public void onTick(long millisUntilFinished) {
-                        loanArcProgress.setProgress((int)(Math.random() * 100));
-
-                    }
-
-                    public void onFinish() {
-                        loanArcProgress.setProgress(80);
-                    }
-
-                }.start();*/
-
-            }
-        }, 2000);
-
-
-
-    }
 
 
     private void prepareListData() {
