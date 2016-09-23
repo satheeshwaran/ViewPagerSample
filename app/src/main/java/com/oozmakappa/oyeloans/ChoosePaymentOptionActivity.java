@@ -114,7 +114,10 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
             }
         });
 
-        showDebitCardLayout();
+        debitCardContainerLayout.setVisibility(View.INVISIBLE);
+        netBankingContainerLayout.setVisibility(View.INVISIBLE);
+
+        //showDebitCardLayout();
 
         final String paymentAmount = getIntent().getStringExtra("payable_amount");
 
@@ -221,12 +224,12 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
         this.savedDebitCards.add(dc);
 
-        DebitCard dc1 = new DebitCard();
+        /*DebitCard dc1 = new DebitCard();
         dc1.debitCardName = "SATHEESHWARAN J";
         dc1.debitCardCVV = "123";
         dc1.debitCardExiry = "11/19";
         dc1.debitCardNumber = "57576789000000000";
-        this.savedDebitCards.add(dc1);
+        this.savedDebitCards.add(dc1);*/
     }
 
     @Override

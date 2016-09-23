@@ -379,7 +379,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt("otp", otp);
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_VALIDATION_SERVICE));
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
         }
