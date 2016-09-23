@@ -7,10 +7,17 @@ import com.oozmakappa.oyeloans.DataExtraction.AppConstants;
 import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.BankInfo;
 import com.oozmakappa.oyeloans.Models.Loan;
+import com.oozmakappa.oyeloans.Models.LoanApplicationInfo;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Random;
 import java.util.UUID;
 
 import com.oozmakappa.oyeloans.Models.SuccessModel;
@@ -33,6 +40,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         String VALIDATE_REFERRAL_KEY = "validateReferral";
         String NEW_APPLICATION_REQUEST_KEY = "newapplication";
         String EMPLOYMENTINFO_REQUEST_KEY = "employmentinfo";
+        String LOAN_HISTORY_KEY = "loanApplicationHistory";
+        String LOAN_INFO_KEY = "loanInfo";
+        String UPLOAD_PHONE_DATA_KEY = "uploadDeviceData";
     }
 
     private JSONObject authObject = new JSONObject();
@@ -72,34 +82,54 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         completionHandler = handler;
     }
 
-    public void makeNewApplicationServiceCall(Application applicationObject) {
+    public void makeNewApplicationServiceCall(Application applicationObject,String deviceID) {
         // Construct the request
         try {
-            JSONObject requestMap = new JSONObject();
+            JSONObject requestMap = requestObjectWithDetails("NewApplication", "GAI002", "1285");
+
+            Random ran = new Random();
+            int applicationID = ran.nextInt(1000);
+
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            Calendar c = Calendar.getInstance(); // starts with today's date and time
+            c.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
+            Date date = c.getTime();
+            String firstPayDate = sdf1.format(date);
+
             requestMap.putOpt(Jsonconstants.OL_NA_NAME_KEY, (applicationObject.loanUserObject.firstName.concat(" ").concat(applicationObject.loanUserObject.lastName)));
             requestMap.putOpt(Jsonconstants.OL_NA_EMAIL_KEY, applicationObject.loanUserObject.emailID);
             requestMap.putOpt(Jsonconstants.OL_NA_MOBILE_NO_KEY, applicationObject.loanUserObject.mobileNumber);
-            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, applicationObject.loanUserObject.DOB);
+            String dob = applicationObject.loanUserObject.DOB;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date formatedDate = sdf.parse(dob);
+                dob = sdf1.format(formatedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            requestMap.putOpt(Jsonconstants.OL_NA_DOB_KEY, dob);
             requestMap.putOpt(Jsonconstants.OL_NA_GENDER_KEY, applicationObject.loanUserObject.gender);
             requestMap.putOpt(Jsonconstants.OL_NA_PAN_KEY, applicationObject.loanUserObject.PANNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.loanUserObject.aadharNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.loanUserObject.doorNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.street);
-            requestMap.putOpt(Jsonconstants.OL_NA_PINCODE_KEY, applicationObject.loanUserObject.PINCode);
+            requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY,Integer.parseInt(applicationObject.loanUserObject.PINCode));
             requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
-            requestMap.putOpt(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationObject.applicationID);
-            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
-            requestMap.putOpt(Jsonconstants.OL_NA_LOAN_DURATION_KEY, applicationObject.loanDuration);
-            requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, applicationObject.firstPayDate);
+            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY,applicationID);
+            requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
+            requestMap.put(Jsonconstants.OL_NA_LOAN_DURATION_KEY, 12);
+            requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, firstPayDate);
+            requestMap.putOpt(Jsonconstants.OL_DEVICE_ID_KEY, deviceID);
 
             // Construct the auth object for the request
-            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
+            //requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, this.authObject);
 
             // Construct the request info object for the request
-            this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
+            /*this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "NewApplication");
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI002");
             this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
-            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);*/
 
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_NEWAPPLICATION_SERVICE_KEY);
@@ -417,19 +447,6 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void getLoanInfoService(Loan loanObject){
-        try{
-            JSONObject requestMap = requestObjectWithDetails("loaninfoprovider", "LI001", "1");
-
-            requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
-            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_LOANINFO_SERVICE));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
-        }
-
-    }
 
     public void makeDueDateGenerationService(Application applicationObject){
         try{
@@ -491,6 +508,128 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             e.printStackTrace();
             completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
         }
+    }
+
+
+    public void getLoanHistory(String emailId){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("customerhistory", "1895", "12345678");
+            requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailId);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, Jsonconstants.OL_APPID_VALUE);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_LOAN_HISTORY);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.LOAN_HISTORY_KEY, url, requestParams, Request.Method.POST, true);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void getLoanInfoService(Loan loanObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("loaninfoprovider", "LI001", "1");
+
+            requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_LOANINFO_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.LOAN_INFO_KEY, url, requestParams, Request.Method.POST, true);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+
+    }
+
+
+
+    public void sendMobileDeviceDataToServer(JSONObject deviceData){
+        try {
+
+            JSONObject requestMap = deviceData;
+            JSONObject authObject = new JSONObject();
+            authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
+            authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
+            requestMap.putOpt(Jsonconstants.OL_AUTH_KEY, authObject);
+            JSONObject requestInfo = new JSONObject();
+            requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "PhoneData");
+            requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI004");
+            requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1289");
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, requestInfo);
+
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_SENDPHONE_DATA_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.UPLOAD_PHONE_DATA_KEY, url, requestParams, Request.Method.POST, true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -596,17 +735,25 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY))) {
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY)))
+            {
                 JSONObject jsonObject = new JSONObject(response);
-                SuccessModel sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
-                sModel.response = response;
-                completionHandler.onRequestCompleted(sModel, null);
-                Log.v("response", response);
+                if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){
+                    LoanApplicationInfo sModel;
+                    sModel = LoanApplicationInfo.LoanApplicationModelFromJSONObject(jsonObject);
+                    completionHandler.onRequestCompleted(sModel, null);
+                }else {
+                    SuccessModel sModel;
+                    sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
+                    sModel.response = response;
+                    completionHandler.onRequestCompleted(sModel, null);
+                    Log.v("response", response);
+                }
             } else {
                 completionHandler.onRequestCompleted(null, null);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }

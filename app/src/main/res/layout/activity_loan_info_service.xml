@@ -40,12 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Loan, Application History"
+            android:text="Loan History"
             android:id="@+id/textView4"
             android:layout_toEndOf="@+id/menuIcon"
             android:layout_below="@+id/textView2"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="3dp"
+            android:paddingBottom="10dp"
             android:textColor="#ffffff"
             android:textSize="10dp"
             android:fontFamily="sans-serif"
@@ -56,7 +57,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/NavBarColor">
+        android:background="@color/NavBarColor"
+        android:id="@+id/loanPresentView"
+        android:visibility="visible">
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -124,8 +128,68 @@
                 fab:fab_size="mini"
                 fab:fab_label="Terms and Conditions" />
 
-
         </com.github.clans.fab.FloatingActionMenu>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/noLoansView"
+        android:background="@color/grey_100">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have no loans with us right now!"
+            android:id="@+id/noloansText"
+            android:gravity="center_horizontal"
+            android:paddingTop="30dp"
+            />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/no_mail"
+            android:id="@+id/emptyImage"
+            android:layout_below="@+id/noloansText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Started"
+            android:textSize="20dp"
+            android:layout_below="@+id/emptyImage"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:id="@+id/getStartedText"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please Click on start new application or continue pending application to proceed further!"
+            android:layout_below="@+id/getStartedText"
+            android:id="@+id/getStartedExplanation"
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_shape"
+            android:text="@string/applyLoanBtn"
+            android:textSize="16dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/applyLoanButtonNoLoanView"
+            android:layout_below="@+id/getStartedExplanation"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -79,12 +79,10 @@ public class ApplyLoanUploadDocuments extends Fragment {
 
 
     public void selectPdfDocument(int identifier){
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/example.pdf");
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivityForResult(Intent.createChooser(intent, "Select Pay slip"),identifier);
-        startActivity(intent);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
     }
 
     View.OnClickListener salarySlipListener = new View.OnClickListener(){

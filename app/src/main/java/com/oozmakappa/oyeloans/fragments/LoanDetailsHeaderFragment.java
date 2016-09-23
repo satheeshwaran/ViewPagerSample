@@ -74,8 +74,7 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
     @Override
     public void onStart() {
-
-        //animateLoanArcWithAmount(70);
+        animateLoanArcWithAmount(60);
         super.onStart();
     }
 

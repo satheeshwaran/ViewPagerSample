@@ -22,9 +22,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +34,19 @@ import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
 import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.Models.Loan;
+import com.oozmakappa.oyeloans.Models.LoanApplicationInfo;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
+import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -62,9 +68,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     // Local Members Reference
     private AppController mController;
 
-    String loanInfoData = "{\"status\": \"success\", \"service_name\": \"loaninfoprovider\",\"request_id\": 1, \"description\": \" Loan Schedule for given loanid\", \"schedule\": [{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"}], \"ob\": 100.8}";
+    String loanInfoData = "";
 
-    String loanHistoryData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
+    //Loan info data - {"status": "success", "service_name": "loaninfoprovider","request_id": 1, "description": " Loan Schedule for given loanid", "schedule": [{"installment_type": "interest", "cycle_no": 1, "payment_amount": "2083.34", "paid_amount": "0.00", "scheduled_due_date": "2016-09-09"},{"installment_type": "interest", "cycle_no": 1, "payment_amount": "2083.34", "paid_amount": "0.00", "scheduled_due_date": "2016-09-09"},{"installment_type": "interest", "cycle_no": 1, "payment_amount": "2083.34", "paid_amount": "0.00", "scheduled_due_date": "2016-09-09"},{"installment_type": "interest", "cycle_no": 1, "payment_amount": "2083.34", "paid_amount": "0.00", "scheduled_due_date": "2016-09-09"}], "ob": 100.8}
+
+    String loanHistoryData = "";
+
+    //Loan history data - {"loan_status_history": [{"loan_id":1, "loan_status":"Closed"},{"loan_id":3, "loan_status":"Pre- Closed"},{"loan_id":107, "loan_status":"Closed"}]}
 
     HashMap<String, List<LoanSummaryModel>> listDataChild = new HashMap<String, List<LoanSummaryModel>>();
     public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
@@ -78,14 +88,91 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private AccountSummaryActivity mContext;
     public ArrayList<LoanSummaryModel> loanArray = new ArrayList<LoanSummaryModel>();
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Initializes the controller, for data extraction.
-        //To be uncommented - Gets all mobile data to submit to underwriting.
-        //getDeviceData();
+        this.setUpBasicItems();
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                try {
+                    if (model.getStatus().equals("success")) {
+                        model = (LoanApplicationInfo) model;
+                        loanHistoryData = ((LoanApplicationInfo) model).getLoanHistory().toString();
+                        appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory().toString();
+                        JSONArray loanArray = ((LoanApplicationInfo) model).getLoanHistory();
+                        for (int i = 0; i < loanArray.length(); i++) {
+                            JSONObject loanObject = loanArray.getJSONObject(i);
+                            Loan loanObj = new Loan();
+                            loanObj.loanID = loanObject.getInt("loan_id");
+                            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                                @Override
+                                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                                    if (model != null && model.getStatus().equals("success")) {
+                                        Utils.removeLoading();
+                                        setUpDashboard();
+                                    }else{
+                                        enableNoLoanView();
+                                    }
+                                }
+                            });
+                            webServiceHelper.getLoanInfoService(loanObj);
+                            //break;
+                        }
+                        FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
+                        Utils.removeLoading();
+                    } else {
+                        enableNoLoanView();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        webServiceHelper.getLoanHistory(SharedDataManager.getInstance().userObject.emailID);
+        Utils.showLoading(this, "Fetching your loan Info");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loan_info_service);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
+    public void enableNoLoanView(){
+        RelativeLayout noLoanView = (RelativeLayout) findViewById(R.id.noLoansView);
+        RelativeLayout loanPresentView = (RelativeLayout)findViewById(R.id.loanPresentView);
+        loanPresentView.setVisibility(View.GONE);
+        noLoanView.setVisibility(View.VISIBLE);
+        Button applyLoan = (Button) findViewById(R.id.applyLoanButtonNoLoanView);
+        applyLoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToApplyLoanPage();
+                Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void setUpDashboard(){
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new LoanDetailsHeaderAdapter(getSupportFragmentManager(), this, loanHistoryData, loanInfoData));
         viewPager.addOnPageChangeListener(pageChangeListener);
@@ -107,6 +194,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }catch (Exception e){
             e.printStackTrace();
         }
+        //animateLoanArcWithAmount(80);
+        prepareListData();
+    }
+
+    public void setUpBasicItems(){
+        setContentView(R.layout.activity_loan_info_service);
         this.setUpMenu();
         ImageView image = (ImageView) findViewById(R.id.menuIcon);
         image.setOnClickListener(new View.OnClickListener() {
@@ -122,12 +215,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(referFriendPage);
             }
         });
-
-
         FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
         FloatingActionButton applyLoanBtn = (FloatingActionButton) findViewById(R.id.fab1);
         FloatingActionButton termsButton = (FloatingActionButton) findViewById(R.id.termsAndConditions);
-
         makePaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +228,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(makePaymentIntent);
             }
         });
-
         applyLoanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +235,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
-
         termsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,36 +242,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(makePaymentIntent);
             }
         });
-
-        //animateLoanArcWithAmount(80);
-        prepareListData();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
-        t.setScreenName("DashBoard - Loan Summary");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
-        t.enableAutoActivityTracking(true);
-        }
-
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 

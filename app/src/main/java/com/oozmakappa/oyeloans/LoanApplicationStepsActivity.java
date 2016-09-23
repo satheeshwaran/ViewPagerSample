@@ -18,6 +18,12 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.oozmakappa.oyeloans.Adapters.LoanStepsPagerAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -39,7 +45,7 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Initializes the controller, for data extraction.
         //To be uncommented - Gets all mobile data to submit to underwriting.
-        //getDeviceData();
+        getDeviceData();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_applocation_steps);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -162,9 +168,26 @@ public class LoanApplicationStepsActivity extends AppCompatActivity implements A
      */
     private void postData() {
         // Post the device data
-        final HashMap<Object, Object> requestParams = new HashMap<>();
-        final String content = new Gson().toJson(mController.getMobileData());
-        Log.v("Device data", content);
+        try {
+            final HashMap<Object, Object> requestParams = new HashMap<>();
+            final String content = new Gson().toJson(mController.getMobileData());
+            JSONObject finalDeviceData = new JSONObject(content);
+            Log.v("Device data", content);
+
+            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    if (model != null && model.getStatus().equals("success")) {
+                        Log.v("upload succcessfull", "**********");
+
+                    }
+                }
+            });
+            webServiceHelper.sendMobileDeviceDataToServer(finalDeviceData);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //Make web service call here.
 
     }

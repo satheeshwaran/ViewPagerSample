@@ -105,6 +105,9 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                ///Strictly for debugging without otp flow...
+                //makeLoanApplicationCall();
+
                 String smsOTP = ((TextView) findViewById(R.id.otpEntryField)).getText().toString();
                 String mobileNumber = SharedDataManager.getInstance().userObject.mobileNumber;
                 if (Utils.checkIfOnlyNumbers(smsOTP) && mobileNumber.length()>0) {
@@ -115,11 +118,20 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                         public void onRequestCompleted(SuccessModel model, String errorMessage) {
                             com.oozmakappa.oyeloans.utils.Utils.removeLoading();
                             if (errorMessage == null && errorMessage.length() == 0 && model.getStatus().equals("success")) {
-                                Utils.removeLoading();
-                                Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
-                                startActivity(thanksScreen);
-                                ApplyLoanThirdActivity.this.finish();
+                                makeLoanApplicationCall();
+                            }else{
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                                alertDialogBuilder.setTitle("Error!");
+                                alertDialogBuilder.setMessage(model.getDescription());
 
+                                alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
                             }
                         }
                     });
@@ -310,6 +322,39 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             currentImage.setImageResource(R.drawable.ic_keyboard_arrow_down_white_48dp);
         }
 
+    }
+
+    private void makeLoanApplicationCall(){
+
+        SharedDataManager.getInstance().activeApplication.loanUserObject = SharedDataManager.getInstance().userObject;
+
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && errorMessage.length() == 0 && model.getStatus().equals("success")) {
+                    Utils.removeLoading();
+                    Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
+                    startActivity(thanksScreen);
+                    ApplyLoanThirdActivity.this.finish();
+
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
+                    alertDialogBuilder.setTitle("Error!");
+                    alertDialogBuilder.setMessage(model.getDescription());
+
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeNewApplicationServiceCall(SharedDataManager.getInstance().activeApplication, com.oozmakappa.oyeloans.DataExtraction.Utils.getDeviceId(ApplyLoanThirdActivity.this));
     }
 
     @Override

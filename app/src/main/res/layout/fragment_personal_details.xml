@@ -313,20 +313,19 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="40dp"
                         android:layout_toLeftOf="@+id/dummyViewHelper"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:layout_below="@+id/include">
 
                         <AutoCompleteTextView
                             android:id="@+id/address_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="No."
+                            android:hint="Door/Flat No."
                             android:layout_marginTop="25dp"
                             android:theme="@style/TextLabel"
                             android:textColor="@color/NavBarColor"
                             android:textColorHint="@color/NavBarColor"
                             android:textSize="15dp"
-                            android:height="20dp"
                             />
                     </android.support.design.widget.TextInputLayout>
 
@@ -349,7 +348,6 @@
                             android:textColor="@color/NavBarColor"
                             android:textColorHint="@color/NavBarColor"
                             android:textSize="15dp"
-                            android:height="20dp"
                             />
                     </android.support.design.widget.TextInputLayout>
 

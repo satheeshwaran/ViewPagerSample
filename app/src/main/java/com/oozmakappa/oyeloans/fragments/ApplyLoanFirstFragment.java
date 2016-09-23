@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +92,23 @@ public class ApplyLoanFirstFragment extends Fragment {
                 int value = (progress * 1000) + 10000;
                 amountEdit.setText(Integer.toString(value));
                 amountEdit.clearFocus();
+                amountEdit.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        SharedDataManager.getInstance().activeApplication.loanAmount = amountEdit.getText().toString();
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        SharedDataManager.getInstance().activeApplication.loanAmount = amountEdit.getText().toString();
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        SharedDataManager.getInstance().activeApplication.loanAmount = amountEdit.getText().toString();
+                    }
+                });
 
             }
         });

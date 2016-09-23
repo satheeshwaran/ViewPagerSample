@@ -82,6 +82,7 @@ public interface Jsonconstants {
     String OL_SERVICENAME_KEY = "service_name";
     String OL_SERVICECODE_KEY = "service_code";
     String OL_REQUESTID_KEY = "request_id";
+    String OL_DEVICE_ID_KEY = "device_id";
 
     //URL Constants
     String OL_BASE_URL = "https://dev.intest.com/";
@@ -98,10 +99,12 @@ public interface Jsonconstants {
     String OL_REFERRAL_CODE_SERVICE = "referral/get/";
 
     String OL_BANKINFO_SERVICE = "bankinfo/";
-    String OL_LOANINFO_SERVICE = "loan/loanschedule/";
+    String OL_LOANINFO_SERVICE = "loan/loanSchedule/";
     String OL_DUEDATE_GENERATOR_SERVICE = "schedule/process/";
     String OL_GET_PAYDATES_SERVICE = "getpaydates/";
     String OL_GET_PERSONALINFO_SERVICE = "personal/personalInfo/";
     String OL_GET_EMPLOYMENTINFO_SERVICE = "getemploymentinfo/";
+    String OL_GET_LOAN_HISTORY = "/customerhistory/";
+    String OL_SENDPHONE_DATA_SERVICE = "/updatephone/";
 
 }
