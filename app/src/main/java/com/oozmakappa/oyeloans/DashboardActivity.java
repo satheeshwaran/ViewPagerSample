@@ -98,7 +98,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onRequestCompleted(SuccessModel model, String errorMessage) {
                 try {
-                    if (model.getStatus().equals("success")) {
+                    if (model != null && model.getStatus().equals("success")) {
                         model = (LoanApplicationInfo) model;
                         loanHistoryData = ((LoanApplicationInfo) model).getLoanHistory().toString();
                         appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory().toString();
