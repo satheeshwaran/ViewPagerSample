@@ -424,7 +424,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_LOANINFO_SERVICE));
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
         }

@@ -42,6 +42,7 @@ public class LoanUser {
     public String workPlace ="";
     public String workTitle ="";
     public String workStartDate="";
+    public String workPhone="";
     public int totalWorkExperience;
     public String doorNumber = "";
 
@@ -52,7 +53,7 @@ public class LoanUser {
     public String landmark = "";
     public String state = "";
     public String relationshipStatus = "";
-
+    public String monthlyIncome = "";
     public JSONArray employment;
     public HashMap<String, Object> employmentInfo = null;
 

@@ -176,4 +176,7 @@ public class ApplyLoanSecondActivity extends AppCompatActivity {
     }
 
 
+    public void setCurrentItem(int i, boolean b) {
+        viewPager.setCurrentItem(i, b);
+    }
 }

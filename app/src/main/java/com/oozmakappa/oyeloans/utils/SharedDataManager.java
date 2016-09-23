@@ -7,6 +7,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
@@ -25,6 +26,8 @@ public class SharedDataManager {
     public static SharedDataManager getInstance() {  return sharedObject;}
 
     public LoanUser userObject = new LoanUser();
+
+    public Application activeApplication = new Application();
 
     public ArrayList<LoanSummaryModel> activeLoans = new ArrayList<>();
 

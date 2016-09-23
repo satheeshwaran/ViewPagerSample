@@ -5,8 +5,9 @@ package com.oozmakappa.oyeloans.Models;
  */
 public class BankInfo {
 
-    public String ifscCode;
-    public String bankAddress1;
-    public String bankAddress2;
+    public String accountNumber ="";
+    public String ifscCode = "";
+    public String bankAddress1 = "";
+    public String bankAddress2 = "";
 
 }
