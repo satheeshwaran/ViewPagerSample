@@ -76,7 +76,7 @@ public class LoanUser {
             user.DOB = object.getString("birthday");
 
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 Date formatedDate = sdf.parse(user.DOB);
                 SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 user.DOB = sdf1.format(formatedDate);
