@@ -33,6 +33,7 @@ public class SelectDebitCardFragment extends Fragment {
     private String mParam2;
     private DebitCard debitCard;
     private OnFragmentInteractionListener mListener;
+    public Boolean isSelected = false;
 
     public SelectDebitCardFragment() {
         // Required empty public constructor
@@ -70,10 +71,17 @@ public class SelectDebitCardFragment extends Fragment {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-                ImageView selected = (ImageView)v.findViewById(R.id.selectedIcon);
-                selected.bringToFront();
-                return false;
+                isSelected = !isSelected;
+                if (isSelected) {
+                    ImageView selected = (ImageView) v.findViewById(R.id.selectedIcon);
+                    selected.setVisibility(View.VISIBLE);
+                    selected.bringToFront();
+                    return false;
+                }else{
+                    ImageView selected = (ImageView) v.findViewById(R.id.selectedIcon);
+                    selected.setVisibility(View.INVISIBLE);
+                    return false;
+                }
             }
         });
         return view;

@@ -13,7 +13,7 @@ public class Utils {
 
     public static ProgressDialog mDialog = null;
 
-    public static void showLoading(Context context,String text){
+    public static void showLoading(Context context, String text) {
 
         try {
             if (mDialog != null)
@@ -24,20 +24,27 @@ public class Utils {
             mDialog.setMessage(text);
             mDialog.setCancelable(false);
             mDialog.show();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public static void removeLoading(){
-        try
-        {
+    public static void removeLoading() {
+        try {
             if (mDialog.isShowing())
                 mDialog.dismiss();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean checkIfOnlyNumbers(String theString) {
+        String regexStr = "^[0-9]*$";
+
+        if (theString.trim().matches(regexStr)) {
+            return true;
+        }
+
+        return false;
     }
 }

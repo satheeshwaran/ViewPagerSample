@@ -93,22 +93,26 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                com.oozmakappa.oyeloans.utils.Utils.showLoading(ApplyLoanThirdActivity.this, "Validating your mobile number...");
+                String smsOTP = ((TextView) findViewById(R.id.otpEntryField)).getText().toString();
+                String mobileNumber = SharedDataManager.getInstance().userObject.mobileNumber;
+                if (Utils.checkIfOnlyNumbers(smsOTP) && mobileNumber.length()>0) {
+                    com.oozmakappa.oyeloans.utils.Utils.showLoading(ApplyLoanThirdActivity.this, "Validating your mobile number...");
 
-                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
-                    @Override
-                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
-                        com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                        if (model.getStatus().equals("success")) {
-                            Utils.removeLoading();
-                            Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
-                            startActivity(thanksScreen);
-                            ApplyLoanThirdActivity.this.finish();
+                    WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                        @Override
+                        public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                            com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                            if (errorMessage == null && errorMessage.length() == 0 && model.getStatus().equals("success")) {
+                                Utils.removeLoading();
+                                Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
+                                startActivity(thanksScreen);
+                                ApplyLoanThirdActivity.this.finish();
 
+                            }
                         }
-                    }
-                });
-                webServiceHelper.validateOTPService(((TextView) findViewById(R.id.otpEntryField)).getText().toString(),SharedDataManager.getInstance().userObject.mobileNumber);
+                    });
+                    webServiceHelper.validateOTPService(smsOTP,mobileNumber);
+                }
 
             }
         });

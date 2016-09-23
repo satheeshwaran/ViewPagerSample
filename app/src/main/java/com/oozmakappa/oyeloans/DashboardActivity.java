@@ -15,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +32,7 @@ import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.google.firebase.crash.FirebaseCrash;
 import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
 import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
@@ -40,9 +42,13 @@ import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by sankarnarayanan on 20/09/16.
@@ -57,6 +63,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     String loanInfoData = "{\"status\": \"success\", \"service_name\": \"loaninfoprovider\",\"request_id\": 1, \"description\": \" Loan Schedule for given loanid\", \"schedule\": [{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"},{\"installment_type\": \"interest\", \"cycle_no\": 1, \"payment_amount\": \"2083.34\", \"paid_amount\": \"0.00\", \"scheduled_due_date\": \"2016-09-09\"}], \"ob\": 100.8}";
 
     String loanHistoryData = "{\"loan_status_history\": [{\"loan_id\":1, \"loan_status\":\"Closed\"},{\"loan_id\":3, \"loan_status\":\"Pre- Closed\"},{\"loan_id\":107, \"loan_status\":\"Closed\"}]}";
+
+    HashMap<String, List<LoanSummaryModel>> listDataChild = new HashMap<String, List<LoanSummaryModel>>();
+    public String appHistoryData = "{\"application_status_history\":[{ \"app_id\":2, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{ \"app_id\":8, \"app_status\":\"All verification completed\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"},{\"app_id\":160, \"app_status\":\"All verification completed\"},{ \"app_id\":290, \"app_status\":\"\", \"application_start_time\": \"2016-08-23 19:49:32\", \"current_state\": \"page4\", \"loan_amount\": \"300.00\", \"ALA\":\"150.00\"}]}";
 
     private ResideMenu resideMenu;
     private FloatingActionMenu menuRed;
@@ -144,6 +153,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         });
 
         animateLoanArcWithAmount(80);
+        prepareListData();
     }
 
     @Override
@@ -188,7 +198,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         chatWithUS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                    FirebaseCrash.log(ex.getLocalizedMessage());
+                }
             }
         });
         itemLogout.setOnClickListener(new View.OnClickListener() {
@@ -305,13 +320,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private void animateLoanArcWithAmount(final int percentage){
         final ArcProgress loanArcProgress = (ArcProgress) findViewById(R.id.loan_arc_progress);
+        loanArcProgress.setProgress(0);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
-                animation.setDuration(percentage * 25);//25 for a fast but not to fast animation
+                animation.setDuration(percentage * 10);//25 for a fast but not to fast animation
                 animation.setInterpolator(new DecelerateInterpolator());
                 animation.start();
 
@@ -335,4 +351,47 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
+
+    private void prepareListData() {
+
+        try {
+            //listDataHeader.add("Loans");
+            //listDataHeader.add("Applications");
+
+            JSONObject jsonLoan = new JSONObject(loanHistoryData);
+            JSONObject jsonApplication = new JSONObject(appHistoryData);
+            JSONArray loanArrayList = jsonLoan.getJSONArray("loan_status_history");
+            JSONArray ApplicationArrayList = jsonApplication.getJSONArray("application_status_history");
+
+            for (int i = 0; i < loanArrayList.length(); i++) {
+                JSONObject currentObj = loanArrayList.getJSONObject(i);
+                final LoanSummaryModel loanModel = new LoanSummaryModel();
+                loanModel.setLoanStatus(currentObj.getString("loan_status"));
+                loanModel.setLoanId("Loan Id : "+currentObj.getString("loan_id"));
+                loanArray.add(loanModel);
+            }
+
+            /*for (int i = 0; i < ApplicationArrayList.length(); i++) {
+                JSONObject currentObj = ApplicationArrayList.getJSONObject(i);
+                final LoanSummaryModel loanModel = new LoanSummaryModel();
+                if (currentObj.has("app_status")) {
+                    loanModel.setLoanStatus(currentObj.getString("app_status"));
+                }
+                if(currentObj.has("loan_amount")) {
+                    loanModel.setLoanAmount("Rs."+currentObj.getString("loan_amount"));
+                    loanModel.setLoanId("App. Id : " +currentObj.getString("app_id"));
+                }else{
+                    loanModel.setLoanAmount("");
+                }
+                applicationArray.add(loanModel);
+            }*/
+
+            listDataChild.put("Loans", loanArray);
+            //listDataChild.put("Applications", applicationArray);
+
+        } catch (Exception e) {
+            Log.v("exception", e.getMessage());
+        }
+
+    }
 }

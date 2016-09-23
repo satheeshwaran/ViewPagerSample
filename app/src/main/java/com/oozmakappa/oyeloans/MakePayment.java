@@ -120,7 +120,7 @@ public class MakePayment extends AppCompatActivity {
 
         LoanSummaryModel selectedLoanObject = null;
 
-        if (getIntent().getBooleanExtra("MultiLoanPayment",false)){
+        if (getIntent().getBooleanExtra("MultiLoanPayment",false) && loanObjects!=null && loanObjects.size() > 0){
             selectedLoanObject = loanObjects.get(selectedLoan);
         }else{
             selectedLoanObject = loanObject;
