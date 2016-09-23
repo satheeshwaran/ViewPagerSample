@@ -34,6 +34,8 @@ import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
@@ -136,6 +138,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onStart() {
+        Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
+        t.setScreenName("Account dashboard");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+        t.enableAutoActivityTracking(true);
         super.onStart();
     }
 
