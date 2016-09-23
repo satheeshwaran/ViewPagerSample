@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -62,7 +61,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             />
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/titlesDashboard"
@@ -81,7 +80,7 @@
             android:id="@+id/scheduleContainer"
             android:dividerHeight="0dp"
             android:divider="@null"
-            android:background="@color/grey_400"
+            android:background="@color/grey_200"
             android:layout_below="@id/titlesDashboard">
 
         </ListView>
@@ -127,16 +126,6 @@
 
 
         </com.github.clans.fab.FloatingActionMenu>
-
-        <com.github.lzyzsd.circleprogress.ArcProgress
-            android:id="@+id/loan_arc_progress"
-            android:background="@android:color/transparent"
-            custom:arc_progress="55"
-            custom:arc_text_color="@android:color/transparent"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_above="@+id/scheduleContainer"
-            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </LinearLayout>

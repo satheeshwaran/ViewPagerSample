@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -89,8 +90,22 @@
             android:textColor="@color/WhiteColor"
             android:layout_below="@+id/outstandin_balance_title"/>
 
+        <com.github.lzyzsd.circleprogress.ArcProgress
+            android:id="@+id/loan_arc_progress"
+            android:background="@android:color/transparent"
+            custom:arc_progress="55"
+            custom:arc_text_color="@android:color/transparent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_above="@+id/scheduleContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+
 
 
     </RelativeLayout>
+
+
 
 </LinearLayout>
