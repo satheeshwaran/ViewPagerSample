@@ -91,6 +91,7 @@ public class ApplyLoanFirstFragment extends Fragment {
 
                 int value = (progress * 1000) + 10000;
                 amountEdit.setText(Integer.toString(value));
+                SharedDataManager.getInstance().activeApplication.loanAmount = Integer.toString(value);
                 amountEdit.clearFocus();
                 amountEdit.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -126,8 +127,18 @@ public class ApplyLoanFirstFragment extends Fragment {
         @Override
         public void onClick(View v){
             switch (v.getId()) {
-                case R.id.profileProceedButton:
-                    constructValidateReferenceRequest();
+                case R.id.profileProceedButton: {
+                    EditText textField = (EditText) getActivity().findViewById(R.id.editText);
+                    EditText referralCode = (EditText) getActivity().findViewById(R.id.editTextReferralCode);
+                    if(textField.getText().toString().length() > 0 && referralCode.getText().length()>0)
+                        constructValidateReferenceRequest(textField.getText().toString(),referralCode.getText().toString());
+                    else {
+                        HashMap<String, String> firstPageData = new HashMap<String, String>();
+                        firstPageData.put("Amount", textField.getText().toString());
+                        mCallback.onLoanAmountSelected(firstPageData);
+                    }
+
+                }
                     // TODO Auto-generated method stub
                     break;
                 case View.NO_ID:
@@ -138,20 +149,20 @@ public class ApplyLoanFirstFragment extends Fragment {
         }
     };
 
-    private void constructValidateReferenceRequest(){
+    private void constructValidateReferenceRequest(final String amount, final String code){
+
         WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
             @Override
             public void onRequestCompleted(SuccessModel model, String errorMessage){
                 if (model.getStatus().equals("success")) {
                     HashMap<String,String> firstPageData = new HashMap<String,String>();
-                    EditText textField = (EditText)getActivity().findViewById(R.id.editText);
-                    firstPageData.put("Amount", textField.getText().toString());
+                    firstPageData.put("Amount", amount);
                     mCallback.onLoanAmountSelected(firstPageData);
                 }
             }
         });
-        EditText referralCode = (EditText) getActivity().findViewById(R.id.editTextReferralCode);
-        webServiceHelper.validateReferral(referralCode.getText().toString());
+
+        webServiceHelper.validateReferral(code);
         //Make web service call here.
 
     }

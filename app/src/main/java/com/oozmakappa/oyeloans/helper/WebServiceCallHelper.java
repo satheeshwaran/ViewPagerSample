@@ -117,7 +117,11 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY,Integer.parseInt(applicationObject.loanUserObject.PINCode));
             requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
             requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY,applicationID);
-            requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
+            if (applicationObject.loanAmount.length()>0)
+                requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
+            else
+                requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, 0);
+
             requestMap.put(Jsonconstants.OL_NA_LOAN_DURATION_KEY, 12);
             requestMap.putOpt(Jsonconstants.OL_NA_FIRST_PAYDATE, firstPayDate);
             requestMap.putOpt(Jsonconstants.OL_DEVICE_ID_KEY, deviceID);
@@ -464,7 +468,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.put(Jsonconstants.OL_DD_LOAN_DURATION_KEY, applicationObject.loanDuration);
             requestMap.put(Jsonconstants.OL_DD_FIRST_PAYDATE_KEY, applicationObject.firstPayDate);
             requestMap.put(Jsonconstants.OL_DD_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
-            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, Integer.parseInt(applicationObject.applicationID));
             requestMap.put(Jsonconstants.OL_DD_GENERATE_AGREEMENT_KEY, "false");
 
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_DUEDATE_GENERATOR_SERVICE));
@@ -660,7 +664,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         try{
             JSONObject requestMap = requestObjectWithDetails("agreementdetails", "1001", "1");
 
-            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, Integer.parseInt(applicationObject.applicationID));
             requestMap.put(Jsonconstants.OL_AS_REASON_KEY, applicationObject.loanReason);
             requestMap.put(Jsonconstants.OL_AS_PREFERRED_DATE_KEY, applicationObject.preferredApplicationPickupDate);
             requestMap.put(Jsonconstants.OL_AS_PREFERRED_TIME_KEY, applicationObject.preferredApplicationPickupTime);
@@ -805,7 +809,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY )))
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY ) || requestName.equals(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY)))
             {
                 JSONObject jsonObject = new JSONObject(response);
                 if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){

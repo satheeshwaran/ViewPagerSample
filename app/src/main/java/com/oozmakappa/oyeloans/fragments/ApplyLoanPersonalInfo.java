@@ -260,6 +260,9 @@ public class ApplyLoanPersonalInfo extends Fragment {
             fieldError = "Invalid Phone number";
             return false;
         }
+
+        if(!Pattern.compile("^[1-9][0-9]{5}$").matcher(pinCodeField.getText().toString()).matches())
+            return false;
         return true;
     }
 

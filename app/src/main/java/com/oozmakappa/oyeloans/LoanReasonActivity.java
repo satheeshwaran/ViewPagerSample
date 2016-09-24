@@ -1,5 +1,6 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.LoanReasonAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 public class LoanReasonActivity extends AppCompatActivity {
 
@@ -55,8 +57,9 @@ public class LoanReasonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String selectedCategory = adapter.selectedCategory;
-                // TO-DO: // Make service call and complete activiyt
-                finish();
+                SharedDataManager.getInstance().activeApplication.loanReason = selectedCategory;
+                Intent appointmentIntent = new Intent(LoanReasonActivity.this,FixAppointmentActivity.class);
+                startActivity(appointmentIntent);
             }
         });
     }

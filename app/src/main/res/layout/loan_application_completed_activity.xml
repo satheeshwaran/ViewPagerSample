@@ -5,19 +5,13 @@
     android:layout_height="match_parent"
     tools:context="com.oozmakappa.oyeloans.ApplicationCompletedActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:clickable="true"
-        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="50dp" >
+            android:padding="80dp" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -34,7 +28,8 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:text="@string/Application_completed"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:paddingTop="5dp"/>
 
 
             <TextView
@@ -45,6 +40,7 @@
                 android:text="@string/Application_completed_thanks"
                 android:textSize="16sp"
                 android:drawablePadding="10dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"/>
 
             <TextView
@@ -65,10 +61,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:text="@string/ok_button"
+                android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:background="@drawable/rounded_button_shape"
+                android:layout_marginTop="10dp"
                 />
 
         </LinearLayout>
-    </LinearLayout>
 </RelativeLayout>

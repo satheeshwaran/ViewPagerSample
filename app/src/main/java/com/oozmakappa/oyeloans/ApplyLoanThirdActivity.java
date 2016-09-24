@@ -117,9 +117,9 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                         @Override
                         public void onRequestCompleted(SuccessModel model, String errorMessage) {
                             com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                            if (errorMessage == null && model!=null && model.getStatus().equals("success")) {
+                            //if (errorMessage == null && model!=null && model.getStatus().equals("success")) {
                                 makeLoanApplicationCall();
-                            }else{
+                            /*}else{
                                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
                                 alertDialogBuilder.setTitle("Error!");
                                 alertDialogBuilder.setMessage(model.getDescription());
@@ -132,7 +132,7 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
 
                                 AlertDialog alertDialog = alertDialogBuilder.create();
                                 alertDialog.show();
-                            }
+                            }*/
                         }
                     });
                     webServiceHelper.validateOTPService(smsOTP,mobileNumber);
@@ -338,7 +338,10 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                 }else{
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
                     alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
                     alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unkown error, please try again.");
 
                     alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -392,10 +395,9 @@ public class ApplyLoanThirdActivity extends AppCompatActivity {
                 com.oozmakappa.oyeloans.utils.Utils.removeLoading();
                 if (errorMessage == null && model != null && model.getStatus().equals("success")) {
                     Utils.removeLoading();
-                    Intent thanksScreen = new Intent(ApplyLoanThirdActivity.this, ApplicationCompletedActivity.class);
-                    startActivity(thanksScreen);
+                    Intent reasonScreenIntent = new Intent(ApplyLoanThirdActivity.this, LoanReasonActivity.class);
+                    startActivity(reasonScreenIntent);
                     ApplyLoanThirdActivity.this.finish();
-
                 }else{
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ApplyLoanThirdActivity.this);
                     alertDialogBuilder.setTitle("Error!");
