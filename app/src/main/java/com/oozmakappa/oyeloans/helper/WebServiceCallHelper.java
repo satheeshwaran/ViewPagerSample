@@ -641,6 +641,67 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
     }
 
+    public void getReferralCodeInfoService(String emailID, String applicationID){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("ReferralCodeInfo", "1001", "12345678");
+
+            requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationID);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_REFERRALCODE_INFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void makeAgreementInfoSaveServiceCall(Application applicationObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("agreementdetails", "1001", "1");
+
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+            requestMap.put(Jsonconstants.OL_AS_REASON_KEY, applicationObject.loanReason);
+            requestMap.put(Jsonconstants.OL_AS_PREFERRED_DATE_KEY, applicationObject.preferredApplicationPickupDate);
+            requestMap.put(Jsonconstants.OL_AS_PREFERRED_TIME_KEY, applicationObject.preferredApplicationPickupTime);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_AGREEMENT_INFO_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void makeApplicationAbandonServiceCall(Application applicationObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("MarkAbandoned", "1021", "12345678");
+
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_MARK_APPLICATION_ABANDON_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
+    public void updateApplicationStateService(Application applicationObject){
+        try{
+            JSONObject requestMap = requestObjectWithDetails("UpdateState", "1020", "12345678");
+
+            requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
+            requestMap.put(Jsonconstants.OL_APPLICATION_STATE_KEY, applicationObject.applicationState);
+
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_APPLICATION_TRACKING_SERVICE));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
+        }
+    }
+
 
 
 
