@@ -3,6 +3,7 @@ package com.oozmakappa.oyeloans;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +73,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     //Loan history data - {"loan_status_history": [{"loan_id":1, "loan_status":"Closed"},{"loan_id":3, "loan_status":"Pre- Closed"},{"loan_id":107, "loan_status":"Closed"}]}
 
     HashMap<String, List<LoanSummaryModel>> listDataChild = new HashMap<String, List<LoanSummaryModel>>();
-    public String appHistoryData = "";
+
+    public JSONArray appHistoryData = null;
 
     //App history Data - {"application_status_history":[{ "app_id":2, "app_status":"All verification completed", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"},{ "app_id":8, "app_status":"All verification completed", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"},{"app_id":160, "app_status":"All verification completed"},{ "app_id":290, "app_status":"", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"}]}
 
@@ -95,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 try {
                     if (model != null && model.getStatus().equals("success")) {
                         loanHistoryData = ((LoanApplicationInfo) model).getLoanHistory().toString();
-                        appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory().toString();
+                        appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory();
                         JSONArray loanArray = ((LoanApplicationInfo) model).getLoanHistory();
                         for (int i = 0; i < loanArray.length(); i++) {
                             JSONObject loanObject = loanArray.getJSONObject(i);
@@ -169,7 +171,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 goToApplyLoanPage();
-                //Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -331,6 +332,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 }
             }
         });
+
+        ImageView notificationsView = (ImageView) findViewById(R.id.notificationsIcon);
+        notificationsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (appHistoryData != null) {
+                    SharedDataManager.getInstance().applicationHistory = appHistoryData;
+                    Intent applicationHistoryIntent = new Intent(DashboardActivity.this, ApplicationHistoryActivity.class);
+                    startActivity(applicationHistoryIntent);
+                }
+            }
+        });
+
 
     }
 
