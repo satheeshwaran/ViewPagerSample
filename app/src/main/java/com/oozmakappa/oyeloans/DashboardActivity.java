@@ -220,7 +220,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         makePaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(),"Make payment button Clicked", Toast.LENGTH_SHORT).show();
                 SharedDataManager.getInstance().activeLoans = loanArray;
                 Intent makePaymentIntent = new Intent(DashboardActivity.this,MakePayment.class);
                 makePaymentIntent.putExtra("MultiLoanPayment",true);
