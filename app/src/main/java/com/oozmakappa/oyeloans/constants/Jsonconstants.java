@@ -15,6 +15,9 @@ public interface Jsonconstants {
     String OL_APPID_KEY = "app_id";
     String OL_APPID_VALUE = "10001";
 
+    // Update application state service constants
+    String OL_APPLICATION_STATE_KEY = "new_state";
+
     //Face book auth registration constants.
     String OL_FB_NAME_KEY = "name";
     String OL_FB_GENDER_KEY = "gender";
@@ -72,6 +75,11 @@ public interface Jsonconstants {
     String OL_DD_LOAN_AMOUNT_KEY = "loan_amount";
     String OL_DD_GENERATE_AGREEMENT_KEY = "generate_agreement";
 
+    // Agreement Info save service constants
+    String OL_AS_REASON_KEY = "reason";
+    String OL_AS_PREFERRED_DATE_KEY = "prefered_date";
+    String OL_AS_PREFERRED_TIME_KEY = "prefered_time";
+
     //General auth & request info constants.
     String OL_AUTH_KEY = "auth";
     String OL_USERNAME_KEY = "username";
@@ -104,7 +112,11 @@ public interface Jsonconstants {
     String OL_GET_PAYDATES_SERVICE = "getpaydates/";
     String OL_GET_PERSONALINFO_SERVICE = "personal/personalInfo/";
     String OL_GET_EMPLOYMENTINFO_SERVICE = "getemploymentinfo/";
-    String OL_GET_LOAN_HISTORY = "/customerhistory/";
-    String OL_SENDPHONE_DATA_SERVICE = "/updatephone/";
+    String OL_GET_LOAN_HISTORY = "customerhistory/";
+    String OL_SENDPHONE_DATA_SERVICE = "updatephone/";
+    String OL_REFERRALCODE_INFO_SERVICE = "referrral/info/";
+    String OL_GET_AGREEMENT_INFO_SERVICE = "agreement/save/";
+    String OL_MARK_APPLICATION_ABANDON_SERVICE = "markabandoned/";
+    String OL_APPLICATION_TRACKING_SERVICE = "changestate/";
 
 }
