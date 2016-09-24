@@ -86,8 +86,17 @@
             android:divider="@null"
             android:background="@color/grey_200"
             android:layout_below="@id/titlesDashboard">
-
         </ListView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Schedule for this loan is not available"
+            android:id="@+id/noScheduleInfo"
+            android:layout_below="@id/titlesDashboard"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:background="@color/WhiteColor"/>
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu_red"
