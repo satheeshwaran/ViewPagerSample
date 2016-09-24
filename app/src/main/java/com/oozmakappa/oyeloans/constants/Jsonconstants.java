@@ -93,7 +93,7 @@ public interface Jsonconstants {
     String OL_DEVICE_ID_KEY = "device_id";
 
     //URL Constants
-    String OL_BASE_URL = "https://dev.intest.com/";
+    String OL_BASE_URL = "https://192.168.56.101/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
 
@@ -118,5 +118,6 @@ public interface Jsonconstants {
     String OL_GET_AGREEMENT_INFO_SERVICE = "agreement/save/";
     String OL_MARK_APPLICATION_ABANDON_SERVICE = "markabandoned/";
     String OL_APPLICATION_TRACKING_SERVICE = "changestate/";
+    String OL_UPLOAD_DOCUMENTS_LINK = "uploadimages/";
 
 }

@@ -1,13 +1,10 @@
 package com.oozmakappa.oyeloans.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -18,20 +15,39 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
 import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.constants.Jsonconstants;
+import com.oozmakappa.oyeloans.helper.MultiPartRequest;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
  */
 public class ApplyLoanUploadDocuments extends Fragment {
+
+
+    private final Context context = getActivity();
+    private final String twoHyphens = "--";
+    private final String lineEnd = "\r\n";
+    private final String boundary = "apiclient-" + System.currentTimeMillis();
+    private final String mimeType = "multipart/form-data;boundary=" + boundary;
+    private byte[] multipartBody;
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    DataOutputStream dos = new DataOutputStream(bos);
 
 
     @Override
@@ -75,6 +91,13 @@ public class ApplyLoanUploadDocuments extends Fragment {
         t.setScreenName("Loan application - upload document screen");
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
+        try {
+            if (SharedDataManager.getInstance().activeApplication != null && SharedDataManager.getInstance().activeApplication.applicationID != null) {
+                buildPart(dos, SharedDataManager.getInstance().activeApplication.applicationID.getBytes(), "app_id");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -89,12 +112,12 @@ public class ApplyLoanUploadDocuments extends Fragment {
         @Override
         public void onClick(View v){
             CardView childView = (CardView) getActivity().findViewById(R.id.salarySlipChildView);
-
-            if (childView.getVisibility() == View.GONE) {
-                childView.setVisibility(View.VISIBLE);
-            }else{
-                childView.setVisibility(View.GONE);
-            }
+            selectPdfDocument(2);
+//            if (childView.getVisibility() == View.GONE) {
+//                childView.setVisibility(View.VISIBLE);
+//            }else{
+//                childView.setVisibility(View.GONE);
+//            }
         }
     };
 
@@ -141,14 +164,34 @@ public class ApplyLoanUploadDocuments extends Fragment {
                 {
                     try
                     {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
-                        //Make web service all here.
+                        buildPart(dos, getDatafromUri(data), "pan_image");
                     } catch (IOException e)
                     {
                         e.printStackTrace();
                     }
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED)
+            }
+            else if (resultCode == Activity.RESULT_CANCELED)
+            {
+                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+            }
+        }else if(requestCode == 2) {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                if (data != null)
+                {
+                    try
+                    {
+                        buildPart(dos, getDatafromUri(data), "stmt_image");
+                        dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                        multipartBody = bos.toByteArray();
+                    } catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else if (resultCode == Activity.RESULT_CANCELED)
             {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
             }
@@ -172,6 +215,67 @@ public class ApplyLoanUploadDocuments extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+    private byte[] getDatafromUri(Intent data){
+        Uri dataUri = data.getData();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(new File(dataUri.getPath()));
+            byte[] buf = new byte[1024];
+            int n;
+            while (-1 != (n = fis.read(buf)))
+                baos.write(buf, 0, n);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        byte[] image = baos.toByteArray();
+        return image;
+    }
+
+
+    private void buildPart(DataOutputStream dataOutputStream, byte[] fileData, String fileName) throws IOException {
+        dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+        dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\"; filename=\""
+                + fileName + "\"" + lineEnd);
+        dataOutputStream.writeBytes(lineEnd);
+
+        ByteArrayInputStream fileInputStream = new ByteArrayInputStream(fileData);
+        int bytesAvailable = fileInputStream.available();
+
+        int maxBufferSize = 1024 * 1024;
+        int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+        byte[] buffer = new byte[bufferSize];
+
+        // read file and write it into form...
+        int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+        while (bytesRead > 0) {
+            dataOutputStream.write(buffer, 0, bufferSize);
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+        }
+
+        dataOutputStream.writeBytes(lineEnd);
+    }
+
+    private void uploadImageToServer(){
+        String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_UPLOAD_DOCUMENTS_LINK);
+        MultiPartRequest multipartRequest = new MultiPartRequest(url, null, mimeType, multipartBody, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                Toast.makeText(context, "Upload successfully!", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Upload failed!\r\n" + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(multipartRequest);
+    }
+
 
 }
 
