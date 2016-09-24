@@ -19,7 +19,6 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
     public String loanInfoData = "";
 
     Context context;
-    int carouselCount = 0;
 
     public LoanDetailsHeaderAdapter(FragmentManager fm, Context context, String loanHistoryData, String loanInfoData) {
         super(fm);
@@ -33,22 +32,25 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         try {
             LoanDetailsHeaderFragment fragment;
-            //make web service call and load the data.
             String loanInfoData = this.loanInfoData;
+            JSONArray loanArrayList = new JSONArray(loanHistoryData);
             JSONObject jsonLoan = new JSONObject(loanInfoData);
             String outstandingBal = jsonLoan.getString("ob");
             fragment = new LoanDetailsHeaderFragment();
-            String string = outstandingBal;
-            String[] parts = string.split("\\.");
-            String part1 = parts[0];
-            String part2 = parts[1];
-            part2 = part2.concat("0");
-            JSONObject jsonLoanObj = new JSONObject(loanHistoryData);
-            JSONArray loanArrayList = jsonLoanObj.getJSONArray("loan_status_history");
-            fragment.setValues(part1, part2, position, loanArrayList);
+            if (outstandingBal.contains("\\.")) {
+                String string = outstandingBal;
+                String[] parts = string.split("\\.");
+                String part1 = parts[0];
+                String part2 = parts[1];
+                part2 = part2.concat("0");
+                fragment.setValues(part1, part2, position, loanArrayList);
+            }else{
+                fragment.setValues(outstandingBal, "00", position, loanArrayList);
+            }
 
             return fragment;
         }catch(Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -57,8 +59,8 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         try {
-            JSONObject jsonLoan = new JSONObject(loanHistoryData);
-            JSONArray loanArrayList = jsonLoan.getJSONArray("loan_status_history");
+            //JSONObject jsonLoan = new JSONObject(loanHistoryData);
+            JSONArray loanArrayList = new JSONArray(loanHistoryData);
             return loanArrayList.length();
         }catch(Exception e){
             return 0;

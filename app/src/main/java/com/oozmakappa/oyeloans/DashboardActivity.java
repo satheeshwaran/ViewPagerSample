@@ -43,6 +43,7 @@ import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.Loan;
 import com.oozmakappa.oyeloans.Models.LoanApplicationInfo;
+import com.oozmakappa.oyeloans.Models.LoanDetailsInfo;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
@@ -54,6 +55,7 @@ import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -112,6 +114,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                 public void onRequestCompleted(SuccessModel model, String errorMessage) {
                                     if (model != null && model.getStatus().equals("success")) {
                                         Utils.removeLoading();
+                                        loanInfoData = ((LoanDetailsInfo) model).getResponse().toString();
                                         setUpDashboard();
                                     }else{
                                         enableNoLoanView();
@@ -200,27 +203,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }catch (Exception e){
             e.printStackTrace();
         }
-        //animateLoanArcWithAmount(80);
         prepareListData();
     }
 
     public void setUpBasicItems(){
         setContentView(R.layout.activity_loan_info_service);
         this.setUpMenu();
-        ImageView image = (ImageView) findViewById(R.id.menuIcon);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-            }
-        });
-        referFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent referFriendPage = new Intent(DashboardActivity.this,ReferFriendActivity.class);
-                startActivity(referFriendPage);
-            }
-        });
         FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
         FloatingActionButton applyLoanBtn = (FloatingActionButton) findViewById(R.id.fab1);
         FloatingActionButton termsButton = (FloatingActionButton) findViewById(R.id.termsAndConditions);
@@ -276,6 +264,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 }catch (Exception ex){
                     ex.printStackTrace();
                     FirebaseCrash.log(ex.getLocalizedMessage());
+                    Toast.makeText(getApplicationContext(), "Chat option not available right now!", Toast.LENGTH_SHORT).show();
+                    resideMenu.closeMenu();
                 }
             }
         });
@@ -312,6 +302,31 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+        ImageView image = (ImageView) findViewById(R.id.menuIcon);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            }
+        });
+        referFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent referFriendPage = new Intent(DashboardActivity.this,ReferFriendActivity.class);
+                startActivity(referFriendPage);
+            }
+        });
+
+        itemHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    resideMenu.closeMenu();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
 
     }
 
