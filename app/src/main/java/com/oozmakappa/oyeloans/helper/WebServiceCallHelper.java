@@ -196,7 +196,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICENAME_KEY, "AddEmploymentInfo");
             this.requestInfo.putOpt(Jsonconstants.OL_SERVICECODE_KEY, "GAI003");
             this.requestInfo.putOpt(Jsonconstants.OL_REQUESTID_KEY, "1285");
-            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);*/
+            requestMap.putOpt(Jsonconstants.OL_REQUESTINFO_KEY, this.requestInfo);
 
             vHelper = new VolleyRequestHelper(this);
             String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY);
@@ -220,9 +220,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             HttpsTrustManager.allowAllSSL();
 
-            vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams, Request.Method.POST, true);
+            vHelper.requestString(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY, url, requestParams, Request.Method.POST, true);*/
 
-            initiateVolleyCall(requestMap,Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY);
+            initiateVolleyCall(requestMap,Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY));
 
         } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());

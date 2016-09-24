@@ -2,6 +2,7 @@ package com.oozmakappa.oyeloans.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,13 +17,18 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.ApplyLoanFirstActivity;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
 import com.oozmakappa.oyeloans.EditProfileActivity;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -207,14 +213,8 @@ public class ApplyLoanPersonalInfo extends Fragment {
             switch (v.getId()) {
                 case R.id.profileProceedButtonPersonal:
                     if (performValidations()) {
-                        HashMap<String, String> firstPageData = new HashMap<String, String>();
-
                         populateGivenData();
-
-                        firstPageData.put("Amount", "Data");
-                        ((ApplyLoanFirstActivity)getActivity()).setCurrentItem(2, true);
-
-                        mCallback.onPersonalDetailsEntered(firstPageData);
+                        makeLoanApplicationCall();
                     } else {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                         alertDialogBuilder.setMessage(fieldError);
@@ -261,8 +261,10 @@ public class ApplyLoanPersonalInfo extends Fragment {
             return false;
         }
 
-        if(!Pattern.compile("^[1-9][0-9]{5}$").matcher(pinCodeField.getText().toString()).matches())
+        if(!Pattern.compile("^[1-9][0-9]{5}$").matcher(pinCodeField.getText().toString()).matches()) {
+            fieldError = "Invalid PIN Code";
             return false;
+        }
         return true;
     }
 
@@ -309,6 +311,41 @@ public class ApplyLoanPersonalInfo extends Fragment {
         user.PINCode = pinCodeField.getText().toString();
         user.aadharNumber = aadharCardField.getText().toString();
         user.PANNumber = panNumberField.getText().toString();
+    }
+
+    private void makeLoanApplicationCall(){
+
+        SharedDataManager.getInstance().activeApplication.loanUserObject = SharedDataManager.getInstance().userObject;
+        Utils.showLoading(getActivity(),"Saving Personal Information...");
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    HashMap<String, String> firstPageData = new HashMap<String, String>();
+                    firstPageData.put("Amount", "Data");
+                    ((ApplyLoanFirstActivity)getActivity()).setCurrentItem(2, true);
+                    mCallback.onPersonalDetailsEntered(firstPageData);
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
+                        alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unknown error, please try again.");
+
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeNewApplicationServiceCall(SharedDataManager.getInstance().activeApplication, com.oozmakappa.oyeloans.DataExtraction.Utils.getDeviceId(getActivity()));
     }
 
 }

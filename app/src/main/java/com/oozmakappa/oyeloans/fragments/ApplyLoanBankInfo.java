@@ -1,5 +1,6 @@
 package com.oozmakappa.oyeloans.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,11 +16,15 @@ import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
 import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.LoanReasonActivity;
 import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.BankInfo;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
 
 import java.util.regex.Pattern;
 
@@ -109,13 +114,11 @@ public class ApplyLoanBankInfo extends Fragment {
 
 
     private void populateGivenData(){
-        Application application = SharedDataManager.getInstance().activeApplication;
-        application.bankInfoObject = new BankInfo();
-
-        application.bankInfoObject.accountNumber = accountNumber.getText().toString();
-        application.bankInfoObject.ifscCode = ifscCode.getText().toString();
-        application.bankInfoObject.bankAddress1 = bankAddr1.getText().toString();
-        application.bankInfoObject.bankAddress2 = bankAddr2.getText().toString();
+        SharedDataManager.getInstance().activeApplication.bankInfoObject = new BankInfo();
+        SharedDataManager.getInstance().activeApplication.bankInfoObject.accountNumber = accountNumber.getText().toString();
+        SharedDataManager.getInstance().activeApplication.bankInfoObject.ifscCode = ifscCode.getText().toString();
+        SharedDataManager.getInstance().activeApplication.bankInfoObject.bankAddress1 = bankAddr1.getText().toString();
+        SharedDataManager.getInstance().activeApplication.bankInfoObject.bankAddress2 = bankAddr2.getText().toString();
 
     }
 
@@ -125,7 +128,7 @@ public class ApplyLoanBankInfo extends Fragment {
 
             if (performValidations()) {
                 populateGivenData();
-                ((ApplyLoanSecondActivity)getActivity()).setCurrentItem(2, true);
+                makeBankInfoService();
 
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -140,4 +143,37 @@ public class ApplyLoanBankInfo extends Fragment {
 
         }
     };
+
+
+
+    private void makeBankInfoService(){
+        Utils.showLoading(getActivity(),"Saving Bank Information...");
+
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    ((ApplyLoanSecondActivity)getActivity()).setCurrentItem(2, true);
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
+                        alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unknown error, please try again.");
+
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeBankInfoServiceCall(SharedDataManager.getInstance().activeApplication);
+    }
 }

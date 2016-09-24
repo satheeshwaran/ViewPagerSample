@@ -1,6 +1,7 @@
 package com.oozmakappa.oyeloans.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,10 +21,14 @@ import android.widget.Spinner;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.R;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
+import com.oozmakappa.oyeloans.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -193,8 +198,7 @@ public class ApplyLoanEmploymentInfo extends Fragment {
 
             if (performValidations()) {
                 populateGivenData();
-                Intent applicationPageTwo = new Intent(getActivity(),ApplyLoanSecondActivity.class);
-                startActivity(applicationPageTwo);
+                makeEmploymentInfoCall();
 
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -260,6 +264,39 @@ public class ApplyLoanEmploymentInfo extends Fragment {
         user.workPhone = workPhone.getText().toString();
         user.monthlyIncome = grossMonthlyIncome.getText().toString();
         user.workStatus = employmentStatus;
+
+    }
+
+    private void makeEmploymentInfoCall(){
+
+        Utils.showLoading(getActivity(),"Saving Employment Information...");
+
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+            @Override
+            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                    Intent applicationPageTwo = new Intent(getActivity(),ApplyLoanSecondActivity.class);
+                    startActivity(applicationPageTwo);
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Error!");
+                    if (model!=null)
+                        alertDialogBuilder.setMessage(model.getDescription());
+                    else
+                        alertDialogBuilder.setMessage("Unknown error, please try again.");
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+        webServiceHelper.makeEmploymentInfoServiceCall(SharedDataManager.getInstance().activeApplication);
 
     }
 
