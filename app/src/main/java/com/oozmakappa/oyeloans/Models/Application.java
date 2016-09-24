@@ -11,4 +11,11 @@ public class Application {
     public BankInfo bankInfoObject;
     public String firstPayDate = "";
 
+    public String loanReason = "";
+    public String preferredApplicationPickupDate = "";
+    public String preferredApplicationPickupTime = "";
+
+    // Here we must supply the page name to track the application state.
+    public String applicationState = "";
+
 }
