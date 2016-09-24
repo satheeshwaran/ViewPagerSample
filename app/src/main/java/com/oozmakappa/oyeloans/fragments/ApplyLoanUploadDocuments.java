@@ -40,7 +40,6 @@ import java.io.IOException;
 public class ApplyLoanUploadDocuments extends Fragment {
 
 
-    private final Context context = getActivity();
     private final String twoHyphens = "--";
     private final String lineEnd = "\r\n";
     private final String boundary = "apiclient-" + System.currentTimeMillis();
@@ -105,7 +104,7 @@ public class ApplyLoanUploadDocuments extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),identifier);
     }
 
     View.OnClickListener salarySlipListener = new View.OnClickListener(){
@@ -185,6 +184,7 @@ public class ApplyLoanUploadDocuments extends Fragment {
                         buildPart(dos, getDatafromUri(data), "stmt_image");
                         dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                         multipartBody = bos.toByteArray();
+                        uploadImageToServer();
                     } catch (IOException e)
                     {
                         e.printStackTrace();
@@ -213,6 +213,11 @@ public class ApplyLoanUploadDocuments extends Fragment {
 
     @Override
     public void onDestroy() {
+        //Clear memory.
+        multipartBody = null;
+        bos = null;
+        dos = null;
+
         super.onDestroy();
     }
 
@@ -265,12 +270,13 @@ public class ApplyLoanUploadDocuments extends Fragment {
         MultiPartRequest multipartRequest = new MultiPartRequest(url, null, mimeType, multipartBody, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
-                Toast.makeText(context, "Upload successfully!", Toast.LENGTH_SHORT).show();
+                String responseString = response.data.toString();
+                Toast.makeText(getActivity(), "Upload successfully!".concat(responseString), Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Upload failed!\r\n" + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Upload failed!\r\n" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         AppController.getInstance().addToRequestQueue(multipartRequest);
