@@ -43,6 +43,7 @@ import com.oozmakappa.oyeloans.Adapters.LoanDetailsHeaderAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.Loan;
 import com.oozmakappa.oyeloans.Models.LoanApplicationInfo;
+import com.oozmakappa.oyeloans.Models.LoanDetailsInfo;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
@@ -54,6 +55,7 @@ import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -112,6 +114,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                 public void onRequestCompleted(SuccessModel model, String errorMessage) {
                                     if (model != null && model.getStatus().equals("success")) {
                                         Utils.removeLoading();
+                                        loanInfoData = ((LoanDetailsInfo) model).getResponse().toString();
                                         setUpDashboard();
                                     }else{
                                         enableNoLoanView();

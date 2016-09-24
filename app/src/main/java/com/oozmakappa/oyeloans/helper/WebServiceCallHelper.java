@@ -8,6 +8,7 @@ import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.BankInfo;
 import com.oozmakappa.oyeloans.Models.Loan;
 import com.oozmakappa.oyeloans.Models.LoanApplicationInfo;
+import com.oozmakappa.oyeloans.Models.LoanDetailsInfo;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
@@ -805,13 +806,18 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY )))
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY ) || requestName.equals(RequestNameKeys.LOAN_INFO_KEY )))
             {
                 JSONObject jsonObject = new JSONObject(response);
                 if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){
                     LoanApplicationInfo sModel;
                     sModel = LoanApplicationInfo.LoanApplicationModelFromJSONObject(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
+                }else if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_INFO_KEY)){
+                    LoanDetailsInfo sModel;
+                    sModel = LoanDetailsInfo.LoanDetailsModelFromJSONObject(jsonObject);
+                    completionHandler.onRequestCompleted(sModel, null);
+
                 }else {
                     SuccessModel sModel;
                     sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
