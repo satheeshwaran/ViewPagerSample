@@ -435,6 +435,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         }
                         setupListView(loanInfoData);
                         Utils.removeLoading();
+                        currentFragment.animateLoanArcWithAmount(60);
                     }
                 });
                 webServiceHelper.getLoanInfoService(loanObj);

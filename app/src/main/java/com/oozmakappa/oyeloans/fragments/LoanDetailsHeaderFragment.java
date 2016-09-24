@@ -94,7 +94,7 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
     @Override
     public void onStart() {
-        animateLoanArcWithAmount(60);
+        //animateLoanArcWithAmount(60);
         super.onStart();
     }
 
@@ -118,7 +118,7 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
 
 
-    private void animateLoanArcWithAmount(final int percentage){
+    public void animateLoanArcWithAmount(final int percentage){
         final ArcProgress loanArcProgress = (ArcProgress) getActivity().findViewById(R.id.loan_arc_progress);
         loanArcProgress.setProgress(0);
         Handler handler = new Handler();
