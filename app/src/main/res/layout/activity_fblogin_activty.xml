@@ -3,21 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.oozmakappa.oyeloans.FBLoginActivty"
-    android:background="@drawable/nav_bar_header"
-    android:scaleType = "centerCrop"
+    android:fitsSystemWindows="true"
     >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/one_man_blur"
+            android:scaleType="centerCrop"/>
+    </FrameLayout>
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/profile"
+        android:src="@mipmap/ic_launcher"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:id="@+id/oyeLoansWelcomeImage"
         />
 
@@ -26,12 +30,12 @@
         android:layout_height="wrap_content"
         android:text="@string/welcomeToOyeLoans"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:layout_below="@+id/oyeLoansWelcomeImage"
         android:id="@+id/welcomeToOye"
-        android:textSize="20dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         />
 
@@ -40,10 +44,11 @@
         android:layout_height="wrap_content"
         android:text="@string/loginMessage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:textSize="15sp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:layout_below="@+id/welcomeToOye"
+        android:layout_margin="10dp"
         />
 
     <com.facebook.login.widget.LoginButton

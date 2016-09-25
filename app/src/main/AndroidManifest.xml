@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".FBLoginActivty"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBarLogin" />
         <activity
             android:name=".AccountSummaryActivity"
             android:label="@string/title_activity_account_summary"
@@ -99,7 +99,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity" />
         </activity>
-        <activity android:name=".ReferFriendActivity" />
+        <activity android:name=".ReferFriendActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
+        </activity>
         <activity android:name=".PaymentSucceededActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

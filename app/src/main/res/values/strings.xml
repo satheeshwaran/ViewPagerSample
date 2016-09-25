@@ -112,7 +112,7 @@
     <string name="state_address">State</string>
     <string name="save">Save</string>
     <string name="welcomeToOyeLoans">Welcome to Oye Loans!</string>
-    <string name="loginMessage">We are glad you installed our app! If you need to apply for a loan please login using your facebook account.</string>
+    <string name="loginMessage">We are here to help you with your immediate financial needs,get money in 24 hours*.\n Please login using your facebook account to apply.</string>
     <string name="HowItWorks"><u><b><i>How it works?</i></b></u></string>
     <string name="title_activity_profile_page">"My Profile"</string>
     <string name="dummyAddress">Pacifica Tech Park, 101A, First Floor, 23, Old Mahabalipuram Road, Navallur, Chennai, Tamil Nadu 603103</string>
@@ -159,7 +159,7 @@
     <string name="loan_reason_icon">Loan Reason Icon</string>
     <string name="loan_declined">Extremely Sorry!</string>
     <string name="what_to_do">What else can I do now?</string>
-    <string name="share_referall">Refer Your friends. You\'ll get 250Rs FlipKart Voucher upon their sucessfull application</string>
+    <string name="share_referall">Refer Your friends. You\'ll get Rs.250 FlipKart Voucher upon their successful application</string>
 
     <string-array name="gender_array">
         <item>Male</item>
