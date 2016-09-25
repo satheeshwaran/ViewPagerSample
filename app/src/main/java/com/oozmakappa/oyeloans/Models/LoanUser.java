@@ -76,15 +76,6 @@ public class LoanUser {
             user.totalFriendcount =object.getJSONObject("friends").getJSONObject("summary").getDouble("total_count");
             user.DOB = object.getString("birthday");
 
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                Date formatedDate = sdf.parse(user.DOB);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                user.DOB = sdf1.format(formatedDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
             user.gender = object.getString("gender");
             user.relationshipStatus = object.getString("relationship_status");
 

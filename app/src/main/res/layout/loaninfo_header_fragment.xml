@@ -33,11 +33,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs."
+                android:text="₹"
                 android:id="@+id/rupeeIcon"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/WhiteColor"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="20sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Outstanding Balance"
+            android:text="Current outstanding"
             android:gravity="center"
             android:textColor="@color/WhiteColor"
             android:layout_below="@+id/relativeContainer"
@@ -83,9 +84,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Loan Amount: Rs.1,00,000"
-            android:textSize="12sp"
+            android:id="@+id/total_loan_amount"
+            android:textSize="11sp"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:paddingBottom="5dp"
             android:textColor="@color/WhiteColor"
             android:layout_below="@+id/outstandin_balance_title"/>

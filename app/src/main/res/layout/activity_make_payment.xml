@@ -8,51 +8,6 @@ android:fitsSystemWindows="true"
 tools:context="com.oozmakappa.oyeloans.MakePayment">
 
 
-     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-         android:id="@+id/loanDetailsLayout"
-         android:background="@color/colorPrimary">
-
-         <Spinner
-             android:id="@+id/loanpicker_spinner"
-             android:layout_width="300dp"
-             android:layout_height="50dp"
-             android:popupBackground="@null"
-             android:layout_marginTop="20dp"
-             android:spinnerMode="dialog"
-             android:layout_centerHorizontal="true"
-             android:dropDownSelector="@color/grey_400"
-                 />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Loan ID"
-        android:id="@+id/loanID"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:layout_centerInParent="true"
-        android:textColor="@color/WhiteColor"
-        android:layout_below="@+id/loanpicker_spinner"
-        android:layout_marginTop="15dp"
-        />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_below="@+id/loanID"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:text="Rs. 1000"
-            android:id="@+id/loanAmount"
-            android:textAlignment="center"
-            android:textColor="@color/WhiteColor"
-            />
-        </RelativeLayout>
-
     <ListView
         android:id="@+id/makePaymentAmountsList"
         android:choiceMode="singleChoice"
@@ -73,4 +28,65 @@ tools:context="com.oozmakappa.oyeloans.MakePayment">
         android:id="@+id/proceedToPay"
         android:textColor="@color/WhiteColor"
         />
+
+    <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="150dp"
+        android:id="@+id/loanDetailsLayout"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Spinner
+            android:id="@+id/loanpicker_spinner"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:popupBackground="@null"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dialog"
+            android:layout_centerHorizontal="true"
+            android:dropDownSelector="@color/grey_400"
+            android:visibility="gone"
+                />
+
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Loan ID"
+       android:id="@+id/loanID"
+       android:layout_centerHorizontal="true"
+       android:textAlignment="center"
+       android:textColor="@color/WhiteColor"
+       android:layout_below="@+id/loanpicker_spinner"
+       android:layout_marginTop="30dp"
+       />
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_below="@+id/loanID"
+           android:textSize="40sp"
+           android:textStyle="bold"
+           android:text="Rs. 1000"
+           android:id="@+id/loanAmount"
+           android:textAlignment="center"
+           android:textColor="@color/WhiteColor"
+           />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Outstanding"
+            android:id="@+id/outstandin_balance_title"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:textColor="@color/WhiteColor"
+            android:layout_below="@+id/loanAmount"
+            android:layout_marginTop="0dp"
+            />
+       </RelativeLayout>
 </RelativeLayout>

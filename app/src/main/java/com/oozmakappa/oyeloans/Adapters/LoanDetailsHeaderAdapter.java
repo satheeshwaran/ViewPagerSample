@@ -20,11 +20,14 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
 
     Context context;
 
-    public LoanDetailsHeaderAdapter(FragmentManager fm, Context context, String loanHistoryData, String loanInfoData) {
+    private int loanFillScore = 0;
+
+    public LoanDetailsHeaderAdapter(FragmentManager fm, Context context, String loanHistoryData, String loanInfoData,int score) {
         super(fm);
         this.context = context;
         this.loanHistoryData = loanHistoryData;
         this.loanInfoData = loanInfoData;
+        loanFillScore = score;
     }
 
 
@@ -36,6 +39,7 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
             JSONArray loanArrayList = new JSONArray(loanHistoryData);
             JSONObject jsonLoan = new JSONObject(loanInfoData);
             String outstandingBal = jsonLoan.getString("ob");
+            String totalLoanAmount = jsonLoan.getString("total_amount");
             fragment = new LoanDetailsHeaderFragment();
             if (outstandingBal.contains("\\.")) {
                 String string = outstandingBal;
@@ -43,9 +47,9 @@ public class LoanDetailsHeaderAdapter extends FragmentStatePagerAdapter {
                 String part1 = parts[0];
                 String part2 = parts[1];
                 part2 = part2.concat("0");
-                fragment.setValues(part1, part2, position, loanArrayList);
+                fragment.setValues(part1, part2, position, loanArrayList,totalLoanAmount,loanFillScore);
             }else{
-                fragment.setValues(outstandingBal, "00", position, loanArrayList);
+                fragment.setValues(outstandingBal, "00", position, loanArrayList,totalLoanAmount,loanFillScore);
             }
 
             return fragment;

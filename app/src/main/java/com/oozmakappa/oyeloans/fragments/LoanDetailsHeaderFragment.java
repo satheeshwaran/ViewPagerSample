@@ -28,19 +28,22 @@ import org.w3c.dom.Text;
  */
 public class LoanDetailsHeaderFragment extends Fragment {
 
-    String amount, paise;
+    String amount, paise, totalLoanAmount;
     JSONArray totalArray;
-    int index = 0;
+    int index = 0,fillScore=0;
 
-    public void setValues(String amount, String paise, int index, JSONArray totalArray ){
+
+    public void setValues(String amount, String paise, int index, JSONArray totalArray,String loanAmount,int score){
         this.amount = amount;
         this.paise = paise;
         this.index = index;
         this.totalArray = totalArray;
+        totalLoanAmount = loanAmount;
+        fillScore = score;
     }
 
 
-    public void setFragmentValues(String outstandingBal){
+    public void setFragmentValues(String outstandingBal,String totalAmount,int score){
         String amt = "", pse= "";
         if (outstandingBal.contains(".")) {
             String string = outstandingBal;
@@ -58,6 +61,10 @@ public class LoanDetailsHeaderFragment extends Fragment {
         TextView paiseText = (TextView) getView().findViewById(R.id.paiseValue);
         amountText.setText(amt);
         paiseText.setText(pse);
+
+        TextView totalAmountTextVIew = (TextView)getView().findViewById(R.id.total_loan_amount);
+        String loanAmountText = "Loan Amount: " + totalAmount;
+        totalAmountTextVIew.setText(loanAmountText);
     }
 
     @Override
@@ -84,6 +91,11 @@ public class LoanDetailsHeaderFragment extends Fragment {
             JSONObject currentObj = currentArray.getJSONObject(index);
             TextView loanIdView = (TextView) v.findViewById(R.id.loanIdentifier);
             loanIdView.setText("Loan Id - ".concat(currentObj.getString("loan_id")));
+
+            TextView totalAmountTextView = (TextView)v.findViewById(R.id.total_loan_amount);
+            String loanAmountText = "Loan Amount: Rs." + totalLoanAmount.substring(0,totalLoanAmount.indexOf("."));
+            totalAmountTextView.setText(loanAmountText);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -94,8 +106,8 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
     @Override
     public void onStart() {
-        //animateLoanArcWithAmount(60);
         super.onStart();
+        animateLoanArcWithAmount(fillScore >= 10?fillScore:5);
     }
 
     @Override
@@ -117,39 +129,26 @@ public class LoanDetailsHeaderFragment extends Fragment {
     }
 
 
-
     public void animateLoanArcWithAmount(final int percentage){
-        final ArcProgress loanArcProgress = (ArcProgress) getActivity().findViewById(R.id.loan_arc_progress);
-        loanArcProgress.setProgress(0);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                final ArcProgress loanArcProgress = (ArcProgress) getActivity().findViewById(R.id.loan_arc_progress);
+                loanArcProgress.setProgress(0);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
-                animation.setDuration(percentage * 10);//25 for a fast but not to fast animation
-                animation.setInterpolator(new DecelerateInterpolator());
-                animation.start();
-
-                /*new CountDownTimer(2000, 500) {
-
-                    public void onTick(long millisUntilFinished) {
-                        loanArcProgress.setProgress((int)(Math.random() * 100));
+                        ObjectAnimator animation = ObjectAnimator.ofInt(loanArcProgress, "progress", 0, percentage);
+                        animation.setDuration(percentage * 10);//25 for a fast but not to fast animation
+                        animation.setInterpolator(new DecelerateInterpolator());
+                        animation.start();
 
                     }
-
-                    public void onFinish() {
-                        loanArcProgress.setProgress(80);
-                    }
-
-                }.start();*/
-
+                }, 2000);
             }
-        }, 2000);
-
-
-
+        });
     }
-
 
 }

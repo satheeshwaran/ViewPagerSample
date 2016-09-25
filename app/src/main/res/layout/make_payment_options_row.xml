@@ -3,7 +3,8 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="80dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:descendantFocusability="beforeDescendants">
 
     <RadioButton
         android:id="@+id/paymentAmountRadioButton"
@@ -56,11 +57,10 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$ 500"
+        android:text="₹.500"
         android:textStyle="bold"
         android:textColor="@color/grey_900"
         android:textSize="16dp"
-        android:width="70dp"
         android:layout_alignParentRight="true"
         android:visibility="visible"/>
 
@@ -72,12 +72,14 @@
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:layout_centerVertical="true"
-        android:text="$ 500"
+        android:hint="₹.500"
+        android:textColorHint="@android:color/darker_gray"
         android:textAlignment="center"
         android:textSize="15sp"
         android:width="70dp"
         android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:background="@color/WhiteColor" />
+        android:background="@color/WhiteColor"
+        android:inputType="numberDecimal"/>
 
 </RelativeLayout>
