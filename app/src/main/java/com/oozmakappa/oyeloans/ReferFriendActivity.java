@@ -1,8 +1,10 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,8 @@ import org.w3c.dom.Text;
 public class ReferFriendActivity extends AppCompatActivity {
 
     String referallCode = "";
+     final static int referallIntentCode = 23042;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +43,7 @@ public class ReferFriendActivity extends AppCompatActivity {
                 txtIntent .setType("text/plain");
                 txtIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "Oye Referral Code");
                 txtIntent .putExtra(android.content.Intent.EXTRA_TEXT, "Please use this referral code " + referallCode + " for applying a loan on Oye Loans. Download the app here https://play.google.com/store/apps/details?id=com.facebook.orca&hl=en");
-                startActivity(Intent.createChooser(txtIntent ,"Share"));
-
+                startActivityForResult(Intent.createChooser(txtIntent ,"Share"),referallIntentCode);
             }
 
         });
@@ -91,5 +94,32 @@ public class ReferFriendActivity extends AppCompatActivity {
         });
         webServiceHelper.getReferallCodeService(SharedDataManager.getInstance().userObject.emailID);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case referallIntentCode:
+                if (resultCode == RESULT_OK) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReferFriendActivity.this);
+                    alertDialogBuilder.setMessage("Thanks for referring a friend, you will get your voucher if your friend aplies loan with the referall code");
+                    alertDialogBuilder.setTitle("Awesome");
+
+                    alertDialogBuilder.setNegativeButton("Cool!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
+
 
