@@ -1,6 +1,5 @@
 package com.oozmakappa.oyeloans;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,17 +9,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.Adapters.ApplicationHistoryListAdapter;
-import com.oozmakappa.oyeloans.Adapters.LoanDashBoardListAdapter;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * Created by sankarnarayanan on 25/09/16.
@@ -81,4 +75,8 @@ public class ApplicationHistoryActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
+
+
 }

@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
+import com.oozmakappa.oyeloans.Models.PersonalDetailsModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.constants.Jsonconstants;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtilsCallback;
@@ -44,6 +45,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         String LOAN_HISTORY_KEY = "loanApplicationHistory";
         String LOAN_INFO_KEY = "loanInfo";
         String UPLOAD_PHONE_DATA_KEY = "uploadDeviceData";
+        String GET_PROFILE_DATA_KEY = "getProfileData";
     }
 
     private JSONObject authObject = new JSONObject();
@@ -174,7 +176,6 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.put(Jsonconstants.OL_EI_APPLICATIONID_KEY, Long.parseLong(applicationObject.applicationID));
             requestMap.putOpt(Jsonconstants.OL_EI_DEGREE_KEY, applicationObject.loanUserObject.highestEducation);
             requestMap.putOpt(Jsonconstants.OL_EI_INSTITUTION_KEY, applicationObject.loanUserObject.highestEducationPlace);
-
             requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, applicationObject.loanUserObject.workStatus);
             requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, applicationObject.loanUserObject.workPlace);
             requestMap.putOpt(Jsonconstants.OL_EI_PHONE_KEY, applicationObject.loanUserObject.workPhone);
@@ -457,8 +458,30 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             JSONObject requestMap = requestObjectWithDetails("getpersonalinfo", "1001", "12345615");
 
             requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
+            vHelper = new VolleyRequestHelper(this);
+            String url = Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_PERSONALINFO_SERVICE);
+            // Post the device data
+            final HashMap<Object, Object> requestParams = new HashMap<>();
 
-            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_GET_PERSONALINFO_SERVICE));
+            // Priority
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_PRIORITY, Request.Priority.HIGH);
+
+            // Headers
+            final HashMap<String, String> headers = new HashMap<>();
+            headers.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_HEADERS, headers);
+
+            // Body
+            final String content = requestMap.toString();
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_BODY_CONTENT, content.getBytes());
+
+            // Content Type
+            requestParams.put(VolleyRequestHelper.VolleyRequestConstants.HTTP_CONTENT_TYPE, AppConstants.CONTENT_TYPE_JSON);
+
+            HttpsTrustManager.allowAllSSL();
+
+            vHelper.requestString(RequestNameKeys.GET_PROFILE_DATA_KEY, url, requestParams, Request.Method.POST, true);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -767,7 +790,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY ) || requestName.equals(RequestNameKeys.LOAN_INFO_KEY ) || requestName.equals(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY)))
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY ) || requestName.equals(RequestNameKeys.LOAN_INFO_KEY ) || requestName.equals(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY) || requestName.equals(RequestNameKeys.GET_PROFILE_DATA_KEY)))
             {
                 JSONObject jsonObject = new JSONObject(response);
                 if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){
@@ -777,6 +800,11 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                 }else if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_INFO_KEY)){
                     LoanDetailsInfo sModel;
                     sModel = LoanDetailsInfo.LoanDetailsModelFromJSONObject(jsonObject);
+                    completionHandler.onRequestCompleted(sModel, null);
+
+                }else if (requestName.equalsIgnoreCase(RequestNameKeys.GET_PROFILE_DATA_KEY)){
+                    PersonalDetailsModel sModel;
+                    sModel = PersonalDetailsModel.personalDetailsModel(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
 
                 }else {
