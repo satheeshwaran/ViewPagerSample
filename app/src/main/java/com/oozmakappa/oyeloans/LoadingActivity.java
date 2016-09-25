@@ -1,12 +1,16 @@
 package com.oozmakappa.oyeloans;
 
 
+import android.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +33,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.Offers.OffersBrain;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.FacebookHelperUtils;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
@@ -45,6 +50,7 @@ public class LoadingActivity extends AppCompatActivity {
     private static final String TAG_CANCEL = "CANCELLED";
     private static final String TAG_ERROR = "ERROR";
     private static final String TAG_RESPONSE = "REPONSE";
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,11 @@ public class LoadingActivity extends AppCompatActivity {
         t.setScreenName("Loading screen");
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
+
+        if(!checkPermission())
+            requestPermission();
+        else
+            OffersBrain.getInstance(this);
     }
 
     void onFacebookLogin() {
@@ -242,4 +253,43 @@ public class LoadingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+        if (result == PackageManager.PERMISSION_GRANTED){
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
+
+
+        } else {
+
+            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    OffersBrain.getInstance(this);
+
+                } else {
+
+                }
+                break;
+        }
+    }
+
 }

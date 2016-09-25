@@ -143,6 +143,8 @@
             </intent-filter>
         </service>
 
+        <service android:name=".Offers.OfferFenceTransitionService" />
+
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".FixAppointmentActivity" />
         <activity

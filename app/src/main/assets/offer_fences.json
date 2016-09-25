@@ -1,0 +1,105 @@
+{
+  "geoFences":
+  [
+    {
+      "fenceDetails":{
+        "fenceId":"12345",
+        "fenceType":"Circle",
+        "fenceCoordinates":{
+          "fenceCenter":{
+            "longitude":12.864397,
+            "latitude": 80.226098
+          },
+          "radius" : 100
+        },
+        "fenceDuration":{
+          "startTime":11.00,
+          "endTime":23.00
+        }
+      },
+      "offer":{
+        "offerId":"12345",
+        "offerTitle":"McDonald's",
+        "offerDescription":"FREE Mc Aloo Tikki of your choice on order of Rs. 189 & above",
+        "offerVendorName":"McDonald's",
+        "offerStartDate":"2016-01-01",
+        "offerExpiryDate":"2017-12-31"
+      }
+    },
+    {
+      "fenceDetails":{
+        "fenceId":"23456",
+        "fenceType":"Circle",
+        "fenceCoordinates":{
+          "fenceCenter":{
+            "longitude":12.843329,
+            "latitude":80.227122
+          },
+          "radius" : 100
+        },
+        "fenceDuration":{
+          "startTime":23.00,
+          "endTime":7.00
+        }
+      },
+      "offer":{
+        "offerId":"23456",
+        "offerTitle":"Nilgiris",
+        "offerDescription":"Summer Essentials: Great Deals on Beauty, Personal Care, Food & Nutrition Products",
+        "offerVendorName":"Nilgiris",
+        "offerStartDate":"2016-01-01",
+        "offerExpiryDate":"2017-12-31"
+      }
+    },
+    {
+      "fenceDetails":{
+        "fenceId":"98766",
+        "fenceType":"Circle",
+        "fenceCoordinates":{
+          "fenceCenter":{
+            "longitude":12.844899,
+            "latitude":80.226328
+          },
+          "radius" : 100
+        },
+        "fenceDuration":{
+          "startTime":23.00,
+          "endTime":7.00
+        }
+      },
+      "offer":{
+        "offerId":"98766",
+        "offerTitle":"Cake World",
+        "offerDescription":"Flat 10% Off on All Cakes and Pastry Items",
+        "offerVendorName":"Cake World",
+        "offerStartDate":"2016-01-01",
+        "offerExpiryDate":"2017-12-31"
+      }
+    },
+    {
+      "fenceDetails":{
+        "fenceId":"77777",
+        "fenceType":"Circle",
+        "fenceCoordinates":{
+          "fenceCenter":{
+            "longitude":12.846949,
+            "latitude": 80.226896
+          },
+          "radius" : 100
+        },
+        "fenceDuration":{
+          "startTime":23.00,
+          "endTime":7.00
+        }
+      },
+      "offer":{
+        "offerId":"77777",
+        "offerTitle":"Naturals Navalur",
+        "offerDescription":"Flat 5% Off on Hair Care (Rogaine & Toppik)",
+        "offerVendorName":"Naturals Navalur",
+        "offerStartDate":"2016-01-01",
+        "offerExpiryDate":"2017-12-31"
+      }
+    }
+  ]
+}
