@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -28,6 +29,13 @@ public class LoanApprovedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_approved);
+
+        String loanID = getIntent().getStringExtra("loan_id");
+        String loanAmount = getIntent().getStringExtra("loan_amount");
+
+
+        String loanApprovedMessage = "Your Loan application (#" + loanID + ") with us,has been approved by us and we will deposit your approved amount of ₹."+ loanAmount +"at the earliest. You will get an email intimation of the same.";
+        ((TextView)findViewById(R.id.loan_approved_message)).setText(loanApprovedMessage);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = this.getWindow();
