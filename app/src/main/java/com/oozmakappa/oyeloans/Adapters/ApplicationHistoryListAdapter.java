@@ -12,10 +12,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.oozmakappa.oyeloans.ApplicationCompletedActivity;
 import com.oozmakappa.oyeloans.ApplicationHistoryActivity;
 import com.oozmakappa.oyeloans.ApplyLoanFirstActivity;
+import com.oozmakappa.oyeloans.ApplyLoanSecondActivity;
+import com.oozmakappa.oyeloans.ApplyLoanThirdActivity;
 import com.oozmakappa.oyeloans.FBLoginActivty;
 import com.oozmakappa.oyeloans.Models.Application;
+import com.oozmakappa.oyeloans.Models.EmploymentDetailsModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.PersonalDetailsModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
@@ -109,9 +113,11 @@ public class ApplicationHistoryListAdapter extends BaseAdapter implements View.O
      ************/
     private class OnItemClickListener implements View.OnClickListener {
         private int mPosition;
+
         OnItemClickListener(int position) {
             mPosition = position;
         }
+
         @Override
         public void onClick(View arg0) {
             try {
@@ -123,20 +129,19 @@ public class ApplicationHistoryListAdapter extends BaseAdapter implements View.O
                 appModel.applicationState = appStatus;
                 appModel.loanDuration = currObj.getString("application_start_time");
                 SharedDataManager.getInstance().activeApplication = appModel;
-                switch (appStatus){
+                switch (appStatus) {
                     case "Personal Information Complete":
-                        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
-                            @Override
-                            public void onRequestCompleted(SuccessModel model, String errorMessage){
-                                if (model.getStatus().equals("success")) {
-                                    setPersonalDetails(((PersonalDetailsModel) model).getPersonalDetails());
-                                    SharedDataManager.getInstance().activeApplication.loanUserObject = SharedDataManager.getInstance().userObject;
-                                    Intent applyLoanFirstActivity = new Intent(context, ApplyLoanFirstActivity.class);
-                                    context.startActivity(applyLoanFirstActivity);
-                                }
-                            }
-                        });
-                        webServiceHelper.getPersonalInfoService(SharedDataManager.getInstance().userObject.emailID);
+                        continueLoanFromPersonalDetails();
+                        break;
+                    case "Stage 1 UW Approved":
+                        continueLoanFromEmploymentDetails(false);
+                        break;
+                    case "PAN / Bank Statement Uploaded":
+                        continueLoanFromEmploymentDetails(true);
+                        break;
+                    case "Esign complete":
+                        Intent thanksScreen = new Intent(context, ApplicationCompletedActivity.class);
+                        context.startActivity(thanksScreen);
                         break;
                     default:
                         break;
@@ -144,13 +149,13 @@ public class ApplicationHistoryListAdapter extends BaseAdapter implements View.O
 
 
                 Log.v("Item Clicked", Integer.toString(mPosition));
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
 
-        private void setPersonalDetails(JSONObject object){
+        private void setPersonalDetails(JSONObject object) {
             try {
                 LoanUser user = SharedDataManager.getInstance().userObject;
                 user.firstName = object.getString("full_name");
@@ -165,10 +170,83 @@ public class ApplicationHistoryListAdapter extends BaseAdapter implements View.O
                 user.PINCode = object.getString("pincode");
                 user.aadharNumber = object.getString("aadhar");
                 user.PANNumber = object.getString("CMNPS5987B");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void continueLoanFromPersonalDetails() {
+            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    if (model.getStatus().equals("success")) {
+                        setPersonalDetails(((PersonalDetailsModel) model).getPersonalDetails());
+                        SharedDataManager.getInstance().activeApplication.loanUserObject = SharedDataManager.getInstance().userObject;
+                        Intent applyLoanFirstActivity = new Intent(context, ApplyLoanFirstActivity.class);
+                        context.startActivity(applyLoanFirstActivity);
+                    }
+                }
+            });
+            webServiceHelper.getPersonalInfoService(SharedDataManager.getInstance().userObject.emailID);
+        }
+
+        private void continueLoanFromEmploymentDetails(final Boolean otpFlow) {
+            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    if (model.getStatus().equals("success")) {
+                        setPersonalDetails(((PersonalDetailsModel) model).getPersonalDetails());
+                        getEmploymentInfo(otpFlow);
+                    }
+                }
+            });
+            webServiceHelper.getPersonalInfoService(SharedDataManager.getInstance().userObject.emailID);
+        }
+
+
+        private void getEmploymentInfo(final Boolean otpFlow){
+            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    if (model.getStatus().equals("success")) {
+                        setEmploymentDetails(((EmploymentDetailsModel) model).getEmploymentDetails());
+                        SharedDataManager.getInstance().activeApplication.loanUserObject = SharedDataManager.getInstance().userObject;
+                        if (otpFlow == false) {
+                            Intent applyLoanSecondActivity = new Intent(context, ApplyLoanSecondActivity.class);
+                            context.startActivity(applyLoanSecondActivity);
+                        }else{
+                            continueLoanFromOtp();
+                        }
+                    }
+                }
+            });
+            webServiceHelper.getEmploymentInfoService(SharedDataManager.getInstance().userObject.emailID);
+        }
+
+
+        private void setEmploymentDetails(JSONObject object){
+            try {
+                LoanUser user = SharedDataManager.getInstance().userObject;
+                user.highestEducationPlace = object.getString("last_institution_studied");
+                user.highestEducation = object.getString("highest_degree");
+                //Hard coded since this is not received from service
+                user.highestEducationYear = "2001";
+                user.workPlace = object.getString("employer_name");
+                user.workTitle = object.getString("employer_name");
+                user.workStartDate = object.getString("employer_name");
+                user.workPhone = object.getString("employer_phone");
+                user.monthlyIncome = object.getString("gross_monthly_income");
+                user.workStatus = object.getString("employment_status");
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+
+        private void continueLoanFromOtp(){
+            Intent applicationPageThree = new Intent(context,ApplyLoanThirdActivity.class);
+            context.startActivity(applicationPageThree);
 
         }
+
     }
 }

@@ -107,6 +107,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         loanHistoryData = ((LoanApplicationInfo) model).getLoanHistory().toString();
                         appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory();
                         JSONArray loanArray = ((LoanApplicationInfo) model).getLoanHistory();
+                        if (loanArray.length() > 0){
                         for (int i = 0; i < loanArray.length(); i++) {
                             JSONObject loanObject = loanArray.getJSONObject(i);
                             Loan loanObj = new Loan();
@@ -131,6 +132,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             });
                             webServiceHelper.getLoanInfoService(loanObj);
                             break;
+                        }
+                        }else{
+                            enableNoLoanView();
                         }
                         FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                     } else {
