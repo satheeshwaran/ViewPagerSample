@@ -36,7 +36,7 @@ public class SharedDataManager {
     /*
      TO be set from loan details acitivity...
      */
-    public LoanSummaryModel singleLoan = null;
+    public JSONObject singleLoan = null;
 
     public boolean isFBLoggedIn() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();

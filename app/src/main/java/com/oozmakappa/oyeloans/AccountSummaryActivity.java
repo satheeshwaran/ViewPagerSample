@@ -82,7 +82,7 @@ public class AccountSummaryActivity extends AppCompatActivity
                     loanModel.setLoanStatus(currentObj.getString("app_status"));
                 }
                 if(currentObj.has("loan_amount")) {
-                    loanModel.setLoanAmount("Rs."+currentObj.getString("loan_amount"));
+                    loanModel.setLoanAmount("₹."+currentObj.getString("loan_amount"));
                     loanModel.setLoanId("App. Id : " +currentObj.getString("app_id"));
                 }else{
                     loanModel.setLoanAmount("");

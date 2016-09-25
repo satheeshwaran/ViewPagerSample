@@ -23,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.login.LoginManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -45,9 +46,11 @@ import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     public JSONArray appHistoryData = null;
 
+    public int loanScore = 0;
     //App history Data - {"application_status_history":[{ "app_id":2, "app_status":"All verification completed", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"},{ "app_id":8, "app_status":"All verification completed", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"},{"app_id":160, "app_status":"All verification completed"},{ "app_id":290, "app_status":"", "application_start_time": "2016-08-23 19:49:32", "current_state": "page4", "loan_amount": "300.00", "ALA":"150.00"}]}
 
     private ResideMenu resideMenu;
@@ -85,13 +89,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ResideMenuItem itemSettings;
     private ResideMenuItem referFriend;
     private AccountSummaryActivity mContext;
-    public ArrayList<LoanSummaryModel> loanArray = new ArrayList<LoanSummaryModel>();
-
+    private JSONObject jsonLoan;
+    private JSONObject currentLoanObject = null;
+    private String currentLoanID = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Initializes the controller, for data extraction.
+        super.onCreate(savedInstanceState);
         setUpBasicItems();
-        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
+        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
             @Override
             public void onRequestCompleted(SuccessModel model, String errorMessage) {
                 try {
@@ -107,24 +113,28 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                 @Override
                                 public void onRequestCompleted(SuccessModel model, String errorMessage) {
                                     if (model != null && model.getStatus().equals("success")) {
-                                        Utils.removeLoading();
                                         loanInfoData = ((LoanDetailsInfo) model).getResponse().toString();
+                                        try {
+                                            jsonLoan = new JSONObject(loanInfoData);
+                                            calculateLoanProgress(jsonLoan);
+                                        } catch (Exception e) {
+                                            FirebaseCrash.log(e.getLocalizedMessage());
+                                        }
                                         setUpDashboard();
-                                    }else{
+                                    } else {
                                         loanInfoData = "";
                                     }
-                                    setupListView(loanInfoData);
+                                    setupListView(jsonLoan);
                                 }
                             });
                             webServiceHelper.getLoanInfoService(loanObj);
                             break;
                         }
                         FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
-                        Utils.removeLoading();
                     } else {
                         enableNoLoanView();
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     enableNoLoanView();
                 }
@@ -132,7 +142,26 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         });
         webServiceHelper.getLoanHistory(SharedDataManager.getInstance().userObject.emailID);
         Utils.showLoading(this, "Fetching your loan Details");
-        super.onCreate(savedInstanceState);
+    }
+
+    private void calculateLoanProgress(JSONObject loanSchedule) {
+        currentLoanObject = loanSchedule;
+        int score = 0;
+        try {
+            JSONArray scheduleArray = loanSchedule.getJSONArray("schedule");
+            for (int i = 0; i < scheduleArray.length(); i++) {
+                Double payment_amount = Double.valueOf(((JSONObject) scheduleArray.get(i)).getString("payment_amount"));
+                Double paid_amount = Double.valueOf(((JSONObject) scheduleArray.get(i)).getString("paid_amount"));
+
+                if (paid_amount >= payment_amount)
+                    score++;
+
+            }
+
+            loanScore = (int) ((Double.valueOf(score) / Double.valueOf(scheduleArray.length())) * 100);
+        } catch (Exception e) {
+            FirebaseCrash.log(e.getLocalizedMessage());
+        }
     }
 
     @Override
@@ -161,9 +190,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     }
 
 
-    public void enableNoLoanView(){
+    public void enableNoLoanView() {
         RelativeLayout noLoanView = (RelativeLayout) findViewById(R.id.noLoansView);
-        RelativeLayout loanPresentView = (RelativeLayout)findViewById(R.id.loanPresentView);
+        RelativeLayout loanPresentView = (RelativeLayout) findViewById(R.id.loanPresentView);
         loanPresentView.setVisibility(View.GONE);
         noLoanView.setVisibility(View.VISIBLE);
         Button applyLoan = (Button) findViewById(R.id.applyLoanButtonNoLoanView);
@@ -174,11 +203,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
+        Utils.removeLoading();
     }
 
-    private void setUpDashboard(){
+    private void setUpDashboard() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        headerAdapter = new LoanDetailsHeaderAdapter(getSupportFragmentManager(), this, loanHistoryData, loanInfoData);
+        headerAdapter = new LoanDetailsHeaderAdapter(getSupportFragmentManager(), this, loanHistoryData, loanInfoData, loanScore);
         viewPager.setAdapter(headerAdapter);
         viewPager.addOnPageChangeListener(pageChangeListener);
         Window window = getWindow();
@@ -187,32 +217,46 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.NavBarColor));
         }
-        CirclePageIndicator titleIndicator = (CirclePageIndicator)findViewById(R.id.titlesDashboard);
-        titleIndicator.setFillColor(R.color.deep_orange_500);
-        titleIndicator.setViewPager(viewPager);
+
+        try {
+            JSONArray loanArrayList = new JSONArray(loanHistoryData);
+
+            if (loanArrayList.length() > 1) {
+                CirclePageIndicator titleIndicator = (CirclePageIndicator) findViewById(R.id.titlesDashboard);
+                titleIndicator.setFillColor(R.color.deep_orange_500);
+                titleIndicator.setViewPager(viewPager);
+            }
+
+            if (loanArrayList.length()>0)
+                currentLoanID = String.valueOf(((JSONObject)loanArrayList.get(0)).getInt("loan_id"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Utils.removeLoading();
     }
 
-    public void setupListView(String loanInfoData){
+    public void setupListView(JSONObject loanInfoData) {
         try {
             if (loanInfoData != null && loanInfoData.length() > 0) {
                 ListView listView = (ListView) findViewById(R.id.scheduleContainer);
                 listView.setVisibility(View.VISIBLE);
-                TextView noScheduleInfo = (TextView)findViewById(R.id.noScheduleInfo);
+                TextView noScheduleInfo = (TextView) findViewById(R.id.noScheduleInfo);
                 noScheduleInfo.setVisibility(View.GONE);
-                JSONObject jsonLoan = new JSONObject(loanInfoData);
-                listView.setAdapter(new LoanDashBoardListAdapter(this, jsonLoan.getJSONArray("schedule")));
-            }else{
+                listView.setAdapter(new LoanDashBoardListAdapter(this, loanInfoData.getJSONArray("schedule")));
+            } else {
                 ListView listView = (ListView) findViewById(R.id.scheduleContainer);
                 listView.setVisibility(View.GONE);
-                TextView noScheduleInfo = (TextView)findViewById(R.id.noScheduleInfo);
+                TextView noScheduleInfo = (TextView) findViewById(R.id.noScheduleInfo);
                 noScheduleInfo.setVisibility(View.VISIBLE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setUpBasicItems(){
+    public void setUpBasicItems() {
         setContentView(R.layout.activity_loan_info_service);
         setUpMenu();
         FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
@@ -221,9 +265,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         makePaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedDataManager.getInstance().activeLoans = loanArray;
-                Intent makePaymentIntent = new Intent(DashboardActivity.this,MakePayment.class);
-                makePaymentIntent.putExtra("MultiLoanPayment",true);
+                SharedDataManager.getInstance().singleLoan = currentLoanObject;
+                Intent makePaymentIntent = new Intent(DashboardActivity.this, MakePayment.class);
+                makePaymentIntent.putExtra("MultiLoanPayment", false);
+                makePaymentIntent.putExtra("LoanID",currentLoanID);
                 startActivity(makePaymentIntent);
             }
         });
@@ -231,18 +276,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 goToApplyLoanPage();
-                Toast.makeText(getApplicationContext(),"Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Apply Loan button Clicked", Toast.LENGTH_SHORT).show();
             }
         });
         termsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent makePaymentIntent = new Intent(DashboardActivity.this,TermsAndConditionsActivity.class);
+                Intent makePaymentIntent = new Intent(DashboardActivity.this, TermsAndConditionsActivity.class);
                 startActivity(makePaymentIntent);
             }
         });
     }
-
 
 
     private void setUpMenu() {
@@ -254,19 +298,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
         resideMenu.setScaleValue(0.4f);
-        itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
+        itemHome = new ResideMenuItem(this, R.drawable.icon_home, "Home");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
         referFriend = new ResideMenuItem(this, R.drawable.command, "Refer A Friend");
-        ResideMenuItem itemFAQ = new ResideMenuItem(this,R.drawable.question, "FAQ");
-        ResideMenuItem chatWithUS = new ResideMenuItem(this,R.drawable.messenger, "Chat");
-        ResideMenuItem rateUs = new ResideMenuItem(this,R.drawable.star, "Rate Us");
-        ResideMenuItem itemLogout = new ResideMenuItem(this,R.drawable.logout, "Logout");
+        ResideMenuItem itemFAQ = new ResideMenuItem(this, R.drawable.question, "FAQ");
+        ResideMenuItem chatWithUS = new ResideMenuItem(this, R.drawable.messenger, "Chat");
+        ResideMenuItem rateUs = new ResideMenuItem(this, R.drawable.star, "Rate Us");
+        ResideMenuItem itemLogout = new ResideMenuItem(this, R.drawable.logout, "Logout");
         chatWithUS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     FirebaseCrash.log(ex.getLocalizedMessage());
                     Toast.makeText(getApplicationContext(), "Chat option not available right now!", Toast.LENGTH_SHORT).show();
@@ -278,7 +322,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 LoginManager.getInstance().logOut();
-                Intent loginIntent = new Intent(DashboardActivity.this,FBLoginActivty.class);
+                Intent loginIntent = new Intent(DashboardActivity.this, FBLoginActivty.class);
                 startActivity(loginIntent);
                 DashboardActivity.this.finish();
             }
@@ -292,7 +336,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         itemFAQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent faqIntent = new Intent(DashboardActivity.this,FAQActivity.class);
+                Intent faqIntent = new Intent(DashboardActivity.this, FAQActivity.class);
                 startActivity(faqIntent);
             }
         });
@@ -300,7 +344,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         itemSettings.setOnClickListener(this);
         referFriend.setOnClickListener(this);
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(referFriend,ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(referFriend, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemFAQ, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(chatWithUS, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(rateUs, ResideMenu.DIRECTION_LEFT);
@@ -317,7 +361,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         referFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent referFriendPage = new Intent(DashboardActivity.this,ReferFriendActivity.class);
+                Intent referFriendPage = new Intent(DashboardActivity.this, ReferFriendActivity.class);
                 startActivity(referFriendPage);
             }
         });
@@ -327,7 +371,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             public void onClick(View v) {
                 try {
                     resideMenu.closeMenu();
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -356,14 +400,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
         @Override
-        public void closeMenu(){
+        public void closeMenu() {
             // Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT).show();
         }
     };
 
 
-    public void ShowDialog()
-    {
+    public void ShowDialog() {
         final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
         final RatingBar rating = new RatingBar(this);
         rating.setMax(4);
@@ -415,32 +458,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 JSONObject loanObject = loanArray.getJSONObject(position);
                 Loan loanObj = new Loan();
                 loanObj.loanID = loanObject.getInt("loan_id");
+                currentLoanID = String.valueOf(loanObj.loanID);
                 WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
                     @Override
-                    public void onRequestCompleted(SuccessModel model, String errorMessage)  {
-                        LoanDetailsHeaderFragment currentFragment = (LoanDetailsHeaderFragment)viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
+                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                        LoanDetailsHeaderFragment currentFragment = (LoanDetailsHeaderFragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
                         if (model != null && model.getStatus().equals("success")) {
                             Utils.removeLoading();
                             loanInfoData = ((LoanDetailsInfo) model).getResponse().toString();
                             JSONObject loanDetails = ((LoanDetailsInfo) model).getResponse();
+                            calculateLoanProgress(loanDetails);
                             try {
                                 String outStandingBal = loanDetails.getString("ob");
-                                currentFragment.setFragmentValues(outStandingBal);
+                                String totalLoanAmount = loanDetails.getString("total_amount");
+                                currentFragment.setFragmentValues(outStandingBal, totalLoanAmount, loanScore);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }else{
+                        } else {
                             loanInfoData = "";
-                            currentFragment.setFragmentValues("NA");
+                            currentFragment.setFragmentValues("NA", "0.0", loanScore);
                         }
-                        setupListView(loanInfoData);
+                        setupListView(jsonLoan);
                         Utils.removeLoading();
-                        currentFragment.animateLoanArcWithAmount(60);
+                        //currentFragment.animateLoanArcWithAmount(60);
                     }
                 });
                 webServiceHelper.getLoanInfoService(loanObj);
                 Utils.showLoading(getApplicationContext(), "Fetching Loan schedule");
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -452,8 +498,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
     };
 
-    public void goToApplyLoanPage(){
-        Intent goToApplyLoanFirstScreenIntent = new Intent(this,LoanApplicationStepsActivity.class);
+    public void goToApplyLoanPage() {
+        Intent goToApplyLoanFirstScreenIntent = new Intent(this, LoanApplicationStepsActivity.class);
         startActivity(goToApplyLoanFirstScreenIntent);
     }
 

@@ -121,7 +121,7 @@ public class ChoosePaymentOptionActivity extends AppCompatActivity implements On
 
         final String paymentAmount = getIntent().getStringExtra("payable_amount");
 
-        ((TextView)findViewById(R.id.payableAmountValue)).setText("Rs." + paymentAmount);
+        ((TextView)findViewById(R.id.payableAmountValue)).setText("₹." + paymentAmount);
 
         Button makepaymentButton = (Button) findViewById(R.id.makePaymentButton1);
         makepaymentButton.setOnClickListener(new View.OnClickListener() {

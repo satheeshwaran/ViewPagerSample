@@ -85,7 +85,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
-        <activity android:name=".ChoosePaymentOptionActivity">
+        <activity android:name=".ChoosePaymentOptionActivity"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.MakePayment" />

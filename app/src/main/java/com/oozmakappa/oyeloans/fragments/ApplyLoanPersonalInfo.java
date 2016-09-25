@@ -29,8 +29,10 @@ import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import com.oozmakappa.oyeloans.utils.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -108,14 +110,28 @@ public class ApplyLoanPersonalInfo extends Fragment {
         pinCodeField = (AutoCompleteTextView) v.findViewById(R.id.pin_code);
         stateField = (AutoCompleteTextView) v.findViewById(R.id.state_value);
 
-        setupDatePickerForDOB();
+
 
         LoanUser user = SharedDataManager.getInstance().userObject;
         if (user != null) {
             firstNameField.setText(user.firstName);
             lastNameField.setText(user.lastName);
             phoneNumberField.setText(user.mobileNumber);
-            dobField.setText(user.DOB);
+
+            Date dob = null;
+            String dateinIndianFormat=user.DOB;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            try {
+                dob = simpleDateFormat.parse(user.DOB);
+                simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                dateinIndianFormat = simpleDateFormat.format(dob);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            setupDatePickerForDOB(dob);
+
+            dobField.setText(dateinIndianFormat);
             emailAddressField.setText(user.emailID);
             panNumberField.setText(user.PANNumber);
             aadharCardField.setText(user.aadharNumber);
@@ -129,7 +145,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
         return v;
     }
 
-    void setupDatePickerForDOB() {
+    void setupDatePickerForDOB(Date actualDOB) {
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -146,6 +162,8 @@ public class ApplyLoanPersonalInfo extends Fragment {
 
         };
 
+        if (actualDOB!=null)
+            myCalendar.setTime(actualDOB);
 
         dobField.setOnClickListener(new View.OnClickListener() {
 
