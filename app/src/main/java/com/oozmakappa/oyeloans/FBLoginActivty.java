@@ -156,6 +156,7 @@ public class FBLoginActivty extends AppCompatActivity {
         editProfileIntent.putExtra("AllEdit",true);
         editProfileIntent.putExtra("ShowInsufficientInformation",status);
         startActivity(editProfileIntent);
+        finish();
     }
 
     void registerForNotifications() {

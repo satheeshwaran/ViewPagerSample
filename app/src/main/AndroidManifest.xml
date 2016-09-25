@@ -152,7 +152,7 @@
             android:label="Loan Approved" />
         <activity
             android:name=".LoanReasonActivity"
-            android:label="Tell Us Why" />
+            android:label= "Tell us why you need the money?" />
         <activity android:name=".LoanRejectionActivity" />
 
         <receiver android:name=".Services.OyeLoansIncomingSMSReceiver">
