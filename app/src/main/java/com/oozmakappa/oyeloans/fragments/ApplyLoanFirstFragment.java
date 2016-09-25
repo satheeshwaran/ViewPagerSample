@@ -1,6 +1,7 @@
 package com.oozmakappa.oyeloans.fragments;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -26,6 +30,8 @@ import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import java.util.HashMap;
 import java.util.Objects;
 import com.oozmakappa.oyeloans.constants.Jsonconstants;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by sankarnarayanan on 11/09/16.
@@ -92,6 +98,7 @@ public class ApplyLoanFirstFragment extends Fragment {
                 int value = (progress * 1000) + 10000;
                 amountEdit.setText(Integer.toString(value));
                 SharedDataManager.getInstance().activeApplication.loanAmount = Integer.toString(value);
+                setAmountInCalculator(value);
                 amountEdit.clearFocus();
                 amountEdit.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -121,6 +128,29 @@ public class ApplyLoanFirstFragment extends Fragment {
         t.setScreenName("Loan application - Apply Loan screen");
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
+
+
+        RelativeLayout emiCalculatorView = (RelativeLayout) getActivity().findViewById(R.id.EmiCalculatorHeader);
+        emiCalculatorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView expandCollapseIcon = (ImageView) getActivity().findViewById(R.id.emiCalculatorExpandIcon);
+                RelativeLayout emiCalculatorTotalView = (RelativeLayout) getActivity().findViewById(R.id.loanEmiCalculator);
+                RelativeLayout containerView = (RelativeLayout) getActivity().findViewById(R.id.firstPagecontainer);
+                if (emiCalculatorTotalView.getVisibility() == View.GONE){
+                    expandCollapseIcon.setImageResource(R.drawable.ic_keyboard_arrow_up_black_48dp);
+                    emiCalculatorTotalView.setVisibility(View.VISIBLE);
+                    containerView.setVisibility(View.GONE);
+                }else if(containerView.getVisibility() == View.GONE){
+                    expandCollapseIcon.setImageResource(R.drawable.ic_keyboard_arrow_down_black_48dp);
+                    emiCalculatorTotalView.setVisibility(View.GONE);
+                    containerView.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+
     }
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {
@@ -184,6 +214,16 @@ public class ApplyLoanFirstFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    private void setAmountInCalculator(int amount){
+        TextView loanAmountCalculator = (TextView) getActivity().findViewById(R.id.loanAmountCalculator);
+        loanAmountCalculator.setText("₹. ".concat(Integer.toString(amount)));
+        int compountInterest = amount * (1 + (25/100));
+        int totalAmount = amount + compountInterest;
+        int interestPerMonth = totalAmount/12;
+        TextView moneyPayable = (TextView) getActivity().findViewById(R.id.moneyPayablePermonth);
+        moneyPayable.setText("₹. ".concat(Integer.toString(interestPerMonth)));
     }
 
 }

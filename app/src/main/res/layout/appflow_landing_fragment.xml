@@ -51,12 +51,11 @@
                     />
 
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow_drawable">
-
+                android:background="@drawable/shadow_drawable"
+                android:id="@+id/seekbarParent">
                 <SeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,86 +68,242 @@
                     android:progressDrawable="@drawable/seekbar_progress_bar"
                     android:thumb="@drawable/thumb"
                     />
+            </RelativeLayout>
 
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/EmiCalculatorHeader"
+                android:background="@drawable/shadow_drawable">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EMI Calculator"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_down_black_48dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/emiCalculatorExpandIcon"
+                    android:gravity="center"
+                    />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow_drawable">
-
-                <TextView
+                android:id="@+id/firstPagecontainer"
+                android:visibility="visible">
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Please Choose loan amount ranging from 10k to 1L"
-                    android:gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:layout_marginBottom="10dp"
-                    android:id="@+id/amountRange"
-                    android:textSize="18dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:background="@drawable/shadow_drawable"
+                    android:id="@+id/textConatiner">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Please Choose loan amount ranging from 10k to 1L"
+                        android:gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/amountRange"
+                        android:textSize="18dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Referral code"
+                        android:layout_below="@+id/amountRange"
+                        android:layout_alignLeft="@+id/amountRange"
+                        android:textSize="18dp"
+                        android:layout_margin="20dp"
+                        android:id="@+id/referralCodeLabel"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/editTextReferralCode"
+                        android:background="@drawable/rounded_edit_text"
+                        android:textSize="12dp"
+                        android:cursorVisible="false"
+                        android:hint="CODE"
+                        android:layout_below="@+id/amountRange"
+                        android:layout_alignRight="@+id/amountRange"
+                        android:layout_toRightOf="@+id/referralCodeLabel"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+                    </EditText>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:padding="20dp"
                     android:layout_height="wrap_content"
-                    android:text="Referral code"
-                    android:layout_below="@+id/amountRange"
-                    android:layout_alignLeft="@+id/amountRange"
-                    android:textSize="18dp"
-                    android:layout_margin="20dp"
-                    android:id="@+id/referralCodeLabel"
-                    />
-
-                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:id="@+id/editTextReferralCode"
-                    android:background="@drawable/rounded_edit_text"
-                    android:textSize="12dp"
-                    android:cursorVisible="false"
-                    android:hint="CODE"
-                    android:layout_below="@+id/amountRange"
-                    android:layout_alignRight="@+id/amountRange"
-                    android:layout_toRightOf="@+id/referralCodeLabel"
+                    android:layout_below="@+id/textConatiner"
+                    android:id="@+id/interestRateText">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/interestRateLoanAppFlow"
+                        android:textColor="@color/NavBarColor"
+                        android:gravity="center"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:padding="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/interestRateText"
+                    android:id="@+id/buttonContainer">
+                    <Button
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button_shape"
+                        android:text="@string/proceedAppFlowButton"
+                        android:textSize="16dp"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:id="@+id/profileProceedButton"
+                        android:layout_centerInParent="true"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/loanEmiCalculator"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:gravity="center">
-                </EditText>
-
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:padding="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-                <TextView
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/loanAmountLayout">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="Loan Amount"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"/>
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="45dp"
+                        android:background="@color/purple_200"
+                        android:layout_alignParentRight="true"
+                        android:text="₹. 10000"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/loanAmountCalculator">
+                    </TextView>
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/interestRateLoanAppFlow"
-                    android:textColor="@color/NavBarColor"
-                    android:gravity="center"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_below="@+id/loanAmountLayout"
+                    android:id="@+id/rateOfInterestLayout">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="ROI"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="45dp"
+                        android:background="@color/orange_100"
+                        android:layout_alignParentRight="true"
+                        android:text="25%"
+                        android:gravity="center"
+                        android:layout_centerVertical="true">
+                    </TextView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/rateOfInterestLayout"
+                    android:id="@+id/loanTenureView">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="Loan Tenure"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"/>
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="45dp"
+                        android:background="@color/yellow_200"
+                        android:layout_alignParentRight="true"
+                        android:text="12 Months"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+                    </TextView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/loanTenureView"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/dividerView">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dividerView"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="EMI Payabale (Per Month)"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/emiPayabaleText"/>
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="45dp"
+                        android:background="@color/green_100"
+                        android:text="₹. 10000"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:layout_below="@+id/emiPayabaleText"
+                        android:id="@+id/moneyPayablePermonth"
+                        android:layout_marginTop="20dp"
+                        android:textSize="25dp"
+                        android:layout_marginBottom="20dp">
+                    </TextView>
+                </RelativeLayout>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:padding="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-                <Button
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_button_shape"
-                    android:text="@string/proceedAppFlowButton"
-                    android:textSize="16dp"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:id="@+id/profileProceedButton"
-                    android:layout_centerInParent="true"
-                    />
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
