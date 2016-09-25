@@ -210,11 +210,11 @@ public class OffersBrain implements ConnectionCallbacks,OnConnectionFailedListen
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             editor.putBoolean(Constants.GEOFENCES_ADDED_KEY, mGeofencesAdded);
             editor.apply();
-            Toast.makeText(
+            /*Toast.makeText(
                     ourContext,
                     mGeofencesAdded ? R.string.geofences_added :
                             R.string.geofences_removed,
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT*/
             ).show();
 
         } else {
