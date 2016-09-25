@@ -9,12 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.oozmakappa.oyeloans.LoanRejectionActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:clickable="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +46,7 @@
 
 
             <TextView
-                android:id="@+id/available_amount_redraw"
+                android:id="@+id/loan_rejection_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Unfortunately your Loan application (#424252) was rejected. We are extremely sorry and hope to do business with you in the future though. You will get an email intimation of the same."

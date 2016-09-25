@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -28,6 +29,9 @@ public class LoanRejectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_rejection);
 
+        if (getIntent().getStringExtra("loan_rejection_message") != null)
+            ((TextView) findViewById(R.id.loan_rejection_message)).setText(getIntent().getStringExtra("loan_rejection_message"));
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = this.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -36,7 +40,7 @@ public class LoanRejectionActivity extends AppCompatActivity {
         }
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
@@ -50,7 +54,7 @@ public class LoanRejectionActivity extends AppCompatActivity {
             }
         });
 
-        Button whatElseToDo = (Button)findViewById(R.id.what_to_do);
+        Button whatElseToDo = (Button) findViewById(R.id.what_to_do);
         whatElseToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

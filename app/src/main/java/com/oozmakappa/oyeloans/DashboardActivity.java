@@ -134,10 +134,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         }
                         FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                     } else {
+                        FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
+                        makePaymentBtn.setEnabled(false);
                         enableNoLoanView();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    FloatingActionButton makePaymentBtn = (FloatingActionButton) findViewById(R.id.fab2);
+                    makePaymentBtn.setEnabled(false);
                     enableNoLoanView();
                 }
             }
