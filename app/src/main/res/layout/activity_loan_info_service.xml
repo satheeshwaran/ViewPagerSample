@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/NavBarColor">
+        android:background="@color/NavBarColor"
+        >
 
 
         <ImageView
@@ -51,7 +52,17 @@
             android:textSize="10dp"
             android:fontFamily="sans-serif"
             android:layout_toRightOf="@+id/menuIcon" />
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_notifications_white_48dp"
+            android:layout_marginTop="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            app:border_color="@android:color/white"
+            app:border_width="2dp"
+            android:id="@+id/notificationsIcon"
+            />
     </RelativeLayout>
 
     <RelativeLayout
@@ -80,14 +91,24 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/scheduleContainer"
             android:dividerHeight="0dp"
             android:divider="@null"
             android:background="@color/grey_200"
             android:layout_below="@id/titlesDashboard">
-
         </ListView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Schedule for this loan is not available"
+            android:id="@+id/noScheduleInfo"
+            android:layout_below="@id/titlesDashboard"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:background="@color/WhiteColor"
+            android:visibility="gone"/>
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu_red"

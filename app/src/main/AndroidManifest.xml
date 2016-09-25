@@ -167,6 +167,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
+        <activity
+            android:name=".ApplicationHistoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

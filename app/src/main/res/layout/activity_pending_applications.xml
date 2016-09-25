@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/NavBarColor"
+        >
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_arrow_back_white_48dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/appHistoryBackIcon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Application Summary"
+            android:id="@+id/textView2"
+            android:layout_toEndOf="@+id/appHistoryBackIcon"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@+id/appHistoryBackIcon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Application History"
+            android:id="@+id/textView4"
+            android:layout_toEndOf="@+id/appHistoryBackIcon"
+            android:layout_below="@+id/textView2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="3dp"
+            android:paddingBottom="10dp"
+            android:textColor="#ffffff"
+            android:textSize="10dp"
+            android:fontFamily="sans-serif"
+            android:layout_toRightOf="@+id/appHistoryBackIcon" />
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_200"
+        android:id="@+id/pendingApplicationsList"
+        android:dividerHeight="0dp"
+        android:divider="@null">
+
+    </ListView>
+
+    </LinearLayout>

@@ -11,6 +11,7 @@ import com.oozmakappa.oyeloans.Models.Application;
 import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +32,7 @@ public class SharedDataManager {
 
     public ArrayList<LoanSummaryModel> activeLoans = new ArrayList<>();
 
+    public JSONArray applicationHistory;
     /*
      TO be set from loan details acitivity...
      */

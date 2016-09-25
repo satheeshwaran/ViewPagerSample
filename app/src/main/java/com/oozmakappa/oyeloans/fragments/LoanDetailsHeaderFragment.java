@@ -40,6 +40,26 @@ public class LoanDetailsHeaderFragment extends Fragment {
     }
 
 
+    public void setFragmentValues(String outstandingBal){
+        String amt = "", pse= "";
+        if (outstandingBal.contains(".")) {
+            String string = outstandingBal;
+            String[] parts = string.split("\\.");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            part2 = part2.concat("0");
+            amt = part1;
+            pse = part2;
+        }else{
+            amt = outstandingBal;
+            pse = "00";
+        }
+        TextView amountText =  (TextView)getView().findViewById(R.id.amountValue);
+        TextView paiseText = (TextView) getView().findViewById(R.id.paiseValue);
+        amountText.setText(amt);
+        paiseText.setText(pse);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +94,7 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
     @Override
     public void onStart() {
-        animateLoanArcWithAmount(60);
+        //animateLoanArcWithAmount(60);
         super.onStart();
     }
 
@@ -98,7 +118,7 @@ public class LoanDetailsHeaderFragment extends Fragment {
 
 
 
-    private void animateLoanArcWithAmount(final int percentage){
+    public void animateLoanArcWithAmount(final int percentage){
         final ArcProgress loanArcProgress = (ArcProgress) getActivity().findViewById(R.id.loan_arc_progress);
         loanArcProgress.setProgress(0);
         Handler handler = new Handler();
