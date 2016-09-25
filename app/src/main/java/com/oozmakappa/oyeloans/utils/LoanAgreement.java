@@ -1,10 +1,13 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -51,6 +54,15 @@ public class LoanAgreement extends AppCompatActivity {
                 Utils.removeLoading();
                 // TODO hide your progress image
                 super.onPageFinished(view, url);
+            }
+        });
+
+        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
+        mailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+                startActivity(intent);
             }
         });
     }

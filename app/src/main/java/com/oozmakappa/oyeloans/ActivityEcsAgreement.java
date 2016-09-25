@@ -1,14 +1,18 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.oozmakappa.oyeloans.utils.Utils;
 
@@ -21,6 +25,15 @@ public class ActivityEcsAgreement extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecs_agreement);
+
+        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
+        mailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+                startActivity(intent);
+            }
+        });
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -39,7 +52,6 @@ public class ActivityEcsAgreement extends AppCompatActivity {
 
         WebView webView = (WebView) findViewById(R.id.loanAgreementWebView);
         webView.loadUrl("file:///android_asset/ecs.html");
-
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon)
