@@ -32,9 +32,14 @@ public class LoanApprovedActivity extends AppCompatActivity {
 
         String loanID = getIntent().getStringExtra("loan_id");
         String loanAmount = getIntent().getStringExtra("loan_amount");
+        String loanMessage = getIntent().getStringExtra("loan_message");
+        String loanApprovedMessage;
+        if (loanMessage !=null){
+            loanApprovedMessage =loanMessage;
+        }else {
+            loanApprovedMessage = "Your Loan application (#" + loanID + ") with us,has been approved by us and we will deposit your approved amount of ₹." + loanAmount + " at the earliest. You will get an email intimation of the same.";
+        }
 
-
-        String loanApprovedMessage = "Your Loan application (#" + loanID + ") with us,has been approved by us and we will deposit your approved amount of ₹."+ loanAmount +"at the earliest. You will get an email intimation of the same.";
         ((TextView)findViewById(R.id.loan_approved_message)).setText(loanApprovedMessage);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -15,6 +15,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.oozmakappa.oyeloans.LoadingActivity;
+import com.oozmakappa.oyeloans.LoanApprovedActivity;
+import com.oozmakappa.oyeloans.LoanRejectionActivity;
 import com.oozmakappa.oyeloans.R;
 
 public class OyeLoansFCMNotificationMessagingService extends FirebaseMessagingService {
@@ -63,14 +65,27 @@ public class OyeLoansFCMNotificationMessagingService extends FirebaseMessagingSe
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, LoadingActivity.class);
+
+        Intent intent = null;
+
+        if (messageBody.toLowerCase().contains("approved")) {
+            intent = new Intent(this, LoanApprovedActivity.class);
+            intent.putExtra("loan_message",messageBody);
+        }
+        else if(messageBody.toLowerCase().contains("rejected")) {
+            intent = new Intent(this, LoanRejectionActivity.class);
+            intent.putExtra("loan_rejection_message",messageBody);
+        }
+        else
+            intent = new Intent(this, LoadingActivity.class);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                //.setSmallIcon(R.drawable.profile)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Message From Oye Loans")
                 .setContentText(messageBody)
                 .setAutoCancel(true)

@@ -156,11 +156,20 @@
         </activity>
         <activity
             android:name=".LoanApprovedActivity"
-            android:label="Loan Approved" />
+            android:label="Loan Approved">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
+        </activity>
         <activity
             android:name=".LoanReasonActivity"
             android:label= "Tell us why you need the money?" />
-        <activity android:name=".LoanRejectionActivity" />
+        <activity android:name=".LoanRejectionActivity"
+            android:label="Loan Rejected">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
+        </activity>
 
         <receiver android:name=".Services.OyeLoansIncomingSMSReceiver">
             <intent-filter>
