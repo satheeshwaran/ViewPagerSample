@@ -96,16 +96,13 @@ public interface Jsonconstants {
     String OL_BASE_URL = "https://192.168.56.101/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
-
     String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";
     String OL_EMPLOYMENTINFO_SERVICE_KEY = "employeeinfo/";
-
     String OL_PAYMENTGATEWAY_SERVICE = "paymentgateway/";
     String OL_PUSH_NOTIIFCATION_REGISTRATION_SERVICE = "fcm/store/";
     String OL_OTP_GENERATION_SERVICE = "otp/sendotp/";
     String OL_OTP_VALIDATION_SERVICE = "otp/validateotp/";
     String OL_REFERRAL_CODE_SERVICE = "referral/get/";
-
     String OL_BANKINFO_SERVICE = "bankinfo/";
     String OL_LOANINFO_SERVICE = "loan/loanSchedule/";
     String OL_DUEDATE_GENERATOR_SERVICE = "schedule/process/";
@@ -119,5 +116,17 @@ public interface Jsonconstants {
     String OL_MARK_APPLICATION_ABANDON_SERVICE = "markabandoned/";
     String OL_APPLICATION_TRACKING_SERVICE = "changestate/";
     String OL_UPLOAD_DOCUMENTS_LINK = "uploadimages/";
+
+    //Activity result codes.
+    int OL_DASHBOARD_CODE = 1200;
+    int OL_APPLYLOAN_FIRSTPAGE_CODE = 1201;
+    int OL_APPLYLOAN_SECONDPAGE_CODE = 1202;
+    int OL_APPLYLOAN_THIRDPAGE_CODE = 1203;
+    int OL_APPLYLOAN_UPLOADDOCS_CODE = 1204;
+    int OL_APPLYLOAN_OTPACTIVITY_CODE = 1205;
+    int OL_APPLYLOAN_WHYLOAN_CODE = 1206;
+    int OL_APPLYLOAN_THANKYOU_CODE = 1207;
+    int OL_APPLYLOAN_REGRET_CODE = 1208;
+
 
 }
