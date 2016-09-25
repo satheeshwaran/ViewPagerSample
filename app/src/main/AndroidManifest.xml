@@ -171,6 +171,12 @@
         <activity
             android:name=".ApplicationHistoryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ActivityEcsAgreement" />
+        <activity
+            android:name=".LoanAgreement" />
+
     </application>
 
 </manifest>

@@ -1,9 +1,14 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -23,6 +28,7 @@ public class LoanAgreement extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
+            actionBar.setTitle("Loan Agreement");
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -52,5 +58,38 @@ public class LoanAgreement extends AppCompatActivity {
                 super.onPageFinished(view, url);
             }
         });
+
+        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
+        mailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+                startActivity(intent);
+            }
+        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_loan_agreement, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                onBackPressed();
+                return true;
+            case R.id.menu_proceed:
+                Intent ecsAgreement = new Intent(this,ActivityEcsAgreement.class);
+                startActivity(ecsAgreement);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
