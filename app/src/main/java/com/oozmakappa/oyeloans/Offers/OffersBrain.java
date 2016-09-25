@@ -214,8 +214,8 @@ public class OffersBrain implements ConnectionCallbacks,OnConnectionFailedListen
                     ourContext,
                     mGeofencesAdded ? R.string.geofences_added :
                             R.string.geofences_removed,
-                    Toast.LENGTH_SHORT*/
-            ).show();
+                    Toast.LENGTH_SHORT
+            ).show();*/
 
         } else {
             // Get the status code for the error and log it using a user-friendly message.
