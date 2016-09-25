@@ -52,15 +52,13 @@
             android:textSize="10dp"
             android:fontFamily="sans-serif"
             android:layout_toRightOf="@+id/menuIcon" />
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_notifications_white_48dp"
+            android:src="@drawable/ic_edit"
             android:layout_marginTop="18dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            app:border_color="@android:color/white"
-            app:border_width="2dp"
             android:id="@+id/notificationsIcon"
             />
     </RelativeLayout>

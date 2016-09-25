@@ -42,4 +42,7 @@ public class SharedDataManager {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;
     }
+
+    public Boolean loanApproved = false;
+
 }

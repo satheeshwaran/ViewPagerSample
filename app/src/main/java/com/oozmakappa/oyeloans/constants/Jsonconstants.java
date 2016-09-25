@@ -14,6 +14,7 @@ public interface Jsonconstants {
     String OL_REFERRALCODE_KEY = "referral_code";
     String OL_APPID_KEY = "app_id";
     String OL_APPID_VALUE = "10001";
+    int OL_APP_INT_VALUE = 10001;
 
     // Update application state service constants
     String OL_APPLICATION_STATE_KEY = "new_state";

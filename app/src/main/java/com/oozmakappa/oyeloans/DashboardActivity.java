@@ -53,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,6 +108,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         loanHistoryData = ((LoanApplicationInfo) model).getLoanHistory().toString();
                         appHistoryData = ((LoanApplicationInfo) model).getApplicationHistory();
                         JSONArray loanArray = ((LoanApplicationInfo) model).getLoanHistory();
+                        if (loanArray.length() > 0){
                         for (int i = 0; i < loanArray.length(); i++) {
                             JSONObject loanObject = loanArray.getJSONObject(i);
                             Loan loanObj = new Loan();
@@ -124,13 +126,22 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                         }
                                         setUpDashboard();
                                     } else {
-                                        loanInfoData = "";
+                                        try {
+                                            loanInfoData = "{\"status\": \"success\", \"service_name\": \"loaninfoprovider\",\"request_id\": 1, \"description\": \"Loan Schedule for given loanid\", \"ob\": NA, \"total_amount\":NA}";
+                                            jsonLoan = new JSONObject(loanInfoData);
+                                            setUpDashboard();
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
                                     }
                                     setupListView(jsonLoan);
                                 }
                             });
                             webServiceHelper.getLoanInfoService(loanObj);
                             break;
+                        }
+                        }else{
+                            enableNoLoanView();
                         }
                         FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                     } else {

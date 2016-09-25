@@ -11,6 +11,10 @@ import android.widget.Button;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.Models.PersonalDetailsModel;
+import com.oozmakappa.oyeloans.Models.SuccessModel;
+import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 /**
  * Created by sankarnarayanan on 14/09/16.
@@ -25,6 +29,19 @@ public class ApplicationCompletedActivity extends AppCompatActivity {
         t.setScreenName("Loan application - Application completed screen");
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
+
+        if (SharedDataManager.getInstance().loanApproved == true){
+            WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                @Override
+                public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                    if (model.getStatus().equals("success")) {
+
+                    }
+                }
+            });
+            webServiceHelper.makeDueDateGenerationService(SharedDataManager.getInstance().activeApplication);
+        }
+
     }
 
     @Override
