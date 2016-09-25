@@ -1,6 +1,7 @@
 package com.oozmakappa.oyeloans;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
@@ -41,6 +42,7 @@ import com.oozmakappa.oyeloans.Models.LoanSummaryModel;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenu;
 import com.oozmakappa.oyeloans.ResideMenu.ResideMenuItem;
+import com.oozmakappa.oyeloans.constants.Jsonconstants;
 import com.oozmakappa.oyeloans.fragments.LoanDetailsHeaderFragment;
 import com.oozmakappa.oyeloans.helper.WebServiceCallHelper;
 import com.oozmakappa.oyeloans.utils.SharedDataManager;
@@ -498,9 +500,18 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
     };
 
-    public void goToApplyLoanPage() {
-        Intent goToApplyLoanFirstScreenIntent = new Intent(this, LoanApplicationStepsActivity.class);
-        startActivity(goToApplyLoanFirstScreenIntent);
+    public void goToApplyLoanPage(){
+        Intent goToApplyLoanFirstScreenIntent = new Intent(this,LoanApplicationStepsActivity.class);
+        startActivityForResult(goToApplyLoanFirstScreenIntent, Jsonconstants.OL_DASHBOARD_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Jsonconstants.OL_DASHBOARD_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                //Stay here.
+            }
+        }
     }
 
 
