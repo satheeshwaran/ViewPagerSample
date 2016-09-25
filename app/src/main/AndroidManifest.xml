@@ -171,6 +171,10 @@
         <activity
             android:name=".ApplicationHistoryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ActivityEcsAgreement" />
+
     </application>
 
 </manifest>

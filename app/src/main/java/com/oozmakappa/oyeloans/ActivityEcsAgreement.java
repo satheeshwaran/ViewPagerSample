@@ -2,8 +2,8 @@ package com.oozmakappa.oyeloans;
 
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,18 +12,22 @@ import android.webkit.WebViewClient;
 
 import com.oozmakappa.oyeloans.utils.Utils;
 
-public class LoanAgreement extends AppCompatActivity {
+/**
+ * Created by sankarnarayanan on 25/09/16.
+ */
+public class ActivityEcsAgreement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loan_agreement);
+        setContentView(R.layout.activity_ecs_agreement);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
+            actionBar.setTitle("ECS Bank Mandate");
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -34,13 +38,13 @@ public class LoanAgreement extends AppCompatActivity {
         }
 
         WebView webView = (WebView) findViewById(R.id.loanAgreementWebView);
-        webView.loadUrl("file:///android_asset/LoanAgreement.html");
+        webView.loadUrl("file:///android_asset/ecs.html");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon)
             {
-                Utils.showLoading(LoanAgreement.this,"Loading...");
+                Utils.showLoading(ActivityEcsAgreement.this,"Loading...");
                 // TODO show you progress image
                 super.onPageStarted(view, url, favicon);
             }
