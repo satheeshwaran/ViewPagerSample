@@ -59,8 +59,8 @@ public class LoanReasonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String selectedCategory = adapter.selectedCategory;
                 SharedDataManager.getInstance().activeApplication.loanReason = selectedCategory;
-                Intent appointmentIntent = new Intent(LoanReasonActivity.this,FixAppointmentActivity.class);
-                startActivity(appointmentIntent);
+                Intent loanAgreementIntent = new Intent(LoanReasonActivity.this,LoanAgreement.class);
+                startActivity(loanAgreementIntent);
             }
         });
     }
