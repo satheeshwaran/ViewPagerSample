@@ -53,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,7 +126,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                         }
                                         setUpDashboard();
                                     } else {
-                                        loanInfoData = "";
+                                        try {
+                                            loanInfoData = "{\"status\": \"success\", \"service_name\": \"loaninfoprovider\",\"request_id\": 1, \"description\": \"Loan Schedule for given loanid\", \"ob\": NA, \"total_amount\":NA}";
+                                            jsonLoan = new JSONObject(loanInfoData);
+                                            setUpDashboard();
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
                                     }
                                     setupListView(jsonLoan);
                                 }

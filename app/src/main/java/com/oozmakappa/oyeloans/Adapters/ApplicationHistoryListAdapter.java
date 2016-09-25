@@ -30,6 +30,9 @@ import com.oozmakappa.oyeloans.utils.SharedDataManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -142,6 +145,24 @@ public class ApplicationHistoryListAdapter extends BaseAdapter implements View.O
                     case "Esign complete":
                         Intent thanksScreen = new Intent(context, ApplicationCompletedActivity.class);
                         context.startActivity(thanksScreen);
+                        break;
+                    case "Application Received. Stage 2 UW In Process":
+                        Intent thanksScreenWithoutSchedule = new Intent(context, ApplicationCompletedActivity.class);
+                        context.startActivity(thanksScreenWithoutSchedule);
+                        break;
+                    case "Stage 2 UW Approved":
+                        SharedDataManager.getInstance().loanApproved = true;
+                        SharedDataManager.getInstance().activeApplication.loanDuration = "12";
+                        Date today = new Date();
+                        today.setHours(0);  // Start date
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(today);
+                        c.add(Calendar.DATE, 2);  // number of days to add
+                        String date = sdf.format(c.getTime());
+                        SharedDataManager.getInstance().activeApplication.firstPayDate = date;
+                        Intent thanksScreenApproved = new Intent(context, ApplicationCompletedActivity.class);
+                        context.startActivity(thanksScreenApproved);
                         break;
                     default:
                         break;

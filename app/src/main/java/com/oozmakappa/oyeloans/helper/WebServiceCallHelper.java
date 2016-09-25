@@ -426,11 +426,11 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         try{
             JSONObject requestMap = requestObjectWithDetails("due_date_generator", "2002", "12345678");
 
-            requestMap.put(Jsonconstants.OL_DD_LOAN_DURATION_KEY, applicationObject.loanDuration);
+            requestMap.put(Jsonconstants.OL_DD_LOAN_DURATION_KEY, Integer.parseInt(applicationObject.loanDuration));
             requestMap.put(Jsonconstants.OL_DD_FIRST_PAYDATE_KEY, applicationObject.firstPayDate);
-            requestMap.put(Jsonconstants.OL_DD_LOAN_AMOUNT_KEY, applicationObject.loanAmount);
+            requestMap.put(Jsonconstants.OL_DD_LOAN_AMOUNT_KEY, Float.parseFloat(applicationObject.loanAmount));
             requestMap.put(Jsonconstants.OL_APPID_KEY, Integer.parseInt(applicationObject.applicationID));
-            requestMap.put(Jsonconstants.OL_DD_GENERATE_AGREEMENT_KEY, "false");
+            requestMap.put(Jsonconstants.OL_DD_GENERATE_AGREEMENT_KEY, "true");
 
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_DUEDATE_GENERATOR_SERVICE));
 
