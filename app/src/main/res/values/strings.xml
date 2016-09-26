@@ -116,7 +116,7 @@
     <string name="HowItWorks"><u><b><i>How it works?</i></b></u></string>
     <string name="title_activity_profile_page">"My Profile"</string>
     <string name="dummyAddress">Pacifica Tech Park, 101A, First Floor, 23, Old Mahabalipuram Road, Navallur, Chennai, Tamil Nadu 603103</string>
-    <string name="dummyEmployment">Global Analytics</string>
+    <string name="dummyEmployment">Your employer name</string>
     <string name="dummySocial">https://facebook.com/satheesh4590</string>
     <string name="dummPhoneNumber">9176034562</string>
     <string name="educationTitle">Education</string>

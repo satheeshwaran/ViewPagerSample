@@ -90,7 +90,7 @@ public class FacebookHelperUtils {
 
     public static boolean checkIfValidFBProfile(LoanUser user){
 
-        if (user.totalFriendcount<10 || user.isFBProfileVerified || user.emailID.length()<=0  || user.ageRange < 21)
+        if (user.totalFriendcount<10 || user.isFBProfileVerified || user.emailID.length()<=0  || user.ageRange < 21 || user.DOB.length()<=0 || user.DOB == null)
             return false;
         return true;
     }

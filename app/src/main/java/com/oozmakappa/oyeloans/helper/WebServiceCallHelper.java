@@ -87,7 +87,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         completionHandler = handler;
     }
 
-    public void makeNewApplicationServiceCall(Application applicationObject,String deviceID) {
+    public void makeNewApplicationServiceCall(Application applicationObject, String deviceID) {
         // Construct the request
         try {
             JSONObject requestMap = requestObjectWithDetails("NewApplication", "GAI002", "1285");
@@ -119,10 +119,10 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_NA_AADHAR_KEY, applicationObject.loanUserObject.aadharNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS1_KEY, applicationObject.loanUserObject.doorNumber);
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.street);
-            requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY,Integer.parseInt(applicationObject.loanUserObject.PINCode));
+            requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY, Integer.parseInt(applicationObject.loanUserObject.PINCode));
             requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
-            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY,applicationID);
-            if (applicationObject.loanAmount.length()>0)
+            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationID);
+            if (applicationObject.loanAmount.length() > 0)
                 requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
             else
                 requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, 0);
@@ -174,16 +174,16 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public void makeEmploymentInfoServiceCall(Application applicationObject) {
         //Construct request
         try {
-            JSONObject requestMap = requestObjectWithDetails("AddEmploymentInfo","GAI003","1285");
+            JSONObject requestMap = requestObjectWithDetails("AddEmploymentInfo", "GAI003", "1285");
             requestMap.put(Jsonconstants.OL_EI_APPLICATIONID_KEY, Long.parseLong(applicationObject.applicationID));
             requestMap.putOpt(Jsonconstants.OL_EI_DEGREE_KEY, applicationObject.loanUserObject.highestEducation);
             requestMap.putOpt(Jsonconstants.OL_EI_INSTITUTION_KEY, applicationObject.loanUserObject.highestEducationPlace);
             requestMap.putOpt(Jsonconstants.OL_EI_STATUS_KEY, applicationObject.loanUserObject.workStatus);
             requestMap.putOpt(Jsonconstants.OL_EI_EMPLOYER_KEY, applicationObject.loanUserObject.workPlace);
             requestMap.putOpt(Jsonconstants.OL_EI_PHONE_KEY, applicationObject.loanUserObject.workPhone);
-            requestMap.put(Jsonconstants.OL_EI_INCOME_KEY,Long.parseLong(applicationObject.loanUserObject.monthlyIncome));
+            requestMap.put(Jsonconstants.OL_EI_INCOME_KEY, Long.parseLong(applicationObject.loanUserObject.monthlyIncome));
 
-            initiateVolleyCall(requestMap,Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY));
+            initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_EMPLOYMENTINFO_SERVICE_KEY));
 
         } catch (Exception e) {
             Log.v("json exception", e.getLocalizedMessage());
@@ -214,26 +214,38 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
             JSONObject historyEdu = new JSONObject();
             JSONArray education = new JSONArray();
+
             for (int i = 0; i < userObject.education.length(); i++) {
-                JSONObject currObject = userObject.education.getJSONObject(i);
-                JSONObject constructedObject = new JSONObject();
-                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY, currObject.getJSONObject("school").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
-                constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY, currObject.get("type"));
-                education.put(constructedObject);
+                try {
+
+                    JSONObject currObject = userObject.education.getJSONObject(i);
+                    JSONObject constructedObject = new JSONObject();
+                    constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY, currObject.getJSONObject("school").get("name"));
+                    constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
+                    constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY, currObject.get("type"));
+                    education.put(constructedObject);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    continue;
+                }
             }
             historyEdu.put(Jsonconstants.OL_FB_HISTORY_KEY, education);
             requestMap.putOpt(Jsonconstants.OL_FB_EDUCATION_KEY, historyEdu);
             JSONObject historyWork = new JSONObject();
             JSONArray work = new JSONArray();
             for (int i = 0; i < userObject.employment.length(); i++) {
-                JSONObject currObject = userObject.employment.getJSONObject(i);
-                JSONObject constructedObject = new JSONObject();
-                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY, currObject.getJSONObject("position").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, currObject.getJSONObject("location").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY, currObject.getJSONObject("employer").get("name"));
-                constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
-                work.put(constructedObject);
+                try {
+                    JSONObject currObject = userObject.employment.getJSONObject(i);
+                    JSONObject constructedObject = new JSONObject();
+                    constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY, currObject.getJSONObject("position").get("name"));
+                    constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, currObject.getJSONObject("location").get("name"));
+                    constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY, currObject.getJSONObject("employer").get("name"));
+                    constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
+                    work.put(constructedObject);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    continue;
+                }
             }
             historyWork.put(Jsonconstants.OL_FB_HISTORY_KEY, work);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_KEY, historyWork);
@@ -333,8 +345,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             JSONObject requestMap = requestObjectWithDetails("paymentgateway", "1001", "12345678");
 
             JSONObject customerDetailsMap = new JSONObject();
-            customerDetailsMap.put("loanid",Integer.parseInt(loanObject.getLoanId()));
-            customerDetailsMap.put("amount",Long.parseLong(loanObject.getLoanAmount()));
+            customerDetailsMap.put("loanid", Integer.parseInt(loanObject.getLoanId()));
+            customerDetailsMap.put("amount", Long.parseLong(loanObject.getLoanAmount()));
             UUID uniqueKey = UUID.randomUUID();
             customerDetailsMap.put("transaction_id", "IN1354");
             requestMap.putOpt("customer_details", customerDetailsMap);
@@ -367,7 +379,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
         try {
             JSONObject requestMap = requestObjectWithDetails("OTPGenerator", "2000", "12345678");
-            requestMap.put("mobile_number",Long.parseLong(mobileNumber));
+            requestMap.put("mobile_number", Long.parseLong(mobileNumber));
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_GENERATION_SERVICE));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -379,7 +391,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public void validateOTPService(String otp, String mobileNumber) {
         try {
             JSONObject requestMap = requestObjectWithDetails("OTPValidator", "2001", "12345678");
-            requestMap.put("mobile_number",Long.parseLong(mobileNumber));
+            requestMap.put("mobile_number", Long.parseLong(mobileNumber));
             requestMap.putOpt("otp", otp);
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_VALIDATION_SERVICE));
@@ -390,10 +402,10 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
 
     }
 
-    public void getReferallCodeService(String email){
+    public void getReferallCodeService(String email) {
         try {
             JSONObject requestMap = requestObjectWithDetails("GetReferralCode", "1001", "12345678");
-            requestMap.put("Email",email);
+            requestMap.put("Email", email);
             requestMap.putOpt("app_id", "10001");
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_REFERRAL_CODE_SERVICE));
@@ -404,7 +416,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
     public void makeBankInfoServiceCall(Application applicationObject) {
-        try{
+        try {
             JSONObject requestMap = requestObjectWithDetails("AddBankInfo", "GAI004", "1285");
             BankInfo bankInfoObject = applicationObject.bankInfoObject;
 
@@ -422,8 +434,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
 
-    public void makeDueDateGenerationService(Application applicationObject){
-        try{
+    public void makeDueDateGenerationService(Application applicationObject) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("due_date_generator", "2002", "12345678");
 
             requestMap.put(Jsonconstants.OL_DD_LOAN_DURATION_KEY, Integer.parseInt(applicationObject.loanDuration));
@@ -440,8 +452,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void getPaydatesService(String loanID, String applicationID){
-        try{
+    public void getPaydatesService(String loanID, String applicationID) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("GetPaydates", "1001", "12345678");
 
             requestMap.put(Jsonconstants.OL_LOANID_KEY, loanID);
@@ -455,8 +467,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void getPersonalInfoService(String emailID){
-        try{
+    public void getPersonalInfoService(String emailID) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("getpersonalinfo", "1001", "12345615");
 
             requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
@@ -491,8 +503,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void getEmploymentInfoService(String emailID){
-        try{
+    public void getEmploymentInfoService(String emailID) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("getpersonalinfo", "1001", "12345615");
 
             requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
@@ -530,8 +542,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
 
-    public void getLoanHistory(String emailId){
-        try{
+    public void getLoanHistory(String emailId) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("customerhistory", "1895", "12345678");
             requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailId);
             requestMap.put(Jsonconstants.OL_APPID_KEY, Jsonconstants.OL_APPID_VALUE);
@@ -567,8 +579,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void getLoanInfoService(Loan loanObject){
-        try{
+    public void getLoanInfoService(Loan loanObject) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("loaninfoprovider", "LI001", "1");
 
             requestMap.put(Jsonconstants.OL_LOANID_KEY, loanObject.loanID);
@@ -606,8 +618,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     }
 
 
-
-    public void sendMobileDeviceDataToServer(JSONObject deviceData){
+    public void sendMobileDeviceDataToServer(JSONObject deviceData) {
         try {
 
             JSONObject requestMap = deviceData;
@@ -644,15 +655,15 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             HttpsTrustManager.allowAllSSL();
 
             vHelper.requestString(RequestNameKeys.UPLOAD_PHONE_DATA_KEY, url, requestParams, Request.Method.POST, true);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
 
-    public void getReferralCodeInfoService(String emailID, String applicationID){
-        try{
+    public void getReferralCodeInfoService(String emailID, String applicationID) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("ReferralCodeInfo", "1001", "12345678");
 
             requestMap.put(Jsonconstants.OL_NA_EMAIL_KEY, emailID);
@@ -666,8 +677,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void makeAgreementInfoSaveServiceCall(Application applicationObject){
-        try{
+    public void makeAgreementInfoSaveServiceCall(Application applicationObject) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("agreementdetails", "1001", "1");
 
             requestMap.put(Jsonconstants.OL_APPID_KEY, Integer.parseInt(applicationObject.applicationID));
@@ -683,8 +694,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void makeApplicationAbandonServiceCall(Application applicationObject){
-        try{
+    public void makeApplicationAbandonServiceCall(Application applicationObject) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("MarkAbandoned", "1021", "12345678");
 
             requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
@@ -697,8 +708,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         }
     }
 
-    public void updateApplicationStateService(Application applicationObject){
-        try{
+    public void updateApplicationStateService(Application applicationObject) {
+        try {
             JSONObject requestMap = requestObjectWithDetails("UpdateState", "1020", "12345678");
 
             requestMap.put(Jsonconstants.OL_APPID_KEY, applicationObject.applicationID);
@@ -711,9 +722,6 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             completionHandler.onRequestCompleted(null, e.getLocalizedMessage());
         }
     }
-
-
-
 
 
     private JSONObject requestObjectWithDetails(String serviceName, String serviceID, String requestID) {
@@ -815,29 +823,28 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
                                    String response, String errorMessage) {
         try {
 
-            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY )|| requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY ) || requestName.equals(RequestNameKeys.LOAN_INFO_KEY ) || requestName.equals(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY) || requestName.equals(RequestNameKeys.GET_PROFILE_DATA_KEY) || requestName.equals(RequestNameKeys.GET_EMPLOYMENT_DATA_KEY)))
-            {
+            if (errorMessage == null && response != null && (requestName.equals(RequestNameKeys.FB_REQUEST_KEY) || requestName.equals(RequestNameKeys.VALIDATE_REFERRAL_KEY) || requestName.equals(RequestNameKeys.LOAN_HISTORY_KEY) || requestName.equals(RequestNameKeys.UPLOAD_PHONE_DATA_KEY) || requestName.equals(RequestNameKeys.EMPLOYMENTINFO_REQUEST_KEY) || requestName.equals(RequestNameKeys.LOAN_INFO_KEY) || requestName.equals(RequestNameKeys.NEW_APPLICATION_REQUEST_KEY) || requestName.equals(RequestNameKeys.GET_PROFILE_DATA_KEY) || requestName.equals(RequestNameKeys.GET_EMPLOYMENT_DATA_KEY))) {
                 JSONObject jsonObject = new JSONObject(response);
-                if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)){
+                if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_HISTORY_KEY)) {
                     LoanApplicationInfo sModel;
                     sModel = LoanApplicationInfo.LoanApplicationModelFromJSONObject(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
-                }else if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_INFO_KEY)){
+                } else if (requestName.equalsIgnoreCase(RequestNameKeys.LOAN_INFO_KEY)) {
                     LoanDetailsInfo sModel;
                     sModel = LoanDetailsInfo.LoanDetailsModelFromJSONObject(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
 
-                }else if (requestName.equalsIgnoreCase(RequestNameKeys.GET_PROFILE_DATA_KEY)){
+                } else if (requestName.equalsIgnoreCase(RequestNameKeys.GET_PROFILE_DATA_KEY)) {
                     PersonalDetailsModel sModel;
                     sModel = PersonalDetailsModel.personalDetailsModel(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
 
-                }else if (requestName.equalsIgnoreCase(RequestNameKeys.GET_EMPLOYMENT_DATA_KEY)){
+                } else if (requestName.equalsIgnoreCase(RequestNameKeys.GET_EMPLOYMENT_DATA_KEY)) {
                     EmploymentDetailsModel sModel;
                     sModel = EmploymentDetailsModel.employmentDetailsModel(jsonObject);
                     completionHandler.onRequestCompleted(sModel, null);
 
-                }else {
+                } else {
                     SuccessModel sModel;
                     sModel = SuccessModel.sucessModelFromJSONObject(jsonObject);
                     sModel.response = response;

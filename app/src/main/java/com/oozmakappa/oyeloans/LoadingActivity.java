@@ -60,11 +60,11 @@ public class LoadingActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
-            if(!checkPermission())
+            if (!checkPermission())
                 requestPermission();
             else
                 OffersBrain.getInstance(this);
-        }else
+        } else
             OffersBrain.getInstance(this);
 
 
@@ -123,19 +123,52 @@ public class LoadingActivity extends AppCompatActivity {
                                                 @Override
                                                 public void callCompleted(JSONObject responseObject) {
                                                     SharedDataManager.getInstance().userObject = LoanUser.loanUserFromJSONObject(responseObject);
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoadingActivity.this);
 
-                                                    registerForNotifications();
-                                                    //SharedDataManager.getInstance().userObject.fbUserName = responseObject.getString("name");
-                                                    WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
-                                                        @Override
-                                                        public void onRequestCompleted(SuccessModel model, String errorMessage) {
-                                                            if (model.getStatus().equals("success")) {
-                                                                Utils.removeLoading();
-                                                                goToAccountSummaryPage();
-                                                            }
+                                                    if (!preferences.getBoolean("made_fb_call_" + SharedDataManager.getInstance().userObject.fbUserID, false)) {
+
+                                                        if (!FacebookHelperUtils.checkIfValidFBProfile(SharedDataManager.getInstance().userObject)) {
+                                                            goToProfileEditPage(true);
+                                                            return;
                                                         }
-                                                    });
-                                                    webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
+                                                        registerForNotifications();
+                                                        //SharedDataManager.getInstance().userObject.fbUserName = respo     nseObject.getString("name");
+                                                        WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                                                            @Override
+                                                            public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                                                                if (model.getStatus().equals("success")) {
+                                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoadingActivity.this);
+                                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                                    editor.putBoolean("made_fb_call_" + SharedDataManager.getInstance().userObject.fbUserID, true);
+                                                                    editor.apply();
+                                                                    Utils.removeLoading();
+                                                                    goToAccountSummaryPage();
+                                                                } else {
+                                                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoadingActivity.this);
+                                                                    if (model != null)
+                                                                        alertDialogBuilder.setMessage(model.getDescription());
+                                                                    else
+                                                                        alertDialogBuilder.setMessage("Unknown Error");
+                                                                    alertDialogBuilder.setTitle("Oops!!");
+
+                                                                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            finish();
+                                                                        }
+                                                                    });
+
+                                                                    AlertDialog alertDialog = alertDialogBuilder.create();
+                                                                    alertDialog.show();
+
+                                                                }
+                                                            }
+                                                        });
+                                                        webServiceHelper.makeFacebookServiceCall(SharedDataManager.getInstance().userObject);
+                                                    } else {
+                                                        Utils.removeLoading();
+                                                        goToAccountSummaryPage();
+                                                    }
                                                     //To be reomoved after setting up single box.
                                                     //goToAccountSummaryPage();
                                                 }
@@ -219,11 +252,11 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
 
-    void goToAccountSummaryPage(){
-            Intent accSummaryIntent = new Intent(this,DashboardActivity.class);
-            startActivity(accSummaryIntent);
-            finish();
-        }
+    void goToAccountSummaryPage() {
+        Intent accSummaryIntent = new Intent(this, DashboardActivity.class);
+        startActivity(accSummaryIntent);
+        finish();
+    }
 
     void goToLoginPage() {
         Intent loginIntent = new Intent(this, FBLoginActivty.class);
@@ -238,17 +271,17 @@ public class LoadingActivity extends AppCompatActivity {
 
             String token = preferences.getString(OyeConstants.FCM_REGISTRATION_TOKEN, null);
 
-            if (token != null && token.length() >0) {
+            if (token != null && token.length() > 0) {
                 WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
                     @Override
                     public void onRequestCompleted(SuccessModel model, String errorMessage) {
-                        if (model!=null && model.getStatus().equals("success")) {
-                            Log.i(TAG_RESPONSE,"push notification service completed.");
+                        if (model != null && model.getStatus().equals("success")) {
+                            Log.i(TAG_RESPONSE, "push notification service completed.");
                         }
                     }
                 });
                 webServiceHelper.registerFCMToken(token, SharedDataManager.getInstance().userObject.emailID);
-            }else {
+            } else {
                 FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
             }
         } catch (Exception e) {
@@ -256,9 +289,9 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkPermission(){
+    private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
-        if (result == PackageManager.PERMISSION_GRANTED){
+        if (result == PackageManager.PERMISSION_GRANTED) {
 
             return true;
 
@@ -269,14 +302,14 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
-    private void requestPermission(){
+    private void requestPermission() {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
 
 
         } else {
 
-            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -292,6 +325,15 @@ public class LoadingActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    void goToProfileEditPage(Boolean status) {
+        registerForNotifications();
+        Intent editProfileIntent = new Intent(this, MyProfilePage.class);
+        editProfileIntent.putExtra("AllEdit", true);
+        editProfileIntent.putExtra("ShowInsufficientInformation", status);
+        startActivity(editProfileIntent);
+        finish();
     }
 
 }

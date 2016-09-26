@@ -145,7 +145,11 @@
 
         <service android:name=".Offers.OfferFenceTransitionService" />
 
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.oozmakappa.oyeloans.MyProfilePage" />
+        </activity>
         <activity android:name=".FixAppointmentActivity" />
         <activity
             android:name=".TermsAndConditionsActivity"

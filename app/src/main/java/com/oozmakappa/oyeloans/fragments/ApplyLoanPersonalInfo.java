@@ -59,7 +59,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
     AutoCompleteTextView aadharCardField;
 
     final Calendar myCalendar = Calendar.getInstance();
-
+    Spinner genderSpinner = null;
     String fieldError = "";
 
     // The container Activity must implement this interface so the frag can deliver messages
@@ -181,7 +181,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
     @Override
     public void onStart() {
 
-        Spinner staticSpinner = (Spinner) getActivity().findViewById(R.id.static_spinner);
+         genderSpinner= (Spinner) getActivity().findViewById(R.id.static_spinner);
 
         // Create an ArrayAdapter using the string array and a default spinner
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
@@ -193,7 +193,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Apply the adapter to the spinner
-        staticSpinner.setAdapter(staticAdapter);
+        genderSpinner.setAdapter(staticAdapter);
 
         Button proceedButton = (Button) getActivity().findViewById(R.id.profileProceedButtonPersonal);
         if (proceedButton != null) {
@@ -329,6 +329,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
         user.PINCode = pinCodeField.getText().toString();
         user.aadharNumber = aadharCardField.getText().toString();
         user.PANNumber = panNumberField.getText().toString();
+        user.gender = genderSpinner.toString();
     }
 
     private void makeLoanApplicationCall(){

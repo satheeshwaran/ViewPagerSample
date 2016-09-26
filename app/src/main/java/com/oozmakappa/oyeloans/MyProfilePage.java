@@ -49,6 +49,7 @@ public class MyProfilePage extends AppCompatActivity implements AppBarLayout.OnO
         t.setScreenName("My Profile");
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
+        setUpData();
     }
 
     @Override
@@ -110,7 +111,6 @@ public class MyProfilePage extends AppCompatActivity implements AppBarLayout.OnO
             alertDialog.show();
         }
 
-            setUpData();
 
         //Button editButton = (Button) findViewById(R.id.profil)
     }

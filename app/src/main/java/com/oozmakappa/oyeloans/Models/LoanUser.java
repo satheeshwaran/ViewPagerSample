@@ -70,11 +70,14 @@ public class LoanUser {
             user.fbUserID = object.getString("id");
             user.fbUserName = object.getString("name");
             user.fbProfileLink = object.getString("link");
-            user.emailID = object.getString("email");
+            if (object.has("email"))
+                user.emailID = object.getString("email");
             user.fbProfilePicURL = object.getJSONObject("picture").getJSONObject("data").getString("url");
             user.ageRange = object.getJSONObject("age_range").getInt("min");
             user.totalFriendcount =object.getJSONObject("friends").getJSONObject("summary").getDouble("total_count");
-            user.DOB = object.getString("birthday");
+
+            if (object.has("birthday"))
+                user.DOB = object.getString("birthday");
 
             user.gender = object.getString("gender");
             user.relationshipStatus = object.getString("relationship_status");
@@ -109,15 +112,19 @@ public class LoanUser {
     private static int calcaulteTotalWorkExp(JSONArray workExpArray){
         try {
             String startDate = ((JSONObject)workExpArray.get(workExpArray.length()-1)).getString("start_date");
+            if (startDate.equals("0000-00"))
+                return 0;
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date convertedDate = dateFormat.parse(startDate);
             return getDiffYears(convertedDate,new Date());
         } catch (JSONException e) {
             e.printStackTrace();
+            return 0;
         } catch (ParseException e) {
             e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
     private static int getDiffYears(Date first, Date last) {
