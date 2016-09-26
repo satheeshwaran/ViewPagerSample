@@ -191,6 +191,10 @@
             android:name=".ActivityEcsAgreement" />
         <activity
             android:name=".LoanAgreement" />
+        <activity
+            android:name=".ActivityHelperClass"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
     </application>
 

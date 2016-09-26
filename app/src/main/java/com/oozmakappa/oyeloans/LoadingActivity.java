@@ -220,7 +220,7 @@ public class LoadingActivity extends AppCompatActivity {
 
 
     void goToAccountSummaryPage(){
-            Intent accSummaryIntent = new Intent(this,DashboardActivity.class);
+            Intent accSummaryIntent = new Intent(this,ActivityHelperClass.class);
             startActivity(accSummaryIntent);
             finish();
         }
