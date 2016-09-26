@@ -60,7 +60,13 @@ public class LoadingActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
-        }
+            if(!checkPermission())
+                requestPermission();
+            else
+                OffersBrain.getInstance(this);
+        }else
+            OffersBrain.getInstance(this);
+
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -91,10 +97,6 @@ public class LoadingActivity extends AppCompatActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
 
-        if(!checkPermission())
-            requestPermission();
-        else
-            OffersBrain.getInstance(this);
     }
 
     void onFacebookLogin() {

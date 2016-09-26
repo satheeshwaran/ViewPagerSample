@@ -88,10 +88,14 @@ public class FBLoginActivty extends AppCompatActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
 
-        if(!checkPermission())
-            requestPermission();
-        else
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if(!checkPermission())
+                requestPermission();
+            else
+                OffersBrain.getInstance(this);
+        }else
             OffersBrain.getInstance(this);
+
     }
 
     void onFacebookLogin(){
