@@ -252,11 +252,11 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
 
-    void goToAccountSummaryPage() {
-        Intent accSummaryIntent = new Intent(this, DashboardActivity.class);
-        startActivity(accSummaryIntent);
-        finish();
-    }
+    void goToAccountSummaryPage(){
+            Intent accSummaryIntent = new Intent(this,ActivityHelperClass.class);
+            startActivity(accSummaryIntent);
+            finish();
+        }
 
     void goToLoginPage() {
         Intent loginIntent = new Intent(this, FBLoginActivty.class);
