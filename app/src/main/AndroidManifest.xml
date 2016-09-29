@@ -26,7 +26,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:largeHeap="true">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -37,10 +38,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@style/FullyTranslucent"
-            tools:replace="android:theme" />
+            tools:replace="android:theme"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -52,7 +55,8 @@
         </activity>
         <activity
             android:name=".LoadingActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,32 +65,39 @@
         </activity>
         <activity
             android:name=".FBLoginActivty"
-            android:theme="@style/AppTheme.NoActionBarLogin" />
+            android:theme="@style/AppTheme.NoActionBarLogin"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AccountSummaryActivity"
             android:label="@string/title_activity_account_summary"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MyProfilePage"
             android:label="@string/title_activity_my_profile_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ApplyLoanFirstActivity"
             android:label="@string/apply_loan_first_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoanApplicationStepsActivity"
             android:label="@string/apply_loan_first_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MakePayment"
             android:label="@string/MakeAPayment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oozmakappa.oyeloans.DashboardActivity" />
+                android:value="com.oozmakappa.oyeloans.DashboardActivity"
+                android:screenOrientation="portrait" />
         </activity>
         <activity android:name=".ChoosePaymentOptionActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.MakePayment" />
@@ -99,29 +110,35 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.ChoosePaymentOptionActivity" />
         </activity>
-        <activity android:name=".ReferFriendActivity">
+        <activity android:name=".ReferFriendActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
-        <activity android:name=".PaymentSucceededActivity">
+        <activity android:name=".PaymentSucceededActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
-        <activity android:name=".PaymentFailedActivity">
+        <activity android:name=".PaymentFailedActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
         <activity
             android:name=".ApplyLoanSecondActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ApplyLoanThirdActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".ApplicationCompletedActivity">
+            android:name=".ApplicationCompletedActivity"
+            android:screenOrientation="portrait" >
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -130,7 +147,8 @@
         </activity>
         <activity
             android:name=".DashboardActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <service android:name=".Services.OyeLoansFCMNotificationMessagingService">
             <intent-filter>
@@ -145,31 +163,38 @@
 
         <service android:name=".Offers.OfferFenceTransitionService" />
 
-        <activity android:name=".EditProfileActivity">
+        <activity android:name=".EditProfileActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.MyProfilePage" />
         </activity>
-        <activity android:name=".FixAppointmentActivity" />
+        <activity android:name=".FixAppointmentActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".TermsAndConditionsActivity"
-            android:label="Terms And Conditions">
+            android:label="Terms And Conditions"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
         <activity
             android:name=".LoanApprovedActivity"
-            android:label="Loan Approved">
-            <meta-data
+            android:label="Loan Approved"
+            android:screenOrientation="portrait" >
+        <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
         <activity
             android:name=".LoanReasonActivity"
-            android:label= "Tell us why you need the money?" />
+            android:label= "Tell us why you need the money?"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".LoanRejectionActivity"
-            android:label="Loan Rejected">
+            android:label="Loan Rejected"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
@@ -182,26 +207,33 @@
         </receiver>
 
         <activity android:name=".FAQActivity"
-            android:label="Oye Loans FAQ">
+            android:label="Oye Loans FAQ"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.DashboardActivity" />
         </activity>
         <activity
             android:name=".ApplicationHistoryActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ActivityEcsAgreement" />
+            android:name=".ActivityEcsAgreement"
+            android:screenOrientation="portrait"
+            />
         <activity
-            android:name=".LoanAgreement" />
+            android:name=".LoanAgreement"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ActivityHelperClass"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".HowitWorks.HowItWorksActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.oozmakappa.oyeloans.FBLoginActivty" />
