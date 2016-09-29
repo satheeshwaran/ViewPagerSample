@@ -1,7 +1,9 @@
 package com.oozmakappa.oyeloans;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -58,9 +60,23 @@ public class LoanReasonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String selectedCategory = adapter.selectedCategory;
-                SharedDataManager.getInstance().activeApplication.loanReason = selectedCategory;
-                Intent loanAgreementIntent = new Intent(LoanReasonActivity.this,LoanAgreement.class);
-                startActivity(loanAgreementIntent);
+                if (selectedCategory!=null && selectedCategory.length()>0) {
+                    SharedDataManager.getInstance().activeApplication.loanReason = selectedCategory;
+                    Intent loanAgreementIntent = new Intent(LoanReasonActivity.this, LoanAgreement.class);
+                    startActivity(loanAgreementIntent);
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(LoanReasonActivity.this);
+                    alertDialogBuilder.setTitle("Error!");
+                    alertDialogBuilder.setMessage("Please choose a Reason");
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         });
     }

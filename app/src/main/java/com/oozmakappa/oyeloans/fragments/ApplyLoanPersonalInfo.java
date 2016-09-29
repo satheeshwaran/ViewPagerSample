@@ -329,7 +329,7 @@ public class ApplyLoanPersonalInfo extends Fragment {
         user.PINCode = pinCodeField.getText().toString();
         user.aadharNumber = aadharCardField.getText().toString();
         user.PANNumber = panNumberField.getText().toString();
-        user.gender = genderSpinner.toString();
+        user.gender = genderSpinner.getSelectedItem().toString().toLowerCase();
     }
 
     private void makeLoanApplicationCall(){

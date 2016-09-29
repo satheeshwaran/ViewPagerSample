@@ -113,12 +113,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="@string/book_appointment"
+                android:hint="@string/book_appointment"
                 android:textAllCaps="false"
                 android:background="@drawable/rounded_button_shape"
                 android:textColor="@color/WhiteColor"
                 android:layout_marginTop="20dp"
-                />
+                android:textColorHint="@color/WhiteColor" />
 
         </LinearLayout>
     </LinearLayout>

@@ -33,6 +33,8 @@ import java.util.Locale;
 public class FixAppointmentActivity extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
+     EditText timeField;
+     EditText appointmentField;
 
     @Override
     public void onStart() {
@@ -47,6 +49,8 @@ public class FixAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fix_appointment);
+        timeField = (EditText) findViewById(R.id.appointmentTimeField);
+        appointmentField = (EditText) findViewById(R.id.appointmentDateTextField);
         setupDatePickerForAppointmentDate();
         setupDatePickerForAppointmentTime();
 
@@ -74,46 +78,58 @@ public class FixAppointmentActivity extends AppCompatActivity {
         bookAppointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Integrate web service here...
-                Utils.showLoading(FixAppointmentActivity.this,"Booking your appointment...");
 
-                WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
-                    @Override
-                    public void onRequestCompleted(SuccessModel model, String errorMessage) {
-                        com.oozmakappa.oyeloans.utils.Utils.removeLoading();
-                        if (errorMessage == null && model != null && model.getStatus().equals("success")) {
-                            Intent thanksScreen = new Intent(FixAppointmentActivity.this, ApplicationCompletedActivity.class);
-                            startActivity(thanksScreen);
-                            FixAppointmentActivity.this.finish();
+                if (timeField.getText().length() >0 && appointmentField.getText().length()>0) {
+                    // TODO: Integrate web service here...
+                    Utils.showLoading(FixAppointmentActivity.this, "Booking your appointment...");
 
-                        }else{
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FixAppointmentActivity.this);
-                            alertDialogBuilder.setTitle("Error!");
-                            if (model!=null)
-                                alertDialogBuilder.setMessage(model.getDescription());
-                            else
-                                alertDialogBuilder.setMessage("Unknown error");
-                            alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
+                    WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
+                        @Override
+                        public void onRequestCompleted(SuccessModel model, String errorMessage) {
+                            com.oozmakappa.oyeloans.utils.Utils.removeLoading();
+                            if (errorMessage == null && model != null && model.getStatus().equals("success")) {
+                                Intent thanksScreen = new Intent(FixAppointmentActivity.this, ApplicationCompletedActivity.class);
+                                startActivity(thanksScreen);
+                                FixAppointmentActivity.this.finish();
 
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-                            alertDialog.show();
+                            } else {
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FixAppointmentActivity.this);
+                                alertDialogBuilder.setTitle("Error!");
+                                if (model != null)
+                                    alertDialogBuilder.setMessage(model.getDescription());
+                                else
+                                    alertDialogBuilder.setMessage("Unknown error");
+                                alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                alertDialog.show();
+                            }
                         }
-                    }
-                });
-                webServiceHelper.makeAgreementInfoSaveServiceCall(SharedDataManager.getInstance().activeApplication);
+                    });
+                    webServiceHelper.makeAgreementInfoSaveServiceCall(SharedDataManager.getInstance().activeApplication);
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FixAppointmentActivity.this);
+                    alertDialogBuilder.setTitle("Error!");
+                    alertDialogBuilder.setMessage("Choose a valid date and time");
+                    alertDialogBuilder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
 
-
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         });
     }
 
     void setupDatePickerForAppointmentDate() {
 
-        final EditText appointmentField = (EditText) findViewById(R.id.appointmentDateTextField);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -149,7 +165,6 @@ public class FixAppointmentActivity extends AppCompatActivity {
 
     void setupDatePickerForAppointmentTime() {
 
-        final EditText timeField = (EditText) findViewById(R.id.appointmentTimeField);
 
         timeField.setOnClickListener(new View.OnClickListener() {
 

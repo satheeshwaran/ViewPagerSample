@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="120dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageButton
@@ -23,7 +23,7 @@
         android:id="@+id/categoryValueLabel"
         android:textAlignment="center"
         android:text="Home Renovation"
-        android:textSize="14dp"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -32,5 +32,6 @@
         android:id="@+id/selectedIcon"
         android:src="@drawable/selected_tick"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:visibility="invisible"/>
 </RelativeLayout>
