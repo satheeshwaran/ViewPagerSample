@@ -158,7 +158,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
         webServiceHelper.getLoanHistory(SharedDataManager.getInstance().userObject.emailID);
-        Utils.showLoading(this, "Fetching your loan Details");
+        Utils.showLoading(this, "Fetching your loan details...");
     }
 
     private void calculateLoanProgress(JSONObject loanSchedule) {
@@ -424,7 +424,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
     public void ShowDialog() {
-        final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
+        /*final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
         final RatingBar rating = new RatingBar(this);
         rating.setMax(4);
         rating.setNumStars(0);
@@ -444,7 +444,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             }
         });
         popDialog.create();
-        popDialog.show();
+        popDialog.show();*/
+
+        final String appPackageName = "com.facebook.katana"; // getPackageName() to open oye loans
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        }
+        catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+
     }
 
 

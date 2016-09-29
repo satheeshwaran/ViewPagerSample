@@ -212,10 +212,10 @@ public class HowItWorksActivity extends AppCompatActivity {
             View object2 = page.findViewById(R.id.a001);
  
             View object3 = page.findViewById(R.id.a002);
-            View object4 = page.findViewById(R.id.a003);
+            //View object4 = page.findViewById(R.id.a003);
             View object5 = page.findViewById(R.id.a004);
             View object6 = page.findViewById(R.id.a005);
-            View object7 = page.findViewById(R.id.a006);
+            //View object7 = page.findViewById(R.id.a006);
             //View object8 = page.findViewById(R.id.a008);
             //View object9 = page.findViewById(R.id.a010);
             View object10 = page.findViewById(R.id.a011);
@@ -257,18 +257,18 @@ public class HowItWorksActivity extends AppCompatActivity {
                     ViewHelper.setTranslationX(object2,pageWidth * position);
                 }
                 
-                if(object4 != null){
+                /*if(object4 != null){
                     ViewHelper.setTranslationX(object4,pageWidth/2 * position);
-                }
+                }*/
                 if(object5 != null){
                     ViewHelper.setTranslationX(object5,pageWidth/2 * position);
                 }
                 if(object6 != null){
                     ViewHelper.setTranslationX(object6,pageWidth/2 * position);
                 }
-                if(object7 != null){
+                /*if(object7 != null){
                     ViewHelper.setTranslationX(object7,pageWidth/2 * position);
-                }
+                }*/
 
                 /*if(object8 != null){
                     ViewHelper.setTranslationX(object8,(float)(pageWidth/1.5 * position));
