@@ -34,7 +34,7 @@ public class ActivityHelperClass extends AppCompatActivity {
         t.send(new HitBuilders.ScreenViewBuilder().build());
         t.enableAutoActivityTracking(true);
         Button button = (Button) findViewById(R.id.helpProceedBtn);
-        button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

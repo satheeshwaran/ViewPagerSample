@@ -483,6 +483,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         if (model != null && model.getStatus().equals("success")) {
                             Utils.removeLoading();
                             loanInfoData = ((LoanDetailsInfo) model).getResponse().toString();
+                            jsonLoan = ((LoanDetailsInfo) model).getResponse();
                             JSONObject loanDetails = ((LoanDetailsInfo) model).getResponse();
                             calculateLoanProgress(loanDetails);
                             try {
