@@ -30,8 +30,10 @@ import com.oozmakappa.oyeloans.DataExtraction.AppController;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanEmploymentInfo;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanFirstFragment;
 import com.oozmakappa.oyeloans.fragments.ApplyLoanPersonalInfo;
+import com.oozmakappa.oyeloans.utils.SharedDataManager;
 
 import java.util.HashMap;
+import java.util.Random;
 
 
 /**
@@ -122,6 +124,9 @@ public class ApplyLoanFirstActivity extends AppCompatActivity implements ApplyLo
             }
         });
 
+        Random ran = new Random();
+        int applicationID = ran.nextInt(1000);
+        SharedDataManager.getInstance().activeApplication.applicationID = String.valueOf(applicationID);
 
     }
 

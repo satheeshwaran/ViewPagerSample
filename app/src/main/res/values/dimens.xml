@@ -12,4 +12,14 @@
     <dimen name="sidemenu_image_width">90dp</dimen>
     <dimen name="image_final_width">32dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
+
+    <dimen name="welcome_images_size">300.0dip</dimen>
+    <dimen name="welcome_images_margin_top">0.0dip</dimen>
+    <dimen name="welcome_heading_margin_bottom">12.0dip</dimen>
+    <dimen name="welcome_text_margin">20.0dip</dimen>
+    <dimen name="welcome_heading">24.0sp</dimen>
+    <dimen name="welcome_text_margin_bottom">12.0dip</dimen>
+    <dimen name="welcome_content_min_height">96.0dip</dimen>
+    <dimen name="welcome_content">16.0sp</dimen>
+
 </resources>

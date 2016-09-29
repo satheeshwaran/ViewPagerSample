@@ -92,9 +92,6 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         try {
             JSONObject requestMap = requestObjectWithDetails("NewApplication", "GAI002", "1285");
 
-            Random ran = new Random();
-            int applicationID = ran.nextInt(1000);
-            SharedDataManager.getInstance().activeApplication.applicationID = String.valueOf(applicationID);
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
             Calendar c = Calendar.getInstance(); // starts with today's date and time
@@ -121,7 +118,7 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_NA_ADDRESS2_KEY, applicationObject.loanUserObject.street);
             requestMap.put(Jsonconstants.OL_NA_PINCODE_KEY, Integer.parseInt(applicationObject.loanUserObject.PINCode));
             requestMap.putOpt(Jsonconstants.OL_NA_CITY_KEY, applicationObject.loanUserObject.city);
-            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY, applicationID);
+            requestMap.put(Jsonconstants.OL_NA_APPLICATIONID_KEY, Integer.parseInt(applicationObject.applicationID));
             if (applicationObject.loanAmount.length() > 0)
                 requestMap.put(Jsonconstants.OL_NA_LOAN_AMOUNT_KEY, Integer.parseInt(applicationObject.loanAmount));
             else

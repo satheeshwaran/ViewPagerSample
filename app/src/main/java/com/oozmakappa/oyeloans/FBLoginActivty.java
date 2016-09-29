@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.oozmakappa.oyeloans.DataExtraction.AppController;
+import com.oozmakappa.oyeloans.HowitWorks.HowItWorksActivity;
 import com.oozmakappa.oyeloans.Models.LoanUser;
 import com.oozmakappa.oyeloans.Models.SuccessModel;
 import com.oozmakappa.oyeloans.Offers.OffersBrain;
@@ -82,6 +84,13 @@ public class FBLoginActivty extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.HowItWorks);
         button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FBLoginActivty.this,HowItWorksActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
 
         Tracker t = ((AppController) this.getApplication()).getDefaultTracker();
         t.setScreenName("Login screen");

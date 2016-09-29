@@ -94,7 +94,7 @@ public interface Jsonconstants {
     String OL_DEVICE_ID_KEY = "device_id";
 
     //URL Constants
-    String OL_BASE_URL = "https://192.168.56.101/";
+    String OL_BASE_URL = "https://52.32.96.144/";
     String OL_FBSERVICE_KEY = "fb/fetch/";
     String OL_VALIDATEREFERRAL_KEY = "/referral/use/";
     String OL_NEWAPPLICATION_SERVICE_KEY = "newapplication/";

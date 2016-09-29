@@ -18,6 +18,7 @@
 
     <color name="fifty_percent_transparency_primary">#8003A9F4</color>
     <color name="fifty_percent_transparency_darker_primary_dark">#80028bca</color>
+    <color name="text_selected">#888</color>
 
     <color name="red_50">#fde0dc</color>
     <color name="red_100">#f9bdbb</color>
