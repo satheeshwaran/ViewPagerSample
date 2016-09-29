@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.oozmakappa.oyeloans.utils.Utils;
@@ -27,14 +28,14 @@ public class ActivityEcsAgreement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecs_agreement);
 
-        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
-        mailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
-                startActivity(intent);
-            }
-        });
+//        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
+//        mailButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
+//                startActivity(intent);
+//            }
+//        });
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -50,6 +51,15 @@ public class ActivityEcsAgreement extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
         }
+
+        ImageView proceed = (ImageView)findViewById(R.id.proceedLoanAgreement);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent ecsAgreement = new Intent(ActivityEcsAgreement.this,FixAppointmentActivity.class);
+                startActivity(ecsAgreement);
+            }
+        });
+
 
         WebView webView = (WebView) findViewById(R.id.loanAgreementWebView);
         webView.loadUrl("file:///android_asset/ecs.html");
@@ -79,10 +89,10 @@ public class ActivityEcsAgreement extends AppCompatActivity {
                 // app icon in action bar clicked; go home
                 onBackPressed();
                 return true;
-            case R.id.menu_proceed:
-                Intent appointmentIntent = new Intent(this,FixAppointmentActivity.class);
-                startActivity(appointmentIntent);
-                return true;
+//            case R.id.menu_proceed:
+//                Intent appointmentIntent = new Intent(this,FixAppointmentActivity.class);
+//                startActivity(appointmentIntent);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

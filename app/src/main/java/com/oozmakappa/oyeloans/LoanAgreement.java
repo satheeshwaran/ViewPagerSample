@@ -2,6 +2,7 @@ package com.oozmakappa.oyeloans;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import com.oozmakappa.oyeloans.utils.Utils;
 
@@ -40,6 +42,14 @@ public class LoanAgreement extends AppCompatActivity {
 
         WebView webView = (WebView) findViewById(R.id.loanAgreementWebView);
         webView.loadUrl("file:///android_asset/LoanAgreement.html");
+
+        ImageView proceed = (ImageView)findViewById(R.id.proceedLoanAgreement);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent ecsAgreement = new Intent(LoanAgreement.this,ActivityEcsAgreement.class);
+                startActivity(ecsAgreement);
+            }
+        });
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -76,10 +86,10 @@ public class LoanAgreement extends AppCompatActivity {
                 // app icon in action bar clicked; go home
                 onBackPressed();
                 return true;
-            case R.id.menu_proceed:
-                Intent ecsAgreement = new Intent(this,ActivityEcsAgreement.class);
-                startActivity(ecsAgreement);
-                return true;
+//            case R.id.menu_proceed:
+//                Intent ecsAgreement = new Intent(this,ActivityEcsAgreement.class);
+//                startActivity(ecsAgreement);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
