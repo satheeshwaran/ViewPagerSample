@@ -59,14 +59,7 @@ public class LoanAgreement extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton mailButton = (FloatingActionButton)findViewById(R.id.fabEmailBtn);
-        mailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.email");
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
