@@ -104,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/expandableListView"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/parentView"
                 android:layout_margin="10dp"
                 android:background="@drawable/shadow_drawable"
                 android:dividerHeight="0.5dp"/>

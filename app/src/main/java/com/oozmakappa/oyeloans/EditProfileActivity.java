@@ -248,7 +248,7 @@ public class EditProfileActivity extends AppCompatActivity {
             user.highestEducationYear = passoutYearField.getText().toString();
             user.workPlace = employerField.getText().toString();
             user.workStartDate = workStartDateField.getText().toString();
-            user.highestEducationYear = designationField.getText().toString();
+            user.workTitle = designationField.getText().toString();
             user.totalWorkExperience = Integer.parseInt(totalWorkExpField.getText().toString());
             if (emailIDField.getVisibility() != GONE) {
                 user.emailID = emailIDField.getText().toString();
@@ -259,7 +259,7 @@ public class EditProfileActivity extends AppCompatActivity {
             WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
                 @Override
                 public void onRequestCompleted(SuccessModel model, String errorMessage){
-                    if (model.getStatus().equals("success")) {
+                    if (model!=null && model.getStatus().equals("success")) {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditProfileActivity.this);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putBoolean("made_fb_call_" + SharedDataManager.getInstance().userObject.fbUserID, true);

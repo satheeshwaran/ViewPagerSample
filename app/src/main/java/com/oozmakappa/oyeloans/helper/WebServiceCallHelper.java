@@ -200,52 +200,66 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
             requestMap.putOpt(Jsonconstants.OL_FB_RELSTATUS_KEY, userObject.relationshipStatus);
             requestMap.putOpt(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, userObject.city);
 
-            JSONArray friendList = new JSONArray();
-            for (int i = 0; i < userObject.friendList.length(); i++) {
-                JSONObject currObject = userObject.friendList.getJSONObject(i);
-                friendList.put(currObject.get("name"));
-            }
+            if (userObject.friendList != null) {
 
+                JSONArray friendList = new JSONArray();
 
-            requestMap.putOpt(Jsonconstants.OL_FB_FRIENDLIST_KEY, friendList);
-
-            JSONObject historyEdu = new JSONObject();
-            JSONArray education = new JSONArray();
-
-            for (int i = 0; i < userObject.education.length(); i++) {
-                try {
-
-                    JSONObject currObject = userObject.education.getJSONObject(i);
-                    JSONObject constructedObject = new JSONObject();
-                    constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY, currObject.getJSONObject("school").get("name"));
-                    constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
-                    constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY, currObject.get("type"));
-                    education.put(constructedObject);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    continue;
+                for (int i = 0; i < userObject.friendList.length(); i++) {
+                    JSONObject currObject = userObject.friendList.getJSONObject(i);
+                    friendList.put(currObject.get("name"));
                 }
+
+
+                requestMap.putOpt(Jsonconstants.OL_FB_FRIENDLIST_KEY, friendList);
             }
-            historyEdu.put(Jsonconstants.OL_FB_HISTORY_KEY, education);
-            requestMap.putOpt(Jsonconstants.OL_FB_EDUCATION_KEY, historyEdu);
-            JSONObject historyWork = new JSONObject();
-            JSONArray work = new JSONArray();
-            for (int i = 0; i < userObject.employment.length(); i++) {
-                try {
-                    JSONObject currObject = userObject.employment.getJSONObject(i);
-                    JSONObject constructedObject = new JSONObject();
-                    constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY, currObject.getJSONObject("position").get("name"));
-                    constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, currObject.getJSONObject("location").get("name"));
-                    constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY, currObject.getJSONObject("employer").get("name"));
-                    constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
-                    work.put(constructedObject);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    continue;
+
+
+            if(userObject.education != null) {
+
+                JSONObject historyEdu = new JSONObject();
+                JSONArray education = new JSONArray();
+
+                for (int i = 0; i < userObject.education.length(); i++) {
+                    try {
+
+                        JSONObject currObject = userObject.education.getJSONObject(i);
+                        JSONObject constructedObject = new JSONObject();
+                        constructedObject.put(Jsonconstants.OL_FB_EDUCATION_SCHOOL_KEY, currObject.getJSONObject("school").get("name"));
+                        constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
+                        constructedObject.put(Jsonconstants.OL_FB_EDUCATION_TYPE_KEY, currObject.get("type"));
+                        education.put(constructedObject);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        continue;
+                    }
                 }
+                historyEdu.put(Jsonconstants.OL_FB_HISTORY_KEY, education);
+                requestMap.putOpt(Jsonconstants.OL_FB_EDUCATION_KEY, historyEdu);
             }
-            historyWork.put(Jsonconstants.OL_FB_HISTORY_KEY, work);
-            requestMap.putOpt(Jsonconstants.OL_FB_WORK_KEY, historyWork);
+
+            if(userObject.employment != null) {
+
+                JSONObject historyWork = new JSONObject();
+                JSONArray work = new JSONArray();
+
+                for (int i = 0; i < userObject.employment.length(); i++) {
+                    try {
+                        JSONObject currObject = userObject.employment.getJSONObject(i);
+                        JSONObject constructedObject = new JSONObject();
+                        constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_POSITION_KEY, currObject.getJSONObject("position").get("name"));
+                        constructedObject.put(Jsonconstants.OL_FB_WORK_HISTORY_LOCATION_KEY, currObject.getJSONObject("location").get("name"));
+                        constructedObject.put(Jsonconstants.OL_FB_WORK_EMPLOYER_ID_KEY, currObject.getJSONObject("employer").get("name"));
+                        constructedObject.put(Jsonconstants.OL_FB_WORK_ID_KEY, currObject.get("id"));
+                        work.put(constructedObject);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        continue;
+                    }
+                }
+                historyWork.put(Jsonconstants.OL_FB_HISTORY_KEY, work);
+                requestMap.putOpt(Jsonconstants.OL_FB_WORK_KEY, historyWork);
+            }
+
             JSONObject authObject = new JSONObject();
             authObject.putOpt(Jsonconstants.OL_USERNAME_KEY, "intest");
             authObject.putOpt(Jsonconstants.OL_PASSWORD_KEY, "intest!23");
@@ -388,8 +402,9 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
     public void validateOTPService(String otp, String mobileNumber) {
         try {
             JSONObject requestMap = requestObjectWithDetails("OTPValidator", "2001", "12345678");
-            requestMap.put("mobile_number", Long.parseLong(mobileNumber));
+
             requestMap.putOpt("otp", otp);
+            requestMap.putOpt("mobile_number",mobileNumber);
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_VALIDATION_SERVICE));
         } catch (Exception e) {

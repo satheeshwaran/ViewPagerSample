@@ -15,5 +15,7 @@ public class OyeConstants {
     //public static String smsOTPIncomingMessageSenderNumber = "+919176034562";
     public static String smsOTPIncomingMessageSenderNumber1 = "VK-KAPMSG";
     public static String smsOTPIncomingMessageSenderNumber2 = "VM-KAPMSG";
+    public static String smsOTPIncomingMessageSenderNumber3 = "KAPMSG";
+
     public static String FCM_REGISTRATION_TOKEN = "fcm_registration_id";
 }

@@ -79,29 +79,37 @@ public class LoanUser {
             if (object.has("birthday"))
                 user.DOB = object.getString("birthday");
 
-            user.gender = object.getString("gender");
-            user.relationshipStatus = object.getString("relationship_status");
+            if (object.has("gender"))
+                user.gender = object.getString("gender");
 
-            if (object.getJSONArray("work") != null) {
+            if (object.has("relationship_status"))
+                user.relationshipStatus = object.getString("relationship_status");
+
+            if (object.has("work") && object.getJSONArray("work") != null) {
+                user.employment = object.getJSONArray("work");
                 JSONObject workArray = (JSONObject) object.getJSONArray("work").get(0);
                 user.workPlace = workArray.getJSONObject("employer").getString("name");
                 user.workTitle = workArray.getJSONObject("position").getString("name");
                 user.totalWorkExperience = calcaulteTotalWorkExp(object.getJSONArray("work"));
             }
 
-            user.employment = object.getJSONArray("work");
-            if (object.getJSONObject("friends") != null){
+
+            if (object.has("friends") && object.getJSONObject("friends") != null){
                 user.friendList = object.getJSONObject("friends").getJSONArray("data");
             }
-            user.education = object.getJSONArray("education");
-            user.city = object.getJSONObject("location").getString("name");
-            ArrayList<String> eductaionList = calculateHighestQualification(object.getJSONArray("education"));
 
-            if(!eductaionList.isEmpty()) {
-                user.highestEducation = eductaionList.get(0);
-                user.highestEducationYear= eductaionList.get(1);
-                user.highestEducationPlace = eductaionList.get(2);
+            if (object.has("education") && object.getJSONObject("education") != null) {
+                user.education = object.getJSONArray("education");
+                ArrayList<String> eductaionList = calculateHighestQualification(object.getJSONArray("education"));
+                if(!eductaionList.isEmpty()) {
+                    user.highestEducation = eductaionList.get(0);
+                    user.highestEducationYear= eductaionList.get(1);
+                    user.highestEducationPlace = eductaionList.get(2);
+                }
             }
+            if (object.has("location") && object.getJSONObject("location") != null)
+                user.city = object.getJSONObject("location").getString("name");
+
 
         } catch (JSONException e) {
             e.printStackTrace();

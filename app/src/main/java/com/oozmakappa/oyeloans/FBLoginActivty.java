@@ -134,7 +134,7 @@ public class FBLoginActivty extends AppCompatActivity {
                                                     WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener(){
                                                         @Override
                                                         public void onRequestCompleted(SuccessModel model, String errorMessage){
-                                                            if (model.getStatus().equals("success")) {
+                                                            if (model!=null && model.getStatus().equals("success")) {
                                                                 FirebaseMessaging.getInstance().subscribeToTopic("loan_info");
                                                                 Utils.removeLoading();
                                                                 goToProfileEditPage(!FacebookHelperUtils.checkIfValidFBProfile(SharedDataManager.getInstance().userObject));
@@ -202,7 +202,7 @@ public class FBLoginActivty extends AppCompatActivity {
                 WebServiceCallHelper webServiceHelper = new WebServiceCallHelper(new WebServiceCallHelper.OnWebServiceRequestCompletedListener() {
                     @Override
                     public void onRequestCompleted(SuccessModel model, String errorMessage) {
-                        if (model.getStatus().equals("success")) {
+                        if (model != null && model.getStatus().equals("success")) {
                             Log.i(TAG_RESPONSE,"push notification service completed.");
                         }
                     }
