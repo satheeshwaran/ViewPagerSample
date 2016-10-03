@@ -403,8 +403,8 @@ public class WebServiceCallHelper implements VolleyRequestHelper.OnRequestComple
         try {
             JSONObject requestMap = requestObjectWithDetails("OTPValidator", "2001", "12345678");
 
-            requestMap.putOpt("otp", otp);
-            requestMap.putOpt("mobile_number",mobileNumber);
+            requestMap.putOpt("otp", otp.trim());
+            requestMap.putOpt("mobile_number",Double.parseDouble(mobileNumber));
             requestMap.putOpt(Jsonconstants.OL_APPID_KEY, 1001);
             initiateVolleyCall(requestMap, Jsonconstants.OL_BASE_URL.concat(Jsonconstants.OL_OTP_VALIDATION_SERVICE));
         } catch (Exception e) {

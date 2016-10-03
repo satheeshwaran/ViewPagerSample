@@ -326,7 +326,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://messaging/1162709597152181")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb-messenger://user/1162709597152181")));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     FirebaseCrash.log(ex.getLocalizedMessage());
